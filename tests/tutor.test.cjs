@@ -56,3 +56,10 @@ test('hint-assisted recall schedules an earlier review than strong recall',()=>{
  const hard=E.review({},'en:vocab:001','hard',now)['en:vocab:001'];
  assert.ok(hard.due<good.due);assert.ok(hard.due>now);
 });
+
+test('higher-level sentence and grammar practice stays multiple-choice',()=>{
+ for(const card of L.lessons.filter(c=>c.mode!=='vocab')){
+  const candidates=L.lessons.filter(c=>c.language===card.language&&c.mode===card.mode);
+  assert.equal(T.questionFor(card,candidates,()=>0.5).kind,'choice',card.id);
+ }
+});

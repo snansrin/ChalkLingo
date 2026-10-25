@@ -12,14 +12,14 @@
    const current=data();const records=engine.normalizeRecords(current.records);
    current.records=engine.review(records,id,grade);
    try{localStorage.setItem(storageKey,JSON.stringify(current));}catch{/* storage disabled */}
-   window.dispatchEvent(new CustomEvent('chalk:review',{detail:{id,grade}}));
+   document.dispatchEvent(new CustomEvent('chalk:review',{detail:{id,grade}}));
  }
  function deck(){const s=engine.sanitizeSettings(data().settings,Object.keys(window.CHALK_LESSONS.packs));return engine.getDeck(lessons,s);}
  function setText(el,value){el.textContent=value||'';}
  function open(){
    lastFocus=document.activeElement;
    dialog.hidden=false;
-   window.dispatchEvent(new Event('chalk:practiceOpened'));
+   document.dispatchEvent(new Event('chalk:practiceOpened'));
    document.body.classList.add('practicing');
    stats={attempted:0,correct:0};
    next();
@@ -28,7 +28,7 @@
  function close(){
    dialog.hidden=true;document.body.classList.remove('practicing');
    if(lastFocus instanceof HTMLElement)lastFocus.focus();
-   window.dispatchEvent(new Event('chalk:practiceClosed'));
+   document.dispatchEvent(new Event('chalk:practiceClosed'));
  }
  function render(){
    finished=false;attempts=0;usedHint=false;selected='';
@@ -59,7 +59,7 @@
    const current=data();const records=engine.normalizeRecords(current.records);
    card=tutor.planNext(deck(),records,card?.id);
    if(!card){setText(prompt,'Seçili derste kart bulunamadı. Ayarlardan seviye değiştir.');return;}
-   question=tutor.questionFor(card,deck());
+   question=tutor.questionFor(card,lessons.filter(x=>x.language===card.language&&x.mode===card.mode));
    render();
  }
  function hint(){
@@ -100,6 +100,8 @@
    }catch(e){setText($('aiResponse'),'Yerel model yanıt vermedi. Ollama çalışıyor mu ve seçilen model indirildi mi? (Ayrıntı: '+String(e?.message||'bağlantı hatası').slice(0,120)+')');}
    finally{$('askAi').disabled=false;}
  }
+ const teacherSvg=document.querySelector('.teacher svg');
+ if(teacherSvg){const avatar=document.createElement('div');avatar.className='practice-teacher';avatar.setAttribute('aria-hidden','true');avatar.append(teacherSvg.cloneNode(true));$('practicePrompt').before(avatar);}
  $('practiceBtn').addEventListener('click',open);
  $('practiceClose').addEventListener('click',close);
  $('practiceCheck').addEventListener('click',grade);

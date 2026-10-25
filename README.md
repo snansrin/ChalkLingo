@@ -1,6 +1,6 @@
 # ChalkLingo · a tiny chalkboard teacher for your desktop
 
-**ChalkLingo 0.2** is an illustrated, offline-first desktop widget that helps you *retrieve* language knowledge instead of only rereading translations. Click the chalkboard for another lesson; right-click to customize your classroom; choose **✎ Çalış** for active exercises. An optional on-device language model (Ollama) can answer lesson questions without a cloud API.
+**ChalkLingo 0.2.2** is an illustrated, offline-first desktop widget that helps you *retrieve* language knowledge instead of only rereading translations. Click the chalkboard for another lesson; right-click to customize your classroom; choose **✎ Çalış** for active exercises. An optional on-device language model (Ollama) can answer lesson questions without a cloud API.
 
 ## What's in the classroom
 
@@ -64,7 +64,7 @@ ui/tutor-ui.js               Accessible teaching flow, hints, feedback, Q&A UI
 ui/ollama-bridge.cjs         Bounded local-only model requests
 ui/app.js                    Existing widget controls, TTS, import/export
 assets/                      Application icons
-tests/                        17 Node unit and security tests
+tests/                        18 Node unit and security tests
 .github/workflows/ci.yml     CI and optional Windows package build
 ```
 
@@ -84,6 +84,6 @@ ChalkLingo makes no claims that its own teaching efficacy has been clinically or
 
 ## Development
 
-`npm run check` performs syntax verification and 17 automated tests. The test suite covers lesson data in seven languages, safe storage handling, scheduling, Unicode answer checks, graded feedback and restricted AI requests. Browser-level/Windows-packaged QA should still be conducted before release.
+`npm run check` performs syntax verification and 18 automated tests. The test suite covers lesson data in seven languages, safe storage handling, scheduling, Unicode answer checks, graded feedback and restricted AI requests. Browser-level/Windows-packaged QA should still be conducted before release.
 
 MIT licensed. This project is independent of DendroGeo.
