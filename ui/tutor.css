@@ -1,0 +1,41 @@
+/* ChalkLingo Atelier · a tactile, compact tutoring layer that keeps the illustrated classroom intact. */
+:root{--chalk-cream:#f8edd5;--chalk-gold:#efc37c;--chalk-sage:#bbd2b1;--chalk-dusk:#162a25}
+#practiceOverlay[hidden]{display:none!important}
+.practice-overlay{position:absolute;z-index:19;inset:43px 9px 9px;background:radial-gradient(circle at 91% 4%,#526d4e32,transparent 40%),linear-gradient(155deg,#2b4033,#182a25 58%,#172b25);border:1px solid #8f9b7670;border-radius:16px;padding:15px;box-shadow:0 13px 36px #0009,inset 0 1px #ffffff12;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#8b9a7f transparent}
+.practice-overlay:before{content:'';pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(93deg,transparent 0 6px,#ffffff03 7px 8px);opacity:.6}
+.practice-top{display:flex;align-items:center;justify-content:space-between;position:relative}.practice-kicker{font-size:9px;letter-spacing:2.2px;font-weight:800;color:var(--chalk-gold)}
+.practice-close{width:29px;height:29px;background:#ffffff13;border:1px solid #ffffff25;color:#f5e4c9;border-radius:8px;font-size:20px}
+.practice-heading{position:relative;display:flex;align-items:center;gap:10px;margin:3px 0 9px;font-size:19px;font-weight:780;color:#f7efdf;letter-spacing:-.6px}
+.practice-heading:before{content:'✳';font-size:21px;color:#f4c98a;animation:teacherBreathe 4.5s ease-in-out infinite}
+.practice-sub{color:#adc6b5;font-size:10px;letter-spacing:.4px;margin-bottom:10px}
+.practice-blackboard{position:relative;flex:none;min-height:111px;background:radial-gradient(ellipse at 50% 40%,#31584b,#17392f);border:7px solid #986b44;border-radius:7px;box-shadow:0 4px 0 #543a2a,inset 0 0 25px #031510aa;padding:13px 15px 11px;overflow:hidden}
+.practice-blackboard:before{content:'';pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(4deg,#fff1 0 1px,transparent 1px 15px);opacity:.08}
+.practice-kind{color:#e8cb9e;font-size:9px;letter-spacing:1.5px;font-weight:800}
+.practice-prompt{white-space:pre-line;font-family:'Segoe Print','Comic Sans MS',ui-sans-serif,sans-serif;font-size:17px;line-height:1.36;color:#f5f1df;text-shadow:1px 1px #829b7e55;margin:7px 0 0;overflow-wrap:anywhere}
+.practice-answer{display:flex;flex-direction:column;gap:9px;position:relative;margin-top:12px}
+.practice-answer label{font-size:10px;color:#b6c5b5;font-weight:700;letter-spacing:.9px}
+.practice-input{height:42px;width:100%;background:#0e241de0;border:1px solid #7d9c83a8;border-radius:9px;color:#f9eeda;padding:0 12px;font-size:15px;outline-offset:3px;user-select:text;-webkit-user-select:text}
+.practice-input::placeholder{color:#8fa99a;font-size:12px}.practice-choices{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.choice-option{min-height:41px;padding:8px 9px;text-align:left;border:1px solid #708c7280;background:#234437;color:#e9eadc;border-radius:9px;font-size:12px;overflow-wrap:anywhere;transition:background .12s,border-color .12s}
+.choice-option:hover{background:#365747}.choice-option.selected{border-color:#e9c17b;background:#4a5238}.choice-option.correct{border-color:#9dd49c;background:#295a40}.choice-option:disabled{opacity:.8}
+.practice-feedback{font-size:11px;color:#bacbbb;line-height:1.4;min-height:26px;margin-top:11px;position:relative;white-space:pre-line}.practice-feedback.info{color:#ecdda7}.practice-feedback.warn{color:#efc1a4}.practice-feedback.success{color:#aee3b9}
+.practice-example{font-size:10.5px;line-height:1.5;color:#b7cab8;white-space:pre-line;max-height:78px;overflow-y:auto;user-select:text;-webkit-user-select:text}
+.practice-controls{display:flex;gap:8px;align-items:center;position:relative;margin:9px 0 10px}.practice-btn{height:35px;padding:0 13px;border:1px solid #688671aa;border-radius:9px;background:#2b4e3b;color:#f0ebd8;font-size:11px;font-weight:800;flex:1}.practice-btn.primary{background:linear-gradient(100deg,#eac585,#e8d5a2);color:#223728;border:0}.practice-btn:disabled{opacity:.45}
+.ai-bench{position:relative;margin-top:auto;border-top:1px solid #e8dcc41c;padding-top:10px}.ai-bench summary{cursor:pointer;font-size:11px;color:#ddc58c;letter-spacing:.2px;font-weight:750}.ai-bench[open] summary{margin-bottom:7px}.ai-bench p{margin:4px 0;color:#a8bca9;font-size:10px;line-height:1.4}
+.ai-question{width:100%;min-height:44px;max-height:65px;resize:vertical;padding:8px 10px;border:1px solid #728c7780;border-radius:8px;background:#122b22;color:#eee9d5;font-size:12px;user-select:text;-webkit-user-select:text}
+.ai-send{display:block;margin-top:5px;margin-left:auto;padding:6px 12px;border:1px solid #b9a277;border-radius:7px;background:#514f39;color:#f8eacc;font-size:11px;font-weight:750}
+.ai-response{font-size:10.5px;color:#d5e0cc;line-height:1.48;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:102px;overflow-y:auto;user-select:text;-webkit-user-select:text}
+.practice-bottom{font-size:9px;color:#90a999;letter-spacing:.3px;margin-top:8px}.actions-card #practiceBtn{background:linear-gradient(130deg,#f4dca9,#d5ad74);color:#28372c;border:0;border-radius:9px;padding:0 12px;height:37px;font-weight:850;font-size:12px}
+.actions-card #practiceBtn:hover{filter:brightness(1.1)}.actions-card:has(#practiceBtn){gap:6px}.actions-card:has(#practiceBtn) .learn-action{padding:0 9px;font-size:11px}.actions-card:has(#practiceBtn) .next-action{padding:0 5px}.actions-card:has(#practiceBtn) .round-action{width:32px}
+.teacher svg{overflow:visible}.teacher{animation:teacherBreathe 5.6s ease-in-out infinite;transform-origin:50% 89%}.teacher .chalk-arm{animation-duration:2.65s}
+.teacher .teacher-eye{transform-box:fill-box;transform-origin:center;animation:teacherBlink 7s infinite}.board-shell.is-erasing+.teacher .chalk-arm{animation-play-state:paused}
+@keyframes teacherBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
+@keyframes teacherBlink{0%,48%,50%,100%{transform:scaleY(1)}49%{transform:scaleY(.16)}}
+body.reduce-motion .teacher{animation:none}
+/* Dashboard settings has scroll rather than clipping on smaller displays. */
+.settings-panel{scrollbar-width:thin}
+.ai-setting{margin-top:7px;padding:8px 9px;border:1px solid #72907a50;border-radius:9px;background:#172e25cc}
+.ai-setting input[type=text]{display:block;margin-top:5px;width:100%;border-radius:7px;border:1px solid #6e8d72;background:#142b21;color:#f5eaca;padding:6px 8px;font-size:12px;user-select:text;-webkit-user-select:text}
+.ai-setting .ai-disclosure{color:#b9caba;font-size:10px;line-height:1.35;margin-top:5px}
+
+.practice-choices[hidden],.practice-input[hidden],.practice-btn[hidden]{display:none!important}

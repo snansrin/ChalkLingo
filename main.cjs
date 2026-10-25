@@ -1,37 +1,90 @@
 'use strict';
-const {app,BrowserWindow,ipcMain,protocol,net,session}=require('electron');
-const path=require('node:path');
-const {pathToFileURL}=require('node:url');
+const { app, BrowserWindow, Tray, Menu, nativeImage, ipcMain, protocol, net, screen } = require('electron');
+const path = require('node:path');
+const fs = require('node:fs');
+const { pathToFileURL } = require('node:url');
+const { requestLocalTutor } = require('./ui/ollama-bridge.cjs');
+
 protocol.registerSchemesAsPrivileged([{scheme:'chalk',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
-let win;
+let mainWindow;
+let tray;
+const WIDTH = 490, HEIGHT = 555;
+let lastTutorRequest = 0;
+
+function preferencesPath(){return path.join(app.getPath('userData'),'window.json');}
+function readWindowState(){try{return JSON.parse(fs.readFileSync(preferencesPath(),'utf8'));}catch{return {};}}
+function saveWindowState(){
+  if(!mainWindow || mainWindow.isDestroyed() || mainWindow.isMinimized()) return;
+  const [x,y]=mainWindow.getPosition();
+  try{fs.mkdirSync(path.dirname(preferencesPath()),{recursive:true});fs.writeFileSync(preferencesPath(),JSON.stringify({x,y}),{mode:0o600});}catch{/* Nonfatal */}
+}
+function safeSender(event){return event.sender === mainWindow?.webContents && event.sender.getURL().startsWith('chalk://app/');}
 function createWindow(){
-  win=new BrowserWindow({width:490,height:550,minWidth:490,maxWidth:490,minHeight:550,maxHeight:550,
-    frame:false,transparent:true,resizable:false,backgroundColor:'#00000000',show:false,hasShadow:true,
-    webPreferences:{preload:path.join(__dirname,'preload.cjs'),nodeIntegration:false,contextIsolation:true,sandbox:true,webSecurity:true,devTools:!app.isPackaged}});
-  win.loadURL('chalk://app/index.html');
-  win.once('ready-to-show',()=>win?.show());
-  win.webContents.setWindowOpenHandler(()=>({action:'deny'}));
-  win.webContents.on('will-navigate',(event,url)=>{if(!url.startsWith('chalk://app/'))event.preventDefault()});
+  const state=readWindowState();
+  const bounds=screen.getAllDisplays().some(d=>Number.isInteger(state.x)&&Number.isInteger(state.y)&&state.x>=d.workArea.x-150&&state.y>=d.workArea.y-150&&state.x<d.workArea.x+d.workArea.width-120&&state.y<d.workArea.y+d.workArea.height-100);
+  mainWindow=new BrowserWindow({
+    width: WIDTH,height:HEIGHT, minWidth:WIDTH,maxWidth:WIDTH,minHeight:HEIGHT,maxHeight:HEIGHT,
+    ...(bounds?{x:state.x,y:state.y}:{center:true}),
+    frame:false,transparent:true,resizable:false,skipTaskbar:false,alwaysOnTop:false,
+    title:'ChalkLingo',show:false,backgroundColor:'#00000000',hasShadow:true,
+    webPreferences:{
+      preload:path.join(__dirname,'preload.cjs'),
+      nodeIntegration:false,contextIsolation:true,sandbox:true,
+      webSecurity:true,devTools:!app.isPackaged
+    }
+  });
+  mainWindow.loadURL('chalk://app/index.html');
+  mainWindow.once('ready-to-show',()=>mainWindow?.show());
+  mainWindow.on('moved',saveWindowState);
+  mainWindow.on('close',saveWindowState);
+  mainWindow.webContents.setWindowOpenHandler(()=>({action:'deny'}));
+  mainWindow.webContents.on('will-navigate',(event,url)=>{if(!url.startsWith('chalk://app/'))event.preventDefault();});
 }
 app.whenReady().then(()=>{
   protocol.handle('chalk',request=>{
-    let u;try{u=new URL(request.url)}catch{return new Response('Bad URL',{status:400})}
-    if(u.hostname!=='app')return new Response('Forbidden',{status:403});
-    let relative;try{relative=decodeURIComponent(u.pathname).replace(/^\/+/,'')||'index.html'}catch{return new Response('Bad path',{status:400})}
-    const base=path.resolve(__dirname,'ui'),target=path.resolve(base,relative);
-    if(!target.startsWith(base+path.sep))return new Response('Forbidden',{status:403});
-    return net.fetch(pathToFileURL(target).toString());
+    const target=new URL(request.url);
+    if(target.hostname!=='app')return new Response('Forbidden',{status:403});
+    const relative=decodeURIComponent(target.pathname).replace(/^\/+/, '') || 'index.html';
+    const normalized=path.normalize(relative);
+    const base=path.resolve(__dirname,'ui');
+    const file=path.resolve(base,normalized);
+    if(!file.startsWith(base+path.sep))return new Response('Forbidden',{status:403});
+    return net.fetch(pathToFileURL(file).toString());
   });
-  session.defaultSession.setPermissionRequestHandler((wc,p,cb)=>cb(false));
-  session.defaultSession.setPermissionCheckHandler(()=>false);
-  ipcMain.handle('control',(event,action,value)=>{
-    if(!win||event.sender!==win.webContents||!event.sender.getURL().startsWith('chalk://app/'))throw Error('Forbidden');
-    if(action==='minimize'){win.minimize();return true}
-    if(action==='close'){win.close();return true}
-    if(action==='get-top')return win.isAlwaysOnTop();
-    if(action==='set-top'&&typeof value==='boolean'){win.setAlwaysOnTop(value);return true}
-    throw Error('Invalid request');
+  const disallow=permission=>false;
+  const session= require('electron').session.defaultSession;
+  session.setPermissionRequestHandler((_wc,_permission,callback)=>callback(false));
+  session.setPermissionCheckHandler(disallow);
+  ipcMain.handle('window:control',(event,action,value)=>{
+    if(!safeSender(event))throw new Error('Unauthorized IPC sender');
+    switch(action){
+      case 'minimize':mainWindow.minimize();return true;
+      case 'close':mainWindow.close();return true;
+      case 'set-top':if(typeof value!=='boolean')throw new TypeError('boolean required');mainWindow.setAlwaysOnTop(value);return true;
+      case 'get-top':return mainWindow.isAlwaysOnTop();
+      case 'show':mainWindow.show();mainWindow.focus();return true;
+      default:throw new Error('Unknown action');
+    }
+  });
+  ipcMain.handle('tutor:ask',async(event,args)=>{
+    if(!safeSender(event))throw new Error('Unauthorized IPC sender');
+    const now=Date.now();
+    if(now-lastTutorRequest<1000)throw new Error('Lütfen bir an sonra tekrar dene');
+    lastTutorRequest=now;
+    return requestLocalTutor(args);
   });
   createWindow();
+  const iconPath=app.isPackaged
+    ? path.join(process.resourcesPath,'app.asar.unpacked','assets','icon.png')
+    : path.join(__dirname,'assets','icon.png');
+  const icon=nativeImage.createFromPath(iconPath).resize({width:20,height:20});
+  tray=new Tray(icon);
+  tray.setToolTip('ChalkLingo · Bir tıkla yeni bir şey öğren');
+  tray.setContextMenu(Menu.buildFromTemplate([
+    {label:'Tahtayı aç',click:()=>{if(!mainWindow)createWindow();else{mainWindow.show();mainWindow.focus();}}},
+    {label:'Çıkış',click:()=>app.quit()}
+  ]));
+  tray.on('double-click',()=>{mainWindow?.show();mainWindow?.focus();});
+  app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)createWindow();});
 });
-app.on('window-all-closed',()=>app.quit());
+app.on('window-all-closed',()=>{if(process.platform!=='darwin')app.quit();});

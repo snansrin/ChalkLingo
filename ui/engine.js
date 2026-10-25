@@ -1,44 +1,70 @@
-(function(root){
+/* Standalone, dependency-free selection & spaced review model. */
+(function(global){
 'use strict';
-const DEFAULTS=Object.freeze({lang:'en',level:'A1',mode:'mix',auto:0,animation:true,top:false});
-const MODES=['mix','vocab','sentence','grammar'],AUTOS=[0,30,60,120,300];
-function sanitizeConfig(raw){
- const s=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
+const LEVELS=['A1','A2','B1','B2','C1','C2'];
+const MODES=['mix','vocab','sentence','grammar'];
+const DEFAULTS=Object.freeze({language:'en',level:'A1',mode:'mix',interval:0,sound:false,translation:true,alwaysTop:false,reduceMotion:false,aiEnabled:false,aiModel:'gemma3:4b'});
+function sanitizeSettings(value, languages=['en','de','fr','es','it','ru','ja']){
+ const v=value&&typeof value==='object'?value:{};
+ const str=(key,allowed,fallback)=>allowed.includes(v[key])?v[key]:fallback;
  return {
-  lang:Object.hasOwn(ChalkData.LANGS,s.lang)?s.lang:DEFAULTS.lang,
-  level:ChalkData.LEVELS.includes(s.level)?s.level:DEFAULTS.level,
-  mode:MODES.includes(s.mode)?s.mode:DEFAULTS.mode,
-  auto:AUTOS.includes(Number(s.auto))?Number(s.auto):0,
-  animation:typeof s.animation==='boolean'?s.animation:true,
-  top:typeof s.top==='boolean'?s.top:false
+  language:str('language',languages,DEFAULTS.language),level:str('level',LEVELS,DEFAULTS.level),
+  mode:str('mode',MODES,DEFAULTS.mode),interval:[0,30,60,120,300].includes(Number(v.interval))?Number(v.interval):0,
+  sound:v.sound===true,translation:v.translation!==false,alwaysTop:v.alwaysTop===true,reduceMotion:v.reduceMotion===true,
+  aiEnabled:v.aiEnabled===true,aiModel:typeof v.aiModel==='string'&&v.aiModel.length<=80&&/^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:\/[a-zA-Z0-9][a-zA-Z0-9._-]*)?(?::[a-zA-Z0-9][a-zA-Z0-9._-]*)?$/.test(v.aiModel)?v.aiModel:DEFAULTS.aiModel
  };
 }
-function candidates(cards,config){return cards.filter(c=>c.lang===config.lang&&c.level===config.level&&(config.mode==='mix'||c.kind===config.mode))}
-function choose(cards,config,records,lastId,now=Date.now()){
- const pool=candidates(cards,config);if(!pool.length)return null;
- const options=pool.length>1?pool.filter(c=>c.id!==lastId):pool;
- const due=options.filter(c=>records[c.id]&&Number(records[c.id].due)<=now);
- const unseen=options.filter(c=>!records[c.id]);
- const source=due.length?due:unseen.length?unseen:options;
- return source[Math.floor(Math.random()*source.length)];
+function getDeck(all,settings){return all.filter(x=>x.language===settings.language&&x.level===settings.level&&(settings.mode==='mix'||x.mode===settings.mode));}
+function safeRecord(rec){
+ if(!rec||typeof rec!=='object')return null;
+ return {seen:Math.max(0,Math.min(99999,Number(rec.seen)||0)),repetitions:Math.max(0,Math.min(99999,Number(rec.repetitions)||0)),
+  interval:Math.max(0,Math.min(3650,Number(rec.interval)||0)),ease:Math.max(1.3,Math.min(3,Number(rec.ease)||2.5)),
+  due:Number.isFinite(rec.due)?Math.max(0,rec.due):0,learned:Boolean(rec.learned),lastSeen:Math.max(0,Number(rec.lastSeen)||0)};
 }
-function review(records,id,known,now=Date.now()){
- const old=records[id]&&typeof records[id]==='object'?records[id]:{};
- const previous=Math.max(0,Math.min(365,Number(old.interval)||0));
- const next=known?(previous===0?1:Math.min(365,Math.ceil(previous*2.35))):0;
- return {...records,[id]:{interval:next,due:now+(known?next*86400000:300000),seen:(Number(old.seen)||0)+1,known:!!known}};
-}
-function safeRecords(raw,cards){
- if(!raw||typeof raw!=='object'||Array.isArray(raw))return {};
- const valid=new Set(cards.map(c=>c.id)),out=Object.create(null);
- for(const [id,v] of Object.entries(raw)){
-  if(!valid.has(id)||!v||typeof v!=='object')continue;
-  if(!Number.isFinite(v.due)||!Number.isFinite(v.interval))continue;
-  out[id]={due:Math.max(0,Math.min(1e16,v.due)),interval:Math.max(0,Math.min(365,v.interval)),seen:Math.max(0,Math.min(1e6,Number(v.seen)||0)),known:v.known===true};
+function normalizeRecords(value){
+ if(!value||typeof value!=='object'||Array.isArray(value))return {};
+ const out={};
+ for(const [key,rec] of Object.entries(value).slice(0,10000)){
+  if(/^[a-z]{2}:(vocab|sentence|grammar):\d{3}$/.test(key)){const safe=safeRecord(rec);if(safe)out[key]=safe;}
  }
  return out;
 }
-const api={DEFAULTS,sanitizeConfig,candidates,choose,review,safeRecords};
-root.ChalkEngine=api;
+function markSeen(records,id,now=Date.now()){
+ const old=safeRecord(records[id])||{seen:0,repetitions:0,interval:0,ease:2.5,due:0,learned:false,lastSeen:0};
+ return {...records,[id]:{...old,seen:old.seen+1,lastSeen:now}};
+}
+function review(records,id,score,now=Date.now()){
+ const quality=score==='again'?1:score==='easy'?5:4;
+ const old=safeRecord(records[id])||{seen:0,repetitions:0,interval:0,ease:2.5,due:0,learned:false,lastSeen:0};
+ let repetitions=old.repetitions,interval=old.interval,ease=old.ease;
+ if(quality<3){repetitions=0;interval=0;}
+ else{
+  repetitions++;
+  interval=repetitions===1?1:repetitions===2?6:Math.max(1,Math.round(interval*ease));
+  ease=Math.max(1.3,ease+0.1-(5-quality)*(0.08+(5-quality)*0.02));
+ }
+ const due=now+(quality<3?5*60*1000:interval*24*60*60*1000);
+ return {...records,[id]:{...old,repetitions,interval,ease,due,learned:quality>=3,lastSeen:now}};
+}
+function selectNext(deck,records,previousId='',now=Date.now(),random=Math.random){
+ if(!deck.length)return null;
+ const withoutPrevious=deck.filter(x=>x.id!==previousId);
+ const pool=withoutPrevious.length?withoutPrevious:deck;
+ const due=pool.filter(x=>records[x.id]?.due && records[x.id].due<=now);
+ const fresh=pool.filter(x=>!records[x.id]?.seen);
+ const candidates=due.length?due:fresh.length?fresh:pool;
+ const sorted=[...candidates].sort((a,b)=>(records[a.id]?.lastSeen||0)-(records[b.id]?.lastSeen||0));
+ const min=records[sorted[0].id]?.lastSeen||0;
+ const tied=sorted.filter(x=>(records[x.id]?.lastSeen||0)===min);
+ return tied[Math.min(tied.length-1,Math.floor(Math.max(0,Math.min(.999999,random()))*tied.length))];
+}
+function stats(deck,records,now=Date.now()){
+ const seen=deck.filter(x=>(records[x.id]?.seen||0)>0).length;
+ const learned=deck.filter(x=>records[x.id]?.learned).length;
+ const due=deck.filter(x=>records[x.id]?.due&&records[x.id].due<=now).length;
+ return {total:deck.length,seen,learned,due,pct:deck.length?Math.round(learned/deck.length*100):0};
+}
+const api=Object.freeze({DEFAULTS,LEVELS,MODES,sanitizeSettings,getDeck,normalizeRecords,markSeen,review,selectNext,stats});
+global.ChalkEngine=api;
 if(typeof module!=='undefined'&&module.exports)module.exports=api;
-})(typeof globalThis!=='undefined'?globalThis:this);
+})(typeof window!=='undefined'?window:globalThis);

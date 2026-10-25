@@ -1,8 +1,10 @@
 'use strict';
-const {contextBridge,ipcRenderer}=require('electron');
+const { contextBridge, ipcRenderer }=require('electron');
 contextBridge.exposeInMainWorld('chalkDesktop',Object.freeze({
-  minimize:()=>ipcRenderer.invoke('control','minimize'),
-  close:()=>ipcRenderer.invoke('control','close'),
-  getTop:()=>ipcRenderer.invoke('control','get-top'),
-  setTop:value=>ipcRenderer.invoke('control','set-top',value)
+  minimize:()=>ipcRenderer.invoke('window:control','minimize'),
+  close:()=>ipcRenderer.invoke('window:control','close'),
+  setAlwaysOnTop:(value)=>ipcRenderer.invoke('window:control','set-top',value),
+  getAlwaysOnTop:()=>ipcRenderer.invoke('window:control','get-top'),
+  askTeacher:(args)=>ipcRenderer.invoke('tutor:ask',args),
+  platform:process.platform
 }));

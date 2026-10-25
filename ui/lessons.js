@@ -1,106 +1,282 @@
-/* Offline starter curriculum: illustrative CEFR placements, not certified. */
-(function(root){
+/* ChalkLingo hand-curated starter lessons. CEFR bands are indicative, not certified. */
+(function(global){
 'use strict';
-const LEVELS=['A1','A2','B1','B2','C1','C2'];
-const LANGS={en:['İngilizce','en-US'],de:['Almanca','de-DE'],fr:['Fransızca','fr-FR'],es:['İspanyolca','es-ES'],it:['İtalyanca','it-IT'],ru:['Rusça','ru-RU'],ja:['Japonca','ja-JP']};
-/* Words: 12 everyday A1 entries followed by A2/B1/B2/C1/C2.
-   Sentence and grammar entries: one for each level in sequence. */
+// Each row: [level, front, meaning in Turkish, example, teaching note, phonetic(optional)]
 const packs={
-en:{
-w:[
-'hello|merhaba|Hello! Nice to meet you.','thank you|teşekkür ederim|Thank you for your help.','please|lütfen|Please, come in.','water|su|Can I have some water?','book|kitap|This is my book.','friend|arkadaş|She is my friend.','home|ev|I am going home.','today|bugün|Today is Monday.','tomorrow|yarın|See you tomorrow.','family|aile|My family is here.','food|yemek|The food is delicious.','school|okul|I go to school.',
-'appointment|randevu|I have an appointment tomorrow.','improve|geliştirmek|Practice will improve your English.','sustainable|sürdürülebilir|We need sustainable solutions.','scrutinize|titizlikle incelemek|We must scrutinize the data.','ubiquitous|her yerde bulunan|Smartphones are ubiquitous.',
-'good morning|günaydın|Good morning, everyone.','good night|iyi geceler|Good night, see you tomorrow.','yes|evet|Yes, I understand.','no|hayır|No, thank you.','help|yardım|I need help.','coffee|kahve|I drink coffee.','city|şehir|This city is beautiful.','happy|mutlu|I am happy.','beautiful|güzel|It is a beautiful day.'
-],
-s:[
-'How are you?|Nasılsın?|I am fine, thank you.','Could you help me?|Bana yardım edebilir misiniz?|A polite request.','I have been learning English for a year.|Bir yıldır İngilizce öğreniyorum.|For: süre; since: başlangıç.','If I had more time, I would travel.|Daha çok zamanım olsa seyahat ederdim.|Second conditional.','Had I known, I would have called.|Bilseydim arardım.|Inverted third conditional.','Rarely have I encountered such clarity.|Böylesine bir açıklıkla nadiren karşılaştım.|Negative-adverb inversion.'
-],
-g:[
-'am / is / are|Olmak fiili; özneye göre değişir.|She is a teacher.','Past simple|Geçmişte tamamlanmış olaylar.|I visited London yesterday.','Present perfect|Geçmişin şimdiyle bağlantısı.|I have finished the task.','Passive voice|Eylemin alıcısını öne çıkarır.|The report was written.','Inversion|Vurgu için devrik cümle kurulur.|Never have I seen this.','Formal subjunctive|Resmî gerekliliklerde yalın fiil.|It is vital that he be present.'
-]},
-de:{
-w:[
-'hallo|merhaba|Hallo, wie geht es dir?','danke|teşekkürler|Danke für deine Hilfe.','bitte|lütfen; buyurun|Ein Wasser, bitte.','Wasser|su|Ich trinke Wasser.','Buch|kitap|Das Buch ist neu.','Freund|arkadaş|Er ist mein Freund.','Haus|ev|Das Haus ist groß.','heute|bugün|Heute ist Montag.','morgen|yarın|Bis morgen!','Familie|aile|Meine Familie ist hier.','Essen|yemek|Das Essen ist lecker.','Schule|okul|Die Schule beginnt um acht.',
-'Termin|randevu|Ich habe einen Termin.','verbessern|geliştirmek|Ich möchte mein Deutsch verbessern.','nachhaltig|sürdürülebilir|Wir brauchen nachhaltige Lösungen.','differenziert|çok yönlü değerlendirilmiş|Das ist eine differenzierte Analyse.','nichtsdestotrotz|buna rağmen|Nichtsdestotrotz machen wir weiter.'
-],
-s:[
-'Wie heißt du?|Adın ne?|Ich heiße Ayşe.','Könnten Sie mir helfen?|Bana yardımcı olabilir misiniz?|Kibar soru.','Ich lerne seit einem Jahr Deutsch.|Bir yıldır Almanca öğreniyorum.|Seit + zaman ifadesi.','Wenn ich Zeit hätte, würde ich reisen.|Zamanım olsa seyahat ederdim.|Konjunktiv II.','Hätte ich es gewusst, hätte ich angerufen.|Bilseydim arardım.|Devrik koşul.','Ungeachtet der Umstände blieb er gelassen.|Koşullara rağmen sakin kaldı.|Resmî üslup.'
-],
-g:[
-'der / die / das|İsimlerin eril, dişil ve nötr tanımlıkları.|Der Tisch, die Lampe, das Buch.','Perfekt|Konuşma dilinde geçmiş zaman.|Ich habe gelernt.','Nebensätze|Yan cümlede çekimli fiil sonda.|Weil ich müde bin.','Konjunktiv II|Gerçek olmayan koşul ve kibar istek.|Ich würde gern kommen.','Nominalstil|Resmî metinlerde isimleştirme.|Nach Abschluss der Prüfung.','Partizipialattribute|Sıfat-fiil grupları.|Die gestern veröffentlichten Daten.'
-]},
-fr:{
-w:[
-'bonjour|merhaba; günaydın|Bonjour, madame.','merci|teşekkürler|Merci beaucoup.','s’il vous plaît|lütfen|Un café, s’il vous plaît.','eau|su|Je bois de l’eau.','livre|kitap|C’est mon livre.','ami|arkadaş|C’est mon ami.','maison|ev|La maison est grande.','aujourd’hui|bugün|Aujourd’hui, il fait beau.','demain|yarın|À demain !','famille|aile|Ma famille est ici.','nourriture|yiyecek|La nourriture est bonne.','école|okul|Je vais à l’école.',
-'rendez-vous|randevu|J’ai un rendez-vous.','améliorer|iyileştirmek|Je veux améliorer mon français.','durable|sürdürülebilir|Un développement durable.','approfondir|derinlemesine incelemek|Nous devons approfondir le sujet.','néanmoins|bununla birlikte|Néanmoins, elle a réussi.'
-],
-s:[
-'Comment ça va ?|Nasılsın?|Ça va bien, merci.','Pourriez-vous m’aider ?|Bana yardım edebilir misiniz?|Kibar rica.','J’apprends le français depuis un an.|Bir yıldır Fransızca öğreniyorum.|Depuis: geçmişten beri.','Si j’avais le temps, je voyagerais.|Zamanım olsa seyahat ederdim.|Si + imparfait, conditionnel.','Bien qu’il soit fatigué, il continue.|Yorgun olmasına rağmen devam ediyor.|Bien que + subjonctif.','Encore eût-il fallu le démontrer.|Yine de bunu kanıtlamak gerekirdi.|Edebî ve resmî kullanım.'
-],
-g:[
-'être|Olmak fiili; je suis, tu es, il est.|Je suis étudiant.','Passé composé|Tamamlanmış geçmiş eylem.|J’ai parlé.','Depuis|Geçmişte başlayıp süren eylem.|Je travaille ici depuis deux ans.','Conditionnel|Varsayım veya kibar istek.|Je voudrais partir.','Subjonctif|Duygu, şüphe ve gereklilik.|Il faut que tu viennes.','Passé simple|Edebî anlatımda geçmiş zaman.|Il entra et s’assit.'
-]},
-es:{
-w:[
-'hola|merhaba|Hola, ¿cómo estás?','gracias|teşekkürler|Muchas gracias.','por favor|lütfen|Ayúdame, por favor.','agua|su|Quiero agua.','libro|kitap|Este libro es nuevo.','amigo|arkadaş|Él es mi amigo.','casa|ev|Estoy en casa.','hoy|bugün|Hoy hace sol.','mañana|yarın|Hasta mañana.','familia|aile|Mi familia es grande.','comida|yemek|La comida está rica.','escuela|okul|Voy a la escuela.',
-'cita|randevu|Tengo una cita mañana.','mejorar|geliştirmek|Quiero mejorar mi español.','sostenible|sürdürülebilir|Es una solución sostenible.','matizar|ayrıntılandırmak|Debemos matizar el argumento.','sin embargo|bununla birlikte|Sin embargo, continuamos.'
-],
-s:[
-'¿Cómo te llamas?|Adın ne?|Me llamo Deniz.','¿Podría ayudarme?|Bana yardım edebilir misiniz?|Kibar rica.','Llevo un año aprendiendo español.|Bir yıldır İspanyolca öğreniyorum.|Llevar + süre + gerundio.','Si tuviera tiempo, viajaría.|Zamanım olsa seyahat ederdim.|Si + imperfecto de subjuntivo.','Aunque sea difícil, lo intentaré.|Zor olsa da deneyeceğim.|Aunque + subjuntivo.','Por más que insistiera, no cedieron.|Ne kadar ısrar etse de boyun eğmediler.|İleri düzey karşıtlık.'
-],
-g:[
-'ser / estar|Kalıcı nitelik ve durum farklılığı.|Soy estudiante. Estoy cansado.','Pretérito perfecto|Şimdiyle ilgili geçmiş olay.|He terminado.','Pretérito imperfecto|Geçmişte alışkanlık veya süreç.|Cuando era niño, jugaba.','Condicional|Varsayımsal ve kibar ifadeler.|Me gustaría viajar.','Subjuntivo|Dilek, gereklilik ve belirsizlik.|Espero que vengas.','Oraciones concesivas|Gelişmiş karşıtlık yapıları.|Por mucho que estudie...'
-]},
-it:{
-w:[
-'ciao|merhaba; hoşça kal|Ciao, come stai?','grazie|teşekkürler|Grazie mille.','per favore|lütfen|Aiutami, per favore.','acqua|su|Bevo acqua.','libro|kitap|Questo libro è nuovo.','amico|arkadaş|Lui è mio amico.','casa|ev|Sono a casa.','oggi|bugün|Oggi è lunedì.','domani|yarın|A domani!','famiglia|aile|La mia famiglia è qui.','cibo|yiyecek|Il cibo è buono.','scuola|okul|Vado a scuola.',
-'appuntamento|randevu|Ho un appuntamento.','migliorare|iyileştirmek|Vorrei migliorare il mio italiano.','sostenibile|sürdürülebilir|Una scelta sostenibile.','approfondire|derinlemesine incelemek|Vorrei approfondire la questione.','ciononostante|buna rağmen|Ciononostante, abbiamo continuato.'
-],
-s:[
-'Come ti chiami?|Adın ne?|Mi chiamo Ada.','Potrebbe aiutarmi?|Bana yardım edebilir misiniz?|Kibar rica.','Studio italiano da un anno.|Bir yıldır İtalyanca öğreniyorum.|Da + süre.','Se avessi tempo, viaggerei.|Zamanım olsa seyahat ederdim.|Se + congiuntivo imperfetto.','Benché sia difficile, ci proverò.|Zor olmasına rağmen deneyeceğim.|Benché + congiuntivo.','Qualora fosse necessario, interverremmo.|Gerekirse müdahale ederdik.|Resmî koşul yapısı.'
-],
-g:[
-'essere|Olmak fiili; sono, sei, è.|Sono a casa.','Passato prossimo|Tamamlanmış geçmiş olay.|Ho studiato.','Imperfetto|Geçmişte alışkanlık veya arka plan.|Da piccolo giocavo.','Condizionale|Kibar istek ve varsayım.|Vorrei un caffè.','Congiuntivo|Şüphe ve duygu ifadesi.|Penso che sia giusto.','Periodo ipotetico|Karmaşık varsayımsal koşul.|Se l’avessi saputo...'
-]},
-ru:{
-w:[
-'привет|merhaba|Привет, как дела?','спасибо|teşekkürler|Большое спасибо.','пожалуйста|lütfen; buyurun|Помогите, пожалуйста.','вода|su|Я пью воду.','книга|kitap|Это моя книга.','друг|arkadaş|Он мой друг.','дом|ev|Я дома.','сегодня|bugün|Сегодня понедельник.','завтра|yarın|До завтра!','семья|aile|Моя семья здесь.','еда|yemek|Еда вкусная.','школа|okul|Я иду в школу.',
-'встреча|buluşma|У меня важная встреча.','улучшать|iyileştirmek|Я хочу улучшать свой русский.','устойчивый|sürdürülebilir; dayanıklı|Нужно устойчивое развитие.','осмыслить|derinlemesine kavramak|Нужно осмыслить результаты.','тем не менее|bununla birlikte|Тем не менее мы продолжили.'
-],
-s:[
-'Как тебя зовут?|Adın ne?|Меня зовут Дениз.','Не могли бы вы мне помочь?|Bana yardım edebilir misiniz?|Kibar rica.','Я учу русский язык уже год.|Bir yıldır Rusça öğreniyorum.|Уже + süre.','Если бы у меня было время, я бы путешествовал.|Zamanım olsa seyahat ederdim.|Если бы + бы.','Несмотря на трудности, мы продолжили.|Zorluklara rağmen devam ettik.|Несмотря на + винительный.','Как бы то ни было, решение принято.|Her hâlükârda karar verildi.|İleri düzey söylem.'
-],
-g:[
-'Род|İsimler eril, dişil ve nötr olabilir.|Дом, книга, окно.','Прошедшее время|Geçmiş zaman ekleri cinsiyetle değişir.|Она читала книгу.','Падежи|Hâl ekleri cümledeki görevi belirtir.|Я читаю книгу.','Вид глагола|Bitmiş ve sürmekte olan eylem ayrımı.|Я читал / Я прочитал.','Причастия|Ortaçlar isimleri niteler.|Человек, читающий книгу.','Деепричастие|Zarf-fiil yapısı.|Прочитав письмо, он ушёл.'
-]},
-ja:{
-w:[
-'こんにちは|merhaba|こんにちは、元気ですか。','ありがとう|teşekkürler|ありがとうございます。','お願いします|lütfen|よろしくお願いします。','水|su|水を飲みます。','本|kitap|これは私の本です。','友達|arkadaş|彼は私の友達です。','家|ev|家に帰ります。','今日|bugün|今日は月曜日です。','明日|yarın|また明日。','家族|aile|家族は元気です。','食べ物|yiyecek|この食べ物はおいしいです。','学校|okul|学校に行きます。',
-'約束|söz; randevu|友達と約束があります。','改善する|iyileştirmek|方法を改善します。','持続可能|sürdürülebilir|持続可能な社会。','精査する|titizlikle incelemek|資料を精査します。','にもかかわらず|buna rağmen|雨にもかかわらず出発した。'
-],
-s:[
-'お名前は何ですか。|Adınız nedir?|私は田中です。','手伝っていただけますか。|Bana yardım edebilir misiniz?|Kibar rica.','日本語を一年間勉強しています。|Bir yıldır Japonca öğreniyorum.|～ています: sürmekte olan eylem.','時間があれば、旅行したいです。|Zamanım olsa seyahat etmek isterdim.|～ば: koşul.','難しいものの、試してみます。|Zor olmakla birlikte deneyeceğim.|～ものの: karşıtlık.','検討の余地がないわけではない。|Değerlendirme olanağı tümden yok değil.|Çifte olumsuzluk.'
-],
-g:[
-'です / ます|Kibar cümle sonları.|私は学生です。','て形|Fiilleri bağlama ve rica oluşturma.|待ってください。','～たことがある|Deneyim bildirme.|日本へ行ったことがあります。','～ば / ～たら|Koşul yapıları.|時間があれば、行きます。','～わけではない|Tamamen öyle değil ifadesi.|嫌いなわけではない。','～に至るまで|Kapsamın son sınırını belirtir.|細部に至るまで確認する。'
-]}
+ en:{name:'İngilizce',voice:'en-US',
+ vocab:[
+ ['A1','hello','merhaba','Hello, my name is Ada.','Selamlaşmak için kullanılır.','/həˈloʊ/'],
+ ['A1','thank you','teşekkür ederim','Thank you for your help.','Kibarca teşekkür et.','/ˈθæŋk juː/'],
+ ['A1','water','su','Can I have some water?','Sayılamayan isimdir.','/ˈwɔːtər/'],
+ ['A1','book','kitap','This is my book.','Book: sayılabilen isim.','/bʊk/'],
+ ['A1','friend','arkadaş','She is my friend.','My, iyelik sıfatıdır.','/frɛnd/'],
+ ['A1','today','bugün','I am happy today.','Zaman zarfı olarak kullanılır.','/təˈdeɪ/'],
+ ['A1','please','lütfen','Please sit down.','Ricaları yumuşatır.','/pliːz/'],
+ ['A1','home','ev; yuva','I am going home.','Go home ifadesinde to kullanılmaz.','/hoʊm/'],
+ ['A2','appointment','randevu','I have an appointment at three.','Make an appointment: randevu almak.'],
+ ['A2','usually','genellikle','I usually walk to work.','Sıklık zarfları çoğunlukla ana fiilden önce gelir.'],
+ ['B1','improve','geliştirmek; iyileştirmek','Practice will improve your speaking.','Improve a skill: bir beceriyi geliştirmek.'],
+ ['B1','reliable','güvenilir','We need a reliable source.','Reliability: güvenilirlik.'],
+ ['B2','sustainable','sürdürülebilir','We need sustainable solutions.','Sustainability: sürdürülebilirlik.'],
+ ['B2','although','-e rağmen; her ne kadar','Although it rained, we went out.','Ardından yan cümle gelir.'],
+ ['C1','nevertheless','bununla birlikte; yine de','It was difficult; nevertheless, we succeeded.','Karşıtlık belirten bağlaç zarfı.'],
+ ['C1','scrutinize','titizlikle incelemek','The team scrutinized the data.','Scrutiny: dikkatli inceleme.'],
+ ['C2','notwithstanding','-e rağmen','Notwithstanding the risks, we proceeded.','Resmî ve ileri düzey dilde kullanılır.'],
+ ['C2','ubiquitous','her yerde bulunan','Smartphones are ubiquitous today.','Yaygın ve her yerde görülen anlamında.']
+ ],
+ sentence:[
+ ['A1','How are you?','Nasılsın?','I am fine, thank you.','How + be + özne soru kalıbı.'],
+ ['A1','What is your name?','Adın ne?','My name is Deniz.','What soru sözcüğüdür.'],
+ ['A2','Could you help me?','Bana yardım edebilir misiniz?','Could you help me find the station?','Could you, kibar rica oluşturur.'],
+ ['B1','I have been learning English for a year.','Bir yıldır İngilizce öğreniyorum.','I have been studying since January.','For süreyi, since başlangıç noktasını verir.'],
+ ['B2','If I had more time, I would travel.','Daha çok zamanım olsa seyahat ederdim.','If I were you, I would ask.','Second conditional: varsayımsal durum.'],
+ ['C1','Had I known, I would have called.','Bilseydim arardım.','Had I seen it, I would have told you.','Üçüncü koşulda devrik yapı.'],
+ ['C2','Rarely have I encountered such clarity.','Böylesine bir açıklıkla nadiren karşılaştım.','Seldom had they witnessed such precision.','Olumsuz sınırlayıcı zarflardan sonra devriklik.']
+ ],
+ grammar:[
+ ['A1','I am / You are / He is','“Be” fiilinin şimdiki zaman biçimleri.','She is a teacher.','Özneye göre am / is / are seç.'],
+ ['A1','a / an','Belirsiz tanımlık; sessiz veya sesli sesle başlayan sözcükler.','An apple · A university','Harfe değil, kelimenin ilk sesine bak.'],
+ ['A2','Past simple','Geçmişte tamamlanan eylemler.','I visited London yesterday.','Düzenli fiillere -ed; düzensizlerde ayrı biçim.'],
+ ['B1','Present perfect','Geçmişin şimdiyle bağlantısını anlatır.','I have finished my homework.','Have / has + fiilin üçüncü hâli.'],
+ ['B2','Passive voice','Edilgen yapı; eylemin alıcısını öne çıkarır.','The report was written yesterday.','Be + V3; zamanı be fiili gösterir.'],
+ ['C1','Inversion','Vurgu için özne-yardımcı fiil sırasını değiştirmek.','Never have I seen this before.','Never, rarely gibi sözlerle sık görülür.'],
+ ['C2','Subjunctive in formal demands','Resmî istek sonrası yalın fiil kullanımı.','It is essential that he be present.','He be, resmî subjunctive örneğidir.']
+ ]},
+ de:{name:'Almanca',voice:'de-DE',
+ vocab:[
+ ['A1','Hallo','merhaba','Hallo, wie geht es dir?','Günlük selamlaşma.'],
+ ['A1','Danke','teşekkürler','Danke für deine Hilfe.','Danke schön: çok teşekkürler.'],
+ ['A1','das Wasser','su','Ich trinke Wasser.','Wasser nötr artikellidir.'],
+ ['A1','das Buch','kitap','Das Buch ist neu.','Çoğul: die Bücher.'],
+ ['A1','der Freund','erkek arkadaş / dost','Er ist mein Freund.','Kadın biçimi: die Freundin.'],
+ ['A1','heute','bugün','Heute lerne ich Deutsch.','Zaman zarfı.'],
+ ['A1','bitte','lütfen; rica ederim','Ein Wasser, bitte.','Ricada ve yanıtta kullanılır.'],
+ ['A2','der Termin','randevu','Ich habe morgen einen Termin.','Haben fiiliyle Akkusativ alır.'],
+ ['A2','normalerweise','genellikle','Normalerweise stehe ich früh auf.','Cümle başında fiil ikinci sıradadır.'],
+ ['B1','verbessern','iyileştirmek','Ich möchte mein Deutsch verbessern.','Dönüşlü biçimi de vardır: sich verbessern.'],
+ ['B1','zuverlässig','güvenilir','Sie ist sehr zuverlässig.','Sıfat olarak kullanılır.'],
+ ['B2','die Nachhaltigkeit','sürdürülebilirlik','Nachhaltigkeit ist uns wichtig.','Sıfat: nachhaltig.'],
+ ['B2','obwohl','-mesine rağmen','Obwohl es regnet, gehen wir raus.','Yan cümlede çekimli fiil sona gider.'],
+ ['C1','gleichwohl','yine de; buna rağmen','Das ist schwierig, gleichwohl möglich.','Resmî bağlaç zarfı.'],
+ ['C1','die Voraussetzung','ön koşul','Erfahrung ist eine Voraussetzung.','Çoğul: Voraussetzungen.'],
+ ['C2','ungeachtet','-e aldırmaksızın','Ungeachtet der Kritik blieb er ruhig.','Genellikle Genitiv ile kullanılır.'],
+ ['C2','die Unwägbarkeit','öngörülemeyen güçlük','Wir müssen Unwägbarkeiten beachten.','İleri düzey resmî anlatım.']
+ ],
+ sentence:[
+ ['A1','Wie heißt du?','Adın ne?','Ich heiße Ece.','Heißen: adı ... olmak.'],
+ ['A1','Wie geht es dir?','Nasılsın?','Mir geht es gut.','Dir: samimi hitap.'],
+ ['A2','Könnten Sie mir helfen?','Bana yardımcı olabilir misiniz?','Könnten Sie das wiederholen?','Sie resmî hitaptır.'],
+ ['B1','Ich lerne seit einem Jahr Deutsch.','Bir yıldır Almanca öğreniyorum.','Ich wohne seit 2025 hier.','Seit + Dativ ile süren durum.'],
+ ['B2','Wenn ich Zeit hätte, würde ich reisen.','Vaktim olsa seyahat ederdim.','Wenn ich reich wäre, würde ich helfen.','Konjunktiv II ile varsayım.'],
+ ['C1','Hätte ich es gewusst, hätte ich angerufen.','Bilseydim arardım.','Wäre ich früher gekommen, wäre das anders.','Gerçekleşmemiş geçmiş varsayımı.'],
+ ['C2','Wenngleich dies zutrifft, bleibt die Frage offen.','Bu doğru olsa da soru hâlâ açık.','Wenngleich es schwierig ist, ist es möglich.','Wenngleich: yazı diline özgü ödünleme.']
+ ],
+ grammar:[
+ ['A1','der / die / das','Almancada üç dil bilgisel cinsiyet bulunur.','der Tisch · die Lampe · das Haus','İsimleri artikeliyle öğren.'],
+ ['A2','Perfekt','Konuşma dilinde geçmiş zaman.','Ich habe heute gearbeitet.','Haben / sein + Partizip II.'],
+ ['B1','Nebensätze mit weil','Weil yan cümlesinde fiil sonda olur.','Ich bleibe, weil ich müde bin.','Weil = çünkü.'],
+ ['B2','Konjunktiv II','Dilek, varsayım ve nezaket.','Ich würde das anders machen.','Würde + Infinitiv sık kullanılır.'],
+ ['C1','Partizipialattribute','Ortaçla kurulan yoğun sıfat yapıları.','die gestern veröffentlichten Daten','Uzun sıfat öbekleri çekimlenir.'],
+ ['C2','Nominalstil','Resmî metinlerde adlaştırılmış anlatım.','Nach Abschluss der Untersuchung …','Akademik yazıda sıktır.']
+ ]},
+ fr:{name:'Fransızca',voice:'fr-FR',
+ vocab:[
+ ['A1','bonjour','merhaba / iyi günler','Bonjour, comment ça va ?','Gündüz selamlaşması.'],
+ ['A1','merci','teşekkürler','Merci beaucoup !','Merci beaucoup: çok teşekkürler.'],
+ ['A1','l’eau','su','Je bois de l’eau.','Dişil isim: une eau; kullanım bağlama bağlıdır.'],
+ ['A1','le livre','kitap','Le livre est sur la table.','Eril isim.'],
+ ['A1','un ami / une amie','arkadaş','C’est mon ami.','Cinsiyete göre biçim değişir.'],
+ ['A1','aujourd’hui','bugün','Aujourd’hui, je travaille.','Zaman zarfıdır.'],
+ ['A1','s’il vous plaît','lütfen','Un café, s’il vous plaît.','Kibar / resmî rica.'],
+ ['A2','le rendez-vous','randevu','J’ai un rendez-vous demain.','Prendre rendez-vous: randevu almak.'],
+ ['A2','d’habitude','genellikle','D’habitude, je lis le soir.','Sıklık bildirir.'],
+ ['B1','améliorer','iyileştirmek','Je veux améliorer mon français.','S’améliorer: gelişmek.'],
+ ['B1','fiable','güvenilir','Cette source est fiable.','Fiabilité: güvenilirlik.'],
+ ['B2','durable','sürdürülebilir; dayanıklı','Nous cherchons une solution durable.','Développement durable: sürdürülebilir kalkınma.'],
+ ['B2','bien que','-mesine rağmen','Bien qu’il pleuve, nous sortons.','Çoğunlukla subjonctif kullanılır.'],
+ ['C1','néanmoins','yine de; bununla birlikte','Il pleut ; néanmoins, nous partons.','Karşıtlık bağlacı.'],
+ ['C1','la pertinence','uygunluk; ilgililik','La pertinence de cette étude est claire.','Akademik kullanıma uygundur.'],
+ ['C2','nonobstant','-e rağmen','Nonobstant les obstacles, elle a réussi.','Resmî / hukuk dilinde sık.'],
+ ['C2','l’ineffabilité','söze dökülemezlik','L’ineffabilité du sentiment le frappe.','Soyut, edebî sözcük.']
+ ],
+ sentence:[
+ ['A1','Comment tu t’appelles ?','Adın ne?','Je m’appelle Deniz.','Samimi hitap.'],
+ ['A1','Comment allez-vous ?','Nasılsınız?','Je vais bien, merci.','Kibar hitap.'],
+ ['A2','Pourriez-vous m’aider ?','Bana yardımcı olabilir misiniz?','Pourriez-vous répéter ?','Conditionnel ile kibar rica.'],
+ ['B1','J’apprends le français depuis un an.','Bir yıldır Fransızca öğreniyorum.','J’habite ici depuis deux ans.','Depuis devam eden süreye işaret eder.'],
+ ['B2','Si j’avais le temps, je voyagerais.','Zamanım olsa seyahat ederdim.','Si j’étais libre, je viendrais.','Si + imparfait, conditionnel présent.'],
+ ['C1','Si je l’avais su, je vous aurais appelé.','Bilseydim sizi arardım.','Si j’avais pu, je serais venu.','Geçmişte gerçekleşmemiş koşul.'],
+ ['C2','Aussi convaincante soit-elle, la thèse reste discutable.','Ne kadar ikna edici olsa da sav tartışmaya açıktır.','Aussi utile soit-il, cet outil a des limites.','Ödünleme anlamı veren gelişmiş diziliş.']
+ ],
+ grammar:[
+ ['A1','être / avoir','Olmak / sahip olmak yardımcı fiilleri.','Je suis étudiant. · J’ai un livre.','Çok sık kullanılırlar.'],
+ ['A2','Passé composé','Tamamlanmış geçmiş eylemler.','J’ai visité Paris.','Avoir / être + participe passé.'],
+ ['B1','Imparfait','Geçmişte alışkanlık ya da arka plan.','Quand j’étais petit, je lisais.','Passé composé ile karşılaştır.'],
+ ['B2','Subjonctif','İstek, gereklilik, duygu gibi bağlamlar.','Il faut que tu viennes.','Que sonrası belirli yapılarda kullanılır.'],
+ ['C1','Pronoms relatifs composés','Birleşik ilgi zamirleri.','le sujet auquel je pense','À + lequel → auquel.'],
+ ['C2','Concordance des temps','Yan cümlelerde zaman uyumu.','Il disait qu’il viendrait.','Dolaylı anlatımda zaman kayması.']
+ ]},
+ es:{name:'İspanyolca',voice:'es-ES',
+ vocab:[
+ ['A1','hola','merhaba','Hola, ¿cómo estás?','Günlük selamlaşma.'],
+ ['A1','gracias','teşekkürler','Muchas gracias.','Muchas gracias: çok teşekkürler.'],
+ ['A1','el agua','su','Quiero agua, por favor.','Dişil isimdir; tekilde vurgu nedeniyle el kullanılır.'],
+ ['A1','el libro','kitap','Este libro es nuevo.','Eril isim.'],
+ ['A1','el amigo / la amiga','arkadaş','Mi amiga es médica.','İsmin cinsiyet biçimleri.'],
+ ['A1','hoy','bugün','Hoy estudio español.','Zaman zarfı.'],
+ ['A1','por favor','lütfen','Ayúdame, por favor.','Kibar ricada kullanılır.'],
+ ['A2','la cita','randevu','Tengo una cita mañana.','Tener una cita: randevusu olmak.'],
+ ['A2','normalmente','genellikle','Normalmente desayuno temprano.','Sıklık zarfı.'],
+ ['B1','mejorar','iyileştirmek','Quiero mejorar mi español.','Mejorarse dönüşlü biçimdir.'],
+ ['B1','fiable','güvenilir','Es una fuente fiable.','Sıfat eril-dişil aynı biçimde.'],
+ ['B2','sostenible','sürdürülebilir','Buscamos soluciones sostenibles.','Desarrollo sostenible ifadesinde geçer.'],
+ ['B2','aunque','-e rağmen','Aunque llueva, saldremos.','Gerçekleşme belirsizse subjuntivo.'],
+ ['C1','sin embargo','ancak; bununla birlikte','Era difícil; sin embargo, lo logramos.','Karşıtlık bildirir.'],
+ ['C1','el matiz','ince anlam farkı','Hay un matiz importante.','Çoğul: los matices.'],
+ ['C2','no obstante','buna karşın','No obstante, la propuesta prosperó.','Akademik bağlaç.'],
+ ['C2','la inefabilidad','ifade edilemezlik','La inefabilidad de la emoción lo sorprendió.','Soyut/edebî sözcük.']
+ ],
+ sentence:[
+ ['A1','¿Cómo te llamas?','Adın ne?','Me llamo Ece.','Dönüşlü llamarse fiili.'],
+ ['A1','¿Cómo estás?','Nasılsın?','Estoy bien, gracias.','Estar durum bildirir.'],
+ ['A2','¿Podrías ayudarme?','Bana yardım edebilir misin?','¿Podrías repetirlo?','Condicional ile nezaket.'],
+ ['B1','Llevo un año aprendiendo español.','Bir yıldır İspanyolca öğreniyorum.','Llevo dos meses trabajando aquí.','Llevar + süre + gerundio.'],
+ ['B2','Si tuviera tiempo, viajaría.','Vaktim olsa seyahat ederdim.','Si pudiera, iría contigo.','Si + imperfecto de subjuntivo, condicional.'],
+ ['C1','Si lo hubiera sabido, te habría llamado.','Bilseydim seni arardım.','Si hubiese podido, habría ido.','Geçmiş gerçek dışı koşul.'],
+ ['C2','Por mucho que insista, no cambiaré de opinión.','Ne kadar ısrar etse de fikrimi değiştirmeyeceğim.','Por más que lo intente, no podré.','Por mucho que + subjuntivo.']
+ ],
+ grammar:[
+ ['A1','ser / estar','İkisi de “olmak”; işlevleri farklıdır.','Soy estudiante. · Estoy cansado.','Kimlik / özellik ve durum / konum ayrımı.'],
+ ['A2','Pretérito indefinido','Bitmiş geçmiş olaylar.','Ayer compré un libro.','Tamamlanan olaylara odaklanır.'],
+ ['B1','Pretérito imperfecto','Geçmiş alışkanlık / betimleme.','Cuando era niño, jugaba.','Indefinido ile karşılaştır.'],
+ ['B2','Subjuntivo presente','İstek ve belirsizlik gibi bağlamlar.','Espero que vengas.','Que öncesi ifadeye dikkat.'],
+ ['C1','Estilo indirecto','Dolaylı anlatım.','Dijo que vendría mañana.','Zaman uyumuna dikkat edilir.'],
+ ['C2','Construcciones concesivas','Gelişmiş ödünleme yapıları.','Por más que llueva, iremos.','Bir karşıtlığa rağmen sonucu bildirir.']
+ ]},
+ it:{name:'İtalyanca',voice:'it-IT',
+ vocab:[
+ ['A1','ciao','merhaba; hoşça kal','Ciao, come stai?','Samimi hitapta kullanılır.'],
+ ['A1','grazie','teşekkürler','Grazie mille!','Grazie mille: çok teşekkürler.'],
+ ['A1','l’acqua','su','Vorrei dell’acqua.','Dişil isim.'],
+ ['A1','il libro','kitap','Il libro è sul tavolo.','Çoğul: i libri.'],
+ ['A1','l’amico / l’amica','arkadaş','La mia amica è qui.','Cinsiyet biçimleri değişir.'],
+ ['A1','oggi','bugün','Oggi studio italiano.','Zaman zarfı.'],
+ ['A1','per favore','lütfen','Un caffè, per favore.','Kibar rica.'],
+ ['A2','l’appuntamento','randevu','Ho un appuntamento domani.','Fissare un appuntamento: randevulaşmak.'],
+ ['A2','di solito','genellikle','Di solito mi sveglio presto.','Alışkanlık bildirir.'],
+ ['B1','migliorare','geliştirmek','Voglio migliorare il mio italiano.','Miglioramento: iyileşme.'],
+ ['B1','affidabile','güvenilir','È una fonte affidabile.','Sıfat.'],
+ ['B2','sostenibile','sürdürülebilir','Cerchiamo una soluzione sostenibile.','Sostenibilità: sürdürülebilirlik.'],
+ ['B2','sebbene','-e rağmen','Sebbene piova, usciamo.','Congiuntivo ile kullanılır.'],
+ ['C1','tuttavia','bununla birlikte','È difficile; tuttavia, è possibile.','Karşıtlık bağlacı.'],
+ ['C1','la premessa','öncül; başlangıç koşulu','Questa è una premessa importante.','Çoğul: premesse.'],
+ ['C2','ciononostante','buna rağmen','Ciononostante, riuscimmo a finire.','Resmî bağlayıcı.'],
+ ['C2','l’ineffabilità','söze dökülemezlik','L’ineffabilità del momento era evidente.','Edebî soyut sözcük.']
+ ],
+ sentence:[
+ ['A1','Come ti chiami?','Adın ne?','Mi chiamo Deniz.','Chiamarsi: adı ... olmak.'],
+ ['A1','Come stai?','Nasılsın?','Sto bene, grazie.','Samimi hitap.'],
+ ['A2','Potresti aiutarmi?','Bana yardımcı olabilir misin?','Potresti ripetere?','Condizionale ile kibar rica.'],
+ ['B1','Studio italiano da un anno.','Bir yıldır İtalyanca öğreniyorum.','Vivo qui da due anni.','Da, devam eden süreyi belirtir.'],
+ ['B2','Se avessi tempo, viaggerei.','Zamanım olsa seyahat ederdim.','Se potessi, verrei.','Se + congiuntivo imperfetto, condizionale.'],
+ ['C1','Se lo avessi saputo, ti avrei chiamato.','Bilseydim seni arardım.','Se fossi partito, sarei arrivato.','Geçmişte gerçekleşmeyen koşul.'],
+ ['C2','Per quanto possa sembrare paradossale, è vero.','Ne kadar çelişkili görünse de doğru.','Per quanto ne sappia, è corretto.','Per quanto + congiuntivo.']
+ ],
+ grammar:[
+ ['A1','essere / avere','Olmak / sahip olmak yardımcı fiilleri.','Sono felice. · Ho fame.','Essere ve avere çekimlerini öğren.'],
+ ['A2','Passato prossimo','Bitmiş geçmiş eylemler.','Ho studiato ieri.','Avere / essere + participio passato.'],
+ ['B1','Imperfetto','Geçmiş alışkanlık ve betimleme.','Da bambino, leggevo molto.','Passato prossimo ile karşılaştır.'],
+ ['B2','Congiuntivo presente','Öznel yargı ve kuşku gibi bağlamlar.','Penso che sia utile.','Che ardından belirli fiillerle kullanılır.'],
+ ['C1','Periodo ipotetico','Koşul cümlelerinin farklı tipleri.','Se avessi studiato, avrei passato l’esame.','Gerçek dışı geçmiş örneği.'],
+ ['C2','Dislocazione a sinistra','Vurgu için ögenin cümle başına alınması.','Questo libro, l’ho già letto.','Nesne zamirle tekrar edilebilir.']
+ ]},
+ ru:{name:'Rusça',voice:'ru-RU',
+ vocab:[
+ ['A1','привет','selam','Привет! Как дела?','Samimi selamlaşma.','privyet'],
+ ['A1','спасибо','teşekkürler','Спасибо за помощь!','Spasibo diye telaffuz edilir.','spasiba'],
+ ['A1','вода','su','Мне нужна вода.','Dişil isim.','vada'],
+ ['A1','книга','kitap','Это моя книга.','Dişil isim.','kniga'],
+ ['A1','друг / подруга','erkek / kadın arkadaş','Это мой друг.','Cinsiyete göre biçim değişir.'],
+ ['A1','сегодня','bugün','Сегодня я учусь.','Zaman zarfı.'],
+ ['A1','пожалуйста','lütfen; rica ederim','Чай, пожалуйста.','Rica ve yanıtta kullanılabilir.'],
+ ['A2','встреча','görüşme; buluşma','У меня завтра встреча.','Vstrecha: buluşma.'],
+ ['A2','обычно','genellikle','Обычно я читаю вечером.','Sıklık zarfı.'],
+ ['B1','улучшать','iyileştirmek','Я хочу улучшать свой русский.','Tamamlanmış görünüş: улучшить.'],
+ ['B1','надёжный','güvenilir','Это надёжный источник.','Dişil: надёжная.'],
+ ['B2','устойчивый','istikrarlı; sürdürülebilir bağlamında kullanılabilir','Нам нужно устойчивое развитие.','Устойчивое развитие: sürdürülebilir kalkınma.'],
+ ['B2','хотя','-e rağmen','Хотя идёт дождь, мы гуляем.','Ödünleme bağlacı.'],
+ ['C1','тем не менее','yine de','Это трудно, тем не менее возможно.','Karşıtlık bağlayıcısı.'],
+ ['C1','предпосылка','ön koşul; öncül','Это важная предпосылка.','Sosyal bilimlerde sık.'],
+ ['C2','невзирая на','-e rağmen','Невзирая на трудности, он продолжал.','Resmî bir ödünleme yapısı.'],
+ ['C2','неотъемлемый','ayrılmaz; vazgeçilmez','Это неотъемлемая часть проекта.','Soyut metinlerde sık.']
+ ],
+ sentence:[
+ ['A1','Как тебя зовут?','Adın ne?','Меня зовут Эдже.','Samimi hitap.','kak tibya zavut'],
+ ['A1','Как дела?','Nasıl gidiyor?','Хорошо, спасибо!','Günlük kalıp.'],
+ ['A2','Вы можете мне помочь?','Bana yardımcı olabilir misiniz?','Вы можете повторить?','Вы kibar / çoğul hitap.'],
+ ['B1','Я учу русский уже год.','Bir yıldır Rusça öğreniyorum.','Я живу здесь уже два года.','Уже sürekliliği vurgular.'],
+ ['B2','Если бы у меня было время, я бы путешествовал.','Zamanım olsa seyahat ederdim.','Если бы я знал, я бы помог.','Бы ile gerçek dışı koşul.'],
+ ['C1','Если бы я знал, я бы позвонил.','Bilseydim arardım.','Если бы я видел это, я бы сказал.','Koşulun bağlamı geçmişi belirler.'],
+ ['C2','Как бы то ни было, вывод остаётся прежним.','Her hâlükârda sonuç değişmiyor.','Как бы то ни было, мы продолжим.','İleri düzey kalıplaşmış bağlayıcı.']
+ ],
+ grammar:[
+ ['A1','Я / ты / он / она','Ben / sen / o (eril) / o (dişil).','Я студент. · Она врач.','Şimdiki zamanda быть çoğunlukla kullanılmaz.'],
+ ['A2','Винительный падеж','Belirtme durumu; doğrudan nesne için.','Я читаю книгу.','Книга → книгу dönüşümüne dikkat.'],
+ ['B1','Вид глагола','Bitmiş / bitmemiş fiil görünüşü.','Я читал. · Я прочитал.','Süreç ile tamamlanma ayrımı.'],
+ ['B2','Причастие','Ortaç; fiilden sıfat türetir.','читающий студент','Yazılı dilde yaygındır.'],
+ ['C1','Деепричастие','Zarf-fiil; eşzamanlı / önceki eylem.','Читая книгу, он улыбался.','Özne aynı olmalıdır.'],
+ ['C2','Безличные конструкции','Öznesiz yapılar.','Мне не спится.','Deneyimleyici dativ biçimde olabilir.']
+ ]},
+ ja:{name:'Japonca',voice:'ja-JP',
+ vocab:[
+ ['A1','こんにちは','merhaba / iyi günler','こんにちは、元気ですか。','Gündüz selamlaşması.','konnichiwa'],
+ ['A1','ありがとう','teşekkürler','ありがとうございます。','Kibar biçim: ありがとうございます。','arigatō'],
+ ['A1','水（みず）','su','水を飲みます。','を, doğrudan nesne parçacığı.','mizu'],
+ ['A1','本（ほん）','kitap','これは私の本です。','の, iyelik / niteleme ilişkisi kurar.','hon'],
+ ['A1','友達（ともだち）','arkadaş','彼は私の友達です。','Günlük isim.','tomodachi'],
+ ['A1','今日（きょう）','bugün','今日は勉強します。','Bağlama göre bugün.','kyō'],
+ ['A1','お願いします','lütfen; rica ederim','水をお願いします。','Kibar rica ifadesi.','onegaishimasu'],
+ ['A2','予定（よてい）','plan; program','明日は予定があります。','Randevu anlamı bağlama göre değişir.','yotei'],
+ ['A2','いつも','her zaman; genellikle','いつも朝ご飯を食べます。','Sıklık zarfı.','itsumo'],
+ ['B1','改善する','iyileştirmek','日本語を改善したいです。','Resmî / teknik bağlamlarda doğal.','kaizen suru'],
+ ['B1','信頼できる','güvenilir','これは信頼できる情報です。','Sıfat görevi gören ifade.','shinrai dekiru'],
+ ['B2','持続可能な','sürdürülebilir','持続可能な社会を目指します。','な ile isim niteler.','jizoku kanō na'],
+ ['B2','にもかかわらず','-e rağmen','雨にもかかわらず出発しました。','Ödünleme ifadesi.'],
+ ['C1','それにもかかわらず','buna rağmen; yine de','それにもかかわらず彼は続けた。','Cümleler arası karşıtlık.'],
+ ['C1','前提（ぜんてい）','öncül; varsayım','この前提を確認しましょう。','Akademik / mantıksal bağlam.','zentei'],
+ ['C2','看過できない','göz ardı edilemez','看過できない問題があります。','İleri düzey resmî ifade.','kanka dekinai'],
+ ['C2','不可欠（ふかけつ）','vazgeçilmez','協力は不可欠です。','Soyut metinlerde kullanılır.','fukaketsu']
+ ],
+ sentence:[
+ ['A1','お名前は何ですか。','Adınız nedir?','私の名前はエジェです。','は konu belirtir.'],
+ ['A1','お元気ですか。','Nasılsınız?','はい、元気です。','Kibar soru.'],
+ ['A2','手伝っていただけますか。','Bana yardım edebilir misiniz?','もう一度言っていただけますか。','Kibar rica yapısı.'],
+ ['B1','一年間日本語を勉強しています。','Bir yıldır Japonca çalışıyorum.','三年間ここに住んでいます。','〜ています: devam eden durum.'],
+ ['B2','時間があれば旅行します。','Zamanım olursa seyahat ederim.','暇があれば行きます。','〜ば koşul yapısı.'],
+ ['C1','知っていたら、電話したのに。','Bilseydim arardım.','早く分かっていれば、助けたのに。','〜のに pişmanlık / ters gerçekleşmeyi vurgular.'],
+ ['C2','検討したからといって、賛成したわけではない。','Değerlendirmiş olmam onayladığım anlamına gelmez.','有名だからといって正しいわけではない。','〜からといって…わけではない.']
+ ],
+ grammar:[
+ ['A1','です / ます','Kibar cümle sonları.','私は学生です。 · 毎日勉強します。','İsim ve fiil cümlelerinde biçim değişir.'],
+ ['A2','て形','Fiilleri bağlayan çok amaçlı biçim.','ドアを開けてください。','〜てください: kibar istek.'],
+ ['B1','〜ながら','İki eylemin aynı anda yapılması.','音楽を聞きながら勉強します。','Fiilin ます kökü + ながら.'],
+ ['B2','〜わけではない','“Mutlaka öyle değil” anlamı verir.','嫌いなわけではありません。','Kısmi olumsuzlama.'],
+ ['C1','〜ざるを得ない','Yapmak zorunda kalmak.','計画を変更せざるを得ない。','Sıkça resmî yazıda.'],
+ ['C2','〜に堪えない','Dayanamayacak kadar; derin duygu.','感謝に堪えません。','Sabit / yüksek kayıtlı ifadelerde.']
+ ]}
 };
-const cards=[];
-for(const [lang,pack] of Object.entries(packs)){
-  const voice=LANGS[lang][1];
-  for(let i=0;i<pack.w.length;i++){
-    const [front,answer,example]=pack.w[i].split('|');
-    const level=i<12?'A1':i<17?LEVELS[i-11]:'A1';
-    cards.push({id:lang+':v:'+i,lang,level,kind:'vocab',front,answer,example:example||'',note:'Örnek cümleyi sesli tekrarla.',voice});
-  }
-  for(const [kind,items] of [['sentence',pack.s],['grammar',pack.g]]){
-    items.forEach((row,i)=>{
-      const [front,answer,example]=row.split('|');
-      cards.push({id:lang+':'+kind+':'+i,lang,level:LEVELS[i],kind,front,answer,example:example||'',note:kind==='grammar'?'Yapıyı örnekte incele.':'Cümleyi tekrar et.',voice});
-    });
-  }
+const levels=['A1','A2','B1','B2','C1','C2'];
+const modes=['vocab','sentence','grammar'];
+const lessons=[];
+for(const [language,pack] of Object.entries(packs)){
+ for(const mode of modes){
+  pack[mode].forEach((row,index)=>{
+   const [level,front,answer,example,note,phonetic='']=row;
+   lessons.push(Object.freeze({id:`${language}:${mode}:${String(index).padStart(3,'0')}`,language,mode,level,front,answer,example,note,phonetic}));
+  });
+ }
 }
-const data=Object.freeze({cards,LANGS,LEVELS});
-root.ChalkData=data;
-if(typeof module!=='undefined'&&module.exports)module.exports=data;
-})(typeof globalThis!=='undefined'?globalThis:this);
+const result=Object.freeze({packs:Object.freeze(Object.fromEntries(Object.entries(packs).map(([key,val])=>[key,Object.freeze({name:val.name,voice:val.voice})]))),levels:Object.freeze(levels),modes:Object.freeze(modes),lessons:Object.freeze(lessons)});
+global.CHALK_LESSONS=result;
+if(typeof module!=='undefined'&&module.exports)module.exports=result;
+})(typeof window!=='undefined'?window:globalThis);

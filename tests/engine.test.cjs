@@ -1,43 +1,51 @@
 'use strict';
-const test=require('node:test'),assert=require('node:assert/strict');
-const data=require('../ui/lessons.js');
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
 const engine=require('../ui/engine.js');
-test('seven study languages, six levels, 212 curated sample cards',()=>{
- assert.equal(Object.keys(data.LANGS).length,7);
- assert.equal(data.LEVELS.length,6);
- assert.equal(data.cards.length,212);
- assert.equal(new Set(data.cards.map(x=>x.id)).size,212);
-});
-test('all study languages, levels, and modes include lessons',()=>{
- for(const lang of Object.keys(data.LANGS)){
-  for(const level of data.LEVELS){
-   for(const mode of ['mix','vocab','sentence','grammar']){
-    assert.ok(engine.candidates(data.cards,{lang,level,mode}).length,lang+' '+level+' '+mode);
-   }
-  }
+const data=require('../ui/lessons.js');
+test('seven languages, every proficiency band and study mode has lessons',()=>{
+ assert.equal(Object.keys(data.packs).length,7);
+ assert.ok(data.lessons.length>=170);
+ for(const language of Object.keys(data.packs))for(const level of engine.LEVELS)for(const mode of engine.MODES){
+  const deck=engine.getDeck(data.lessons,{language,level,mode});
+  assert.ok(deck.length>0,`${language} ${level} ${mode} missing`);
+  assert.ok(deck.every(c=>c.front.trim()&&c.answer.trim()&&c.example.trim()&&c.note.trim()));
  }
 });
-test('meaning, example and translation are present',()=>{
- for(const c of data.cards){assert.ok(c.id&&c.front&&c.answer&&c.example);assert.ok(data.LEVELS.includes(c.level))}
+test('all lesson IDs unique and language references valid',()=>{
+ const ids=data.lessons.map(c=>c.id);
+ assert.equal(new Set(ids).size,ids.length);
+ for(const c of data.lessons){assert.ok(data.packs[c.language]);assert.ok(engine.LEVELS.includes(c.level));}
 });
-test('settings are validated against allowlists',()=>{
- assert.deepEqual(engine.sanitizeConfig({lang:'bad',level:'X1',mode:'evil',auto:2,top:'yes'}),engine.DEFAULTS);
- assert.equal(engine.sanitizeConfig({lang:'ja',level:'C2',mode:'grammar',auto:30}).lang,'ja');
+test('unknown/corrupt settings are sanitized',()=>{
+ const s=engine.sanitizeSettings({language:'xx',level:'Z9',mode:'danger',interval:-99,alwaysTop:'yes',translation:false});
+ assert.equal(s.language,'en');assert.equal(s.level,'A1');assert.equal(s.mode,'mix');assert.equal(s.interval,0);
+ assert.equal(s.alwaysTop,false);assert.equal(s.translation,false);
 });
-test('review scheduling moves correct answers further away',()=>{
- const t=Date.now(),once=engine.review({},'en:v:1',true,t);
- assert.equal(once['en:v:1'].interval,1);
- const twice=engine.review(once,'en:v:1',true,t);
- assert.ok(twice['en:v:1'].due>once['en:v:1'].due);
- const fail=engine.review(twice,'en:v:1',false,t);
- assert.equal(fail['en:v:1'].interval,0);
- assert.equal(fail['en:v:1'].due,t+300000);
+test('new cards are chosen before seen cards, no immediate repeat',()=>{
+ const cards=[{id:'a'},{id:'b'},{id:'c'}];
+ let rec=engine.markSeen({},'a',100);
+ const chosen=engine.selectNext(cards,rec,'a',200,()=>0);
+ assert.notEqual(chosen.id,'a');assert.equal(chosen.id,'b');
+ assert.equal(engine.selectNext([cards[0]],rec,'a').id,'a');
 });
-test('card selection does not immediately repeat with a larger pool',()=>{
- const cfg={lang:'en',level:'A1',mode:'vocab'},first=engine.choose(data.cards,cfg,{},null);
- assert.ok(first);assert.notEqual(engine.choose(data.cards,cfg,{},first.id).id,first.id);
+test('repetition schedule and again reset work',()=>{
+ const now=Date.UTC(2026,9,25);
+ let rec=engine.markSeen({},'en:vocab:000',now);
+ rec=engine.review(rec,'en:vocab:000','good',now);
+ assert.equal(rec['en:vocab:000'].interval,1);
+ assert.equal(rec['en:vocab:000'].due,now+86400000);
+ rec=engine.review(rec,'en:vocab:000','good',now+86400000);
+ assert.equal(rec['en:vocab:000'].interval,6);
+ rec=engine.review(rec,'en:vocab:000','again',now+86400000);
+ assert.equal(rec['en:vocab:000'].repetitions,0);
+ assert.equal(rec['en:vocab:000'].due,now+86400000+300000);
 });
-test('untrusted imported progress is sanitized',()=>{
- const clean=engine.safeRecords({'en:v:0':{interval:1,due:3000,seen:2,known:true},'evil':{interval:1,due:0},'en:v:1':{interval:'no',due:'bad'}},data.cards);
- assert.deepEqual(Object.keys(clean),['en:v:0']);
+test('records can be reloaded safely; statistics remain bounded',()=>{
+ const r=engine.normalizeRecords({'en:vocab:000':{seen:3,ease:999,due:0,learned:true},'__proto__':{bad:true},'hack':{seen:2}});
+ assert.equal(Object.keys(r).length,1);
+ assert.equal(r['en:vocab:000'].ease,3);
+ const deck=engine.getDeck(data.lessons,{language:'en',level:'A1',mode:'vocab'});
+ const info=engine.stats(deck,r);
+ assert.equal(info.learned,1);assert.equal(info.seen,1);
 });
