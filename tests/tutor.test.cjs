@@ -50,3 +50,9 @@ test('settings sanitize AI model and opt-in',()=>{
  assert.equal(a.aiEnabled,true);assert.equal(a.aiModel,'local-model:latest');
  assert.equal(E.sanitizeSettings({aiEnabled:'true',aiModel:'../oops?'}).aiEnabled,false);
 });
+
+test('hint-assisted recall schedules an earlier review than strong recall',()=>{
+ const now=Date.UTC(2026,9,25);const good=E.review({},'en:vocab:001','good',now)['en:vocab:001'];
+ const hard=E.review({},'en:vocab:001','hard',now)['en:vocab:001'];
+ assert.ok(hard.due<good.due);assert.ok(hard.due>now);
+});

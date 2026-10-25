@@ -34,13 +34,13 @@ function markSeen(records,id,now=Date.now()){
  return {...records,[id]:{...old,seen:old.seen+1,lastSeen:now}};
 }
 function review(records,id,score,now=Date.now()){
- const quality=score==='again'?1:score==='easy'?5:4;
+ const quality=score==='again'?1:score==='hard'?3:score==='easy'?5:4;
  const old=safeRecord(records[id])||{seen:0,repetitions:0,interval:0,ease:2.5,due:0,learned:false,lastSeen:0};
  let repetitions=old.repetitions,interval=old.interval,ease=old.ease;
  if(quality<3){repetitions=0;interval=0;}
  else{
   repetitions++;
-  interval=repetitions===1?1:repetitions===2?6:Math.max(1,Math.round(interval*ease));
+  interval=repetitions===1?(quality===3?1/6:1):repetitions===2?(quality===3?2:6):Math.max(1,Math.round(interval*ease));
   ease=Math.max(1.3,ease+0.1-(5-quality)*(0.08+(5-quality)*0.02));
  }
  const due=now+(quality<3?5*60*1000:interval*24*60*60*1000);
