@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-src 'none'; form-action 'none'">
+<title>ChalkLingo · Masaüstü Dil Öğretmenin</title>
+<link rel="stylesheet" href="./styles.css">
+<script src="./lessons.js" defer></script><script src="./engine.js" defer></script><script src="./app.js" defer></script>
+</head><body>
+<main class="widget" id="widget">
+ <header class="titlebar">
+  <div class="brand"><span class="brand-icon">✳</span> chalk<span>lingo</span> <small>DAILY LEARNING</small></div>
+  <div class="window-controls">
+   <button type="button" id="settingsButton" aria-label="Ayarlar" title="Ayarlar (S)">⚙</button>
+   <button type="button" id="minimizeButton" aria-label="Küçült" title="Küçült">−</button>
+   <button type="button" id="closeButton" aria-label="Kapat" title="Kapat">×</button>
+  </div>
+ </header>
+ <section class="classroom">
+  <div class="kicker"><span>✦</span> HER GÜN BİR ADIM <span class="rule"></span> <span id="dateLabel"></span></div>
+  <div class="scene">
+   <div class="boardframe">
+    <article class="board" id="board" role="button" tabindex="0" aria-label="Yeni derse geç">
+     <div class="board-top"><span id="kindLabel">KELİME / VOCAB</span><span id="levelLabel">EN · A1</span></div>
+     <div class="content" id="lessonContent" aria-live="polite">
+      <h1 id="lessonFront">hello</h1>
+      <p class="translation" id="lessonAnswer">merhaba</p>
+      <div class="chalk-rule"></div>
+      <p class="example" id="lessonExample">Hello, my name is Ada.</p>
+      <p class="note" id="lessonNote">Örnek cümleyi sesli tekrarla.</p>
+     </div>
+     <div class="board-bottom"><span>● YENİ DERS İÇİN TIKLA</span><span id="positionLabel">01 / 30</span></div>
+     <div class="eraser" aria-hidden="true"></div>
+    </article>
+   </div>
+   <svg class="teacher" aria-hidden="true" viewBox="0 0 166 320">
+    <defs>
+     <linearGradient id="jacket" x2=".8" y2="1"><stop stop-color="#f0a77e"/><stop offset="1" stop-color="#be6b54"/></linearGradient>
+    </defs>
+    <ellipse cx="81" cy="313" rx="57" ry="7" fill="#000" opacity=".15"/>
+    <path d="M56 234 L51 301 L79 301 L86 247 L91 302 L117 302 L109 232" fill="#39515a"/>
+    <path d="M48 298 L45 311 L80 311 L79 300 M91 300 L91 311 L129 311 Q128 298 113 298" fill="#513c37"/>
+    <path d="M54 147 Q30 163 36 207 L44 249 Q80 265 118 248 L119 192 Q112 161 99 149 Z" fill="url(#jacket)" stroke="#985946" stroke-width="2"/>
+    <path d="M79 152 L62 170 L84 223 L100 168 Z" fill="#fff0d7"/>
+    <path d="M79 170 L91 170 L96 200 L85 219 L79 201 Z" fill="#5f9b89"/>
+    <path d="M44 182 Q27 193 30 216 L45 242" fill="none" stroke="#c58166" stroke-width="19" stroke-linecap="round"/>
+    <circle cx="46" cy="246" r="10" fill="#e3a687"/>
+    <g class="drawing-hand">
+     <path d="M114 180 Q133 162 139 141 L149 91" fill="none" stroke="#c68163" stroke-width="21" stroke-linecap="round"/>
+     <path d="M148 94 L158 83" stroke="#f0b48e" stroke-width="15" stroke-linecap="round"/>
+     <path d="M159 83 L165 69" stroke="#fff3d5" stroke-width="4.5" stroke-linecap="round"/>
+    </g>
+    <rect x="77" y="121" width="23" height="36" rx="9" fill="#d89b77"/>
+    <ellipse cx="86" cy="78" rx="47" ry="58" fill="#eab28d" stroke="#ce9173" stroke-width="2"/>
+    <path d="M40 70 Q25 25 52 16 Q99 -6 124 42 Q130 68 119 72 Q105 35 78 41 Q52 44 40 70" fill="#3b3b40"/>
+    <circle cx="70" cy="81" r="4" fill="#332d32"/><circle cx="105" cy="81" r="4" fill="#332d32"/>
+    <path d="M59 67 Q69 62 78 67 M98 67 Q109 62 117 67" fill="none" stroke="#403336" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M77 106 Q89 116 101 105" fill="none" stroke="#9c534b" stroke-width="3" stroke-linecap="round"/>
+    <rect x="50" y="75" width="30" height="18" rx="7" stroke="#584946" stroke-width="3" fill="none"/>
+    <rect x="94" y="75" width="30" height="18" rx="7" stroke="#584946" stroke-width="3" fill="none"/>
+    <path d="M80 81 L94 81" stroke="#584946" stroke-width="3"/>
+   </svg>
+   <div class="tray"></div>
+  </div>
+  <div class="bottom-lesson"><div class="lesson-label"><span class="signal">●</span> <span id="languageLabel">İngilizce</span> <span class="middot">·</span> <span id="modeLabel">Karma ders</span></div><div class="status" id="statusLabel">Öğrenmeye hazırsın!</div></div>
+  <div class="buttons">
+   <button type="button" id="againButton" class="secondary" title="Tekrar et (1)">↶ <span>TEKRAR</span></button>
+   <button type="button" id="speechButton" class="sound" title="Seslendir (R)">♫</button>
+   <button type="button" id="learnedButton" class="primary" title="Öğrendim (2)">✓ <span>ÖĞRENDİM</span></button>
+  </div>
+  <footer><span>✦ KÜÇÜK ADIMLAR, BÜYÜK KELİMELER</span><span id="counter">0 ÖĞRENİLDİ</span></footer>
+ </section>
+ <aside id="settingsPanel" class="settings" aria-labelledby="panelTitle" aria-hidden="true">
+  <div class="settings-header"><div><small>ÖZEL SINIFIN</small><h2 id="panelTitle">Ders ayarları</h2></div><button type="button" id="closeSettings" aria-label="Ayarları kapat">✕</button></div>
+  <div class="settings-body">
+   <label for="language">Öğrenmek istediğin dil</label><select id="language"><option value="en">🇬🇧 İngilizce</option><option value="de">🇩🇪 Almanca</option><option value="fr">🇫🇷 Fransızca</option><option value="es">🇪🇸 İspanyolca</option><option value="it">🇮🇹 İtalyanca</option><option value="ru">🇷🇺 Rusça</option><option value="ja">🇯🇵 Japonca</option></select>
+   <div class="two-col"><div><label for="level">Seviye (CEFR)</label><select id="level"><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select></div><div><label for="mode">Ders türü</label><select id="mode"><option value="mix">Karma</option><option value="vocab">Kelime</option><option value="sentence">Cümle</option><option value="grammar">Gramer</option></select></div></div>
+   <label for="auto">Otomatik ders geçişi</label><select id="auto"><option value="0">Kapalı</option><option value="30">30 saniye</option><option value="60">1 dakika</option><option value="120">2 dakika</option><option value="300">5 dakika</option></select>
+   <label class="toggle"><span>Animasyonlar<small>Tebeşir ve silgi hareketleri</small></span><input type="checkbox" id="animation" checked></label>
+   <label class="toggle"><span>Her zaman üstte<small>Masaüstünde görünür kalsın</small></span><input type="checkbox" id="alwaysTop"></label>
+   <div class="settings-actions"><button type="button" id="exportButton">↥ Verilerimi dışa aktar</button><button type="button" id="importButton">↧ İlerlemeni içe aktar</button><input type="file" id="importFile" accept="application/json,.json" hidden></div>
+   <p class="privacy">🔒 Dersler ve ilerlemen bu cihazda saklanır. Oturum açma veya internet bağlantısı gerekmez.</p>
+  </div>
+ </aside>
+</main>
+</body></html>
