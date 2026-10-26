@@ -24,3 +24,5 @@ Gerçek Ollama modeli indirilmedi; cevap kalitesi ve kaynak tüketimi ayrıca s�
 ## Güvenlik
 
 IPC doğru ana frame ve tam URL gerektirir. Tek model isteği, gerçek akış boyutu sınırı, sabit yerel uç nokta, yönlendirme yasağı ve zaman aşımı vardır. Konum toplu yazılır; ikinci açılış mevcut pencereyi getirir. Başlangıç kaydı, sistem ayarı değişikliği, shell komutu veya uzak kod yürütme eklenmedi. Model için işletim sistemi seviyesinde CPU/RAM/GPU kotası uygulanmaz.
+
+Paket doğrulaması: release/win-unpacked/ChalkLingo.exe aynı masaüstü testinden geçti; renderer hatası yok. İlk etkileşim denemesi ayar paneli açık kaldığı için zaman aşımına uğradı; tek başına yeniden çalıştırılan tam test başarılı oldu.
