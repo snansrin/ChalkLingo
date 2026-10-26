@@ -5,6 +5,9 @@ contextBridge.exposeInMainWorld('chalkDesktop',Object.freeze({
   close:()=>ipcRenderer.invoke('window:control','close'),
   setAlwaysOnTop:(value)=>ipcRenderer.invoke('window:control','set-top',value),
   getAlwaysOnTop:()=>ipcRenderer.invoke('window:control','get-top'),
+  layout:(value)=>ipcRenderer.invoke('window:control','layout',value),
+  getStartup:()=>ipcRenderer.invoke('startup:get'),
+  setStartup:(value)=>ipcRenderer.invoke('startup:set',value),
   onVisibility:(callback)=>{
     if(typeof callback!=='function')return ()=>{};
     const listener=(_event,hidden)=>{if(typeof hidden==='boolean')callback(hidden);};
