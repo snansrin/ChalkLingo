@@ -22,7 +22,25 @@ const packs={
  ['C1','nevertheless','bununla birlikte; yine de','It was difficult; nevertheless, we succeeded.','Karşıtlık belirten bağlaç zarfı.'],
  ['C1','scrutinize','titizlikle incelemek','The team scrutinized the data.','Scrutiny: dikkatli inceleme.'],
  ['C2','notwithstanding','-e rağmen','Notwithstanding the risks, we proceeded.','Resmî ve ileri düzey dilde kullanılır.'],
- ['C2','ubiquitous','her yerde bulunan','Smartphones are ubiquitous today.','Yaygın ve her yerde görülen anlamında.']
+ ['C2','ubiquitous','her yerde bulunan','Smartphones are ubiquitous today.','Yaygın ve her yerde görülen anlamında.'],
+ // Extra beginner words extend the existing A1 path without changing any saved lesson IDs.
+ ['A1','family','aile','My family lives nearby.','Family çoğunlukla tekil bir grup adı olarak kullanılır.','/ˈfæməli/',true],
+ ['A1','morning','sabah','I study in the morning.','Good morning: günaydın.','/ˈmɔːrnɪŋ/',true],
+ ['A1','evening','akşam','We eat together in the evening.','Good evening: iyi akşamlar.','/ˈiːvnɪŋ/',true],
+ ['A1','school','okul','The children walk to school.','Go to school: okula gitmek.','/skuːl/',true],
+ ['A1','work','iş; çalışmak','I work near my home.','Work isim veya fiil olabilir.','/wɜːrk/',true],
+ ['A1','food','yiyecek; yemek','The food is ready.','Food genellikle sayılamayan isimdir.','/fuːd/',true],
+ ['A1','eat','yemek yemek','We eat lunch at noon.','Eat fiilinin geçmiş hâli ate.','/iːt/',true],
+ ['A1','drink','içmek; içecek','I drink tea every morning.','Drink fiilinin geçmiş hâli drank.','/drɪŋk/',true],
+ ['A1','want','istemek','I want a cup of tea.','Want + isim veya to + fiil.','/wɑːnt/',true],
+ ['A1','need','ihtiyaç duymak; gerek','We need more time.','Need + isim veya to + fiil.','/niːd/',true],
+ ['A1','happy','mutlu','She is happy today.','Be happy: mutlu olmak.','/ˈhæpi/',true],
+ ['A1','small','küçük','This room is small.','Small, boyut belirtir.','/smɔːl/',true],
+ ['A1','big','büyük','They have a big garden.','Big günlük konuşmada yaygındır.','/bɪɡ/',true],
+ ['A1','where','nerede; nereye','Where is the station?','Yer sormak için kullanılır.','/wer/',true],
+ ['A1','when','ne zaman','When does the class start?','Zaman sormak için kullanılır.','/wen/',true],
+ ['A1','family member','aile üyesi','A family member is visiting us.','Family member: aileden bir kişi.','/ˈfæməli ˌmembər/',true],
+ ['A1','help','yardım etmek; yardım','Can you help me, please?','Help, isim veya fiil olabilir.','/help/',true]
  ],
  sentence:[
  ['A1','How are you?','Nasılsın?','I am fine, thank you.','How + be + özne soru kalıbı.'],
@@ -271,8 +289,8 @@ const lessons=[];
 for(const [language,pack] of Object.entries(packs)){
  for(const mode of modes){
   pack[mode].forEach((row,index)=>{
-   const [level,front,answer,example,note,phonetic='']=row;
-   lessons.push(Object.freeze({id:`${language}:${mode}:${String(index).padStart(3,'0')}`,language,mode,level,front,answer,example,note,phonetic}));
+   const [level,front,answer,example,note,phonetic='',pathOnly=false]=row;
+   lessons.push(Object.freeze({id:`${language}:${mode}:${String(index).padStart(3,'0')}`,language,mode,level,front,answer,example,note,phonetic,pathOnly}));
   });
  }
 }

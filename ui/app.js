@@ -12,6 +12,10 @@ const elements={
 };
 let persisted={};
 try{persisted=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{};}catch{/* Recover from malformed storage */}
+const lessonById=new Map(lessons.map(card=>[card.id,card]));
+persisted.dayDeckIds=Array.isArray(persisted.dayDeckIds)?[...new Set(persisted.dayDeckIds.filter(id=>lessonById.get(id)?.mode==='vocab'))].slice(0,30):null;
+persisted.dayNumber=Number.isSafeInteger(persisted.dayNumber)&&persisted.dayNumber>0?Math.min(persisted.dayNumber,99999):0;
+persisted.dayIsReview=persisted.dayIsReview===true;
 let settings=engine.sanitizeSettings(persisted.settings,Object.keys(packs));
 let records=engine.normalizeRecords(persisted.records);
 let current=null;
@@ -31,17 +35,26 @@ let speakTimer=null;
 let modalWasOpenedFrom=null;
 const modeNames={vocab:'KELİME  /  VOCAB',sentence:'CÜMLE  /  SENTENCE',grammar:'GRAMER  /  GRAMMAR'};
 const voiceFallback={en:'en-US',de:'de-DE',fr:'fr-FR',es:'es-ES',it:'it-IT',ru:'ru-RU',ja:'ja-JP'};
-function persist(){try{localStorage.setItem(STORAGE,JSON.stringify({settings,records}));}catch{/* Full or restricted local storage */}}
-function deck(){return engine.getDeck(lessons,settings);}
+function persist(){try{localStorage.setItem(STORAGE,JSON.stringify({settings,records,dayDeckIds:persisted.dayDeckIds,dayNumber:persisted.dayNumber,dayIsReview:persisted.dayIsReview}));}catch{/* Full or restricted local storage */}}
+function activeDay(){return settings.mode==='vocab'&&Array.isArray(persisted.dayDeckIds)&&persisted.dayDeckIds.some(id=>lessonById.get(id)?.language===settings.language);}
+function deck(){const daily=activeDay()?persisted.dayDeckIds.map(id=>lessonById.get(id)).filter(card=>card?.language===settings.language):[];return daily.length?daily:engine.getDeck(lessons,settings);}
+function updateNextAction(info){
+ const next=$('nextBtn');
+ const complete=info.total>0&&info.learned===info.total;
+ next.innerHTML=complete?`${persisted.dayIsReview?'Kelime tekrarı':'Yeni kelime günü'} <span>→</span>`:'Sonraki <span>→</span>';
+ next.title=complete?'Yeni kelimelere devam et':'Sonraki karta geç';
+}
 function updateProgress(){
  const info=engine.stats(deck(),records);
- elements.progressText.textContent=`${info.learned} / ${info.total} öğrenildi`;
+ elements.progressText.textContent=activeDay()?`${info.learned} / ${info.total} öğrenildi · ${persisted.dayIsReview?'TEKRAR':`GÜN ${persisted.dayNumber}`}`:`${info.learned} / ${info.total} öğrenildi`;
  elements.progressFill.style.width=`${info.pct}%`;
  $('seenStat').textContent=String(info.seen);
  $('learnedStat').textContent=String(info.learned);
  $('dueStat').textContent=String(info.due);
+ updateNextAction(info);
 }
 function setCurrent(card){
+ const previousId=current?.id;
  current=card;
  if(!card){
   elements.lessonFront.textContent='Ders bulunamadı';
@@ -53,7 +66,7 @@ function setCurrent(card){
  records=engine.markSeen(records,card.id);
  persist();
  elements.cardType.textContent=modeNames[card.mode];
- elements.levelPill.textContent=`${settings.language.toUpperCase()} · ${settings.level}`;
+ elements.levelPill.textContent=`${card.language.toUpperCase()} · ${card.level}`;
  const isLong=card.front.length>42;
  elements.lessonFront.classList.toggle('long-word',isLong);
  elements.lessonFront.classList.toggle('japanese',card.language==='ja');
@@ -65,7 +78,7 @@ function setCurrent(card){
  elements.lessonExample.textContent=card.example;
  elements.lessonExample.setAttribute('title',card.note);
  elements.teacherTip.title=card.note;
- elements.teacherTip.textContent=card.note||'Her gün küçük bir adım.';
+ elements.teacherTip.textContent=persisted.dayIsReview&&activeDay()?'Lumi: Bildiklerini sağlamlaştırıyoruz. Bu kelimeler kalıcı hafızana yerleşiyor.':activeDay()?`Lumi: Gün ${persisted.dayNumber}. “${card.front}” kelimesini örneğinde yakala.`:(card.note||'Lumi: Her gün küçük bir adım, güçlü bir alışkanlık kurar.');
  const list=deck();
  const index=list.findIndex(x=>x.id===card.id)+1;
  elements.lessonIndex.textContent=`${String(index).padStart(2,'0')} / ${String(list.length).padStart(2,'0')}`;
@@ -76,14 +89,28 @@ function setCurrent(card){
  }
  updateProgress();
  scheduler.reset();restartAuto();mood('teaching');
- if(pendingCue&&settings.notificationSound)cue(settings.tone);
+ if(settings.notificationSound&&!quiet()&&(pendingCue||(previousId&&previousId!==card.id)))cue(settings.tone);
  pendingCue=false;
  if(settings.sound&&!quiet()){clearTimeout(speakTimer);speakTimer=setTimeout(()=>{if(!quiet())speak();},600);}
+}
+function startVocabularyDay(){
+ const batch=engine.nextVocabularyDay(lessons,records,settings.language,settings.level,12);
+ if(!batch.cards.length)return false;
+ cancelTransition();clearTimeout(speakTimer);cancelPronunciation();scheduler.pause();
+ persisted.dayNumber=(persisted.dayNumber||0)+1;
+ persisted.dayIsReview=batch.review;
+ persisted.dayDeckIds=batch.cards.map(card=>card.id);
+ settings.mode='vocab';
+ persist();
+ setCurrent(engine.selectNext(deck(),records,current?.id));
+ return true;
 }
 function next(immediate=false){
  if(transitioning)return;
  scheduler.pause();clearTimeout(speakTimer);
  cancelPronunciation();
+ const currentDeck=deck(),info=engine.stats(currentDeck,records);
+ if(info.total>0&&info.learned===info.total&&startVocabularyDay())return;
  const show=()=>setCurrent(engine.selectNext(deck(),records,current?.id));
  if(immediate||settings.reduceMotion){show();return;}
  transitioning=true;
@@ -115,7 +142,7 @@ function voices(language=$('languageSelect').value||settings.language){
  for(const v of list){const opt=document.createElement('option');opt.value=v.voiceURI||v.name;opt.textContent=v.name+' · '+v.lang;select.append(opt);}
  const wanted=language===settings.language?settings.voiceId:'auto';
  select.value=list.some(v=>(v.voiceURI||v.name)===wanted)?wanted:'auto';
- if(language==='en'){auto.textContent='Otomatik · çevrimdışı İngilizce (Zira)';$('voiceStatus').textContent='32 İngilizce ders kaydı hazır · Microsoft Zira (ABD). İstersen kurulu bir İngilizce sesi seç.';return;}
+ if(language==='en'){auto.textContent='Otomatik · çevrimdışı İngilizce (Zira)';const count=lessons.filter(card=>card.language==='en').length;$('voiceStatus').textContent=`${count} İngilizce ders kaydı hazır · Microsoft Zira (ABD). İstersen kurulu bir İngilizce sesi seç.`;return;}
  $('voiceStatus').textContent=list.length?list.length+' uygun ses yüklü.':'Bu dilin sesi yok. Windows → Saat ve Dil → Konuşma bölümünden ses yükle.';
 }
 async function startup(){
@@ -191,6 +218,7 @@ function applySettings(){
   translation:$('translationToggle').checked,alwaysTop:$('alwaysTopToggle').checked,
   reduceMotion:$('motionToggle').checked,voiceId:$('voiceSelect').value,aiEnabled:$('aiToggle').checked,aiModel:$('aiModel').value.trim()
  },Object.keys(packs));
+ if(old.language!==settings.language||old.level!==settings.level||old.mode!==settings.mode){persisted.dayDeckIds=null;persisted.dayIsReview=false;}
  document.body.classList.toggle('reduce-motion',settings.reduceMotion);
  persist();
  if(old.alwaysTop!==settings.alwaysTop&&window.chalkDesktop?.setAlwaysOnTop){
@@ -223,7 +251,7 @@ function closeSettings(){
  restartAuto();
 }
 function exportData(){
- const data={app:'ChalkLingo',version:1,exportedAt:new Date().toISOString(),settings,records};
+ const data={app:'ChalkLingo',version:1,exportedAt:new Date().toISOString(),settings,records,dayDeckIds:persisted.dayDeckIds,dayNumber:persisted.dayNumber,dayIsReview:persisted.dayIsReview};
  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
  const url=URL.createObjectURL(blob);
  const a=document.createElement('a');a.href=url;a.download='chalklingo-ilerleme.json';a.click();
@@ -237,6 +265,9 @@ async function importData(file){
   if(!window.confirm('Mevcut ilerlemenin üzerine yedek yüklensin mi?'))return;
   settings=engine.sanitizeSettings(data.settings,Object.keys(packs));
   records=engine.normalizeRecords(data.records);
+  persisted.dayDeckIds=Array.isArray(data.dayDeckIds)?data.dayDeckIds.filter(id=>lessonById.get(id)?.mode==='vocab').slice(0,30):null;
+  persisted.dayNumber=Number.isSafeInteger(data.dayNumber)?Math.max(0,Math.min(99999,data.dayNumber)):0;
+  persisted.dayIsReview=data.dayIsReview===true;
   persist();syncForm();next(true);
   document.body.classList.toggle('reduce-motion',settings.reduceMotion);
   if(window.chalkDesktop?.setAlwaysOnTop)window.chalkDesktop.setAlwaysOnTop(settings.alwaysTop).catch(()=>{});
@@ -245,7 +276,7 @@ async function importData(file){
 }
 function resetData(){
  if(!window.confirm('Tüm öğrenme ilerlemen silinecek. Devam edilsin mi?'))return;
- records={};persist();updateProgress();next(true);syncForm();
+ records={};persisted.dayDeckIds=null;persisted.dayNumber=0;persisted.dayIsReview=false;persist();updateProgress();next(true);syncForm();
 }
 function attach(){
  fillOptions();
@@ -273,7 +304,12 @@ function attach(){
  $('settingsBtn').addEventListener('click',openSettings);
  document.addEventListener('chalk:review',()=>{try{records=engine.normalizeRecords(JSON.parse(localStorage.getItem(STORAGE)||'{}').records);}catch{}updateProgress();});
  document.addEventListener('chalk:practiceOpened',()=>{panel('expanded');cancelTransition();scheduler.pause();clearTimeout(speakTimer);cancelPronunciation();mood('thinking');});
- document.addEventListener('chalk:feedback',e=>{mood(e.detail);if(settings.lessonSound)cue(e.detail);});
+ document.addEventListener('chalk:feedback',e=>{
+  mood(e.detail);
+  const lines={correct:'Lumi: Güzel hatırladın. Şimdi bu kelimeyi kendi cümlende kullan.',retry:'Lumi: Acele yok. İpucuna bak, bir kez daha dene; hatalar öğrenmenin parçası.',complete:'Lumi: Oturum tamamlandı. Kısa bir nefes al; hazır olduğunda yeni kelimeler seni bekliyor.'};
+  if(lines[e.detail])elements.teacherTip.textContent=lines[e.detail];
+  if(settings.lessonSound)cue(e.detail);
+ });
  document.addEventListener('chalk:practiceClosed',()=>{panel('compact');next(true);restartAuto();});
  $('closeSettings').addEventListener('click',closeSettings);
  $('doneSettings').addEventListener('click',closeSettings);

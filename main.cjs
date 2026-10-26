@@ -14,11 +14,14 @@ let layoutExpanded=false,compactPosition=null;
 function startupExe(){return process.env.PORTABLE_EXECUTABLE_FILE||process.execPath;}
 function startupSupported(){return process.platform==='win32'&&app.isPackaged&&!process.argv.includes('--chalk-test');}
 function startupFile(){return path.join(app.getPath('userData'),'startup.json');}
-function startupOptions(enabled){return {openAtLogin:enabled,path:startupExe(),args:[],name:'ChalkLingo'};}
+function startupOptions(enabled){return {openAtLogin:enabled,enabled:true,path:startupExe(),args:[],name:'ChalkLingo'};}
 function getStartup(){
  if(!startupSupported())return {supported:false,enabled:false};
  const s=app.getLoginItemSettings({path:startupExe(),args:[]});
- return {supported:true,enabled:!!s.openAtLogin&&s.executableWillLaunchAtLogin!==false};
+ const exe=path.resolve(startupExe()).toLowerCase();
+ const item=(s.launchItems||[]).find(entry=>entry.scope==='user'&&typeof entry.path==='string'&&path.resolve(entry.path).toLowerCase()===exe&&JSON.stringify(entry.args||[])==='[]');
+ const enabled=item?!!item.enabled&&s.executableWillLaunchAtLogin!==false:!!s.openAtLogin&&s.executableWillLaunchAtLogin!==false;
+ return {supported:true,enabled};
 }
 function setStartup(enabled){
  if(!startupSupported())return getStartup();
