@@ -19,7 +19,7 @@ fs.mkdirSync(output,{recursive:true});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.waitForSelector('#lessonFront:not(:empty)');
   const trunk=await page.locator('.scene > .teacher .elephant-trunk').evaluate(node=>{const b=node.getBBox();return {x:b.x,y:b.y,width:b.width,height:b.height};});
-  assert.ok(trunk.width>45&&trunk.height>90,'Hortum yüzün altına kadar uzanmalı: '+JSON.stringify(trunk));
+  assert.ok(trunk.width>45&&trunk.height>80&&trunk.y+trunk.height>194,'Hortum yüzün altına kadar uzanmalı: '+JSON.stringify(trunk));
   assert.equal(await page.locator('.scene > .teacher .elephant-nostril').count(),1);
   await page.evaluate(()=>{
    const key='chalklingo.v1',saved=JSON.parse(localStorage.getItem(key)||'{}');
