@@ -9,7 +9,13 @@ function sanitizeSettings(value, languages=['en','de','fr','es','it','ru','ja'])
  const str=(key,allowed,fallback)=>allowed.includes(v[key])?v[key]:fallback;
  return {
   language:str('language',languages,DEFAULTS.language),level:str('level',LEVELS,DEFAULTS.level),
-  mode:str('mode',MODES,DEFAULTS.mode),interval:[0,30,60,120,300].includes(Number(v.interval))?Number(v.interval):0,
+  mode:str('mode',MODES,DEFAULTS.mode),interval:[0,30,60,120,300,600,900,1800,3600,7200].includes(Number(v.interval))?Number(v.interval):0,
+  notificationSound:v.notificationSound===true,lessonSound:v.lessonSound===true,
+  volume:Number.isFinite(v.volume)?Math.max(0,Math.min(1,v.volume)):.35,
+  tone:str('tone',['soft','bell','wood'],'soft'),
+  quietEnabled:v.quietEnabled===true,quietStart:Number.isInteger(v.quietStart)&&v.quietStart>=0&&v.quietStart<24?v.quietStart:22,
+  quietEnd:Number.isInteger(v.quietEnd)&&v.quietEnd>=0&&v.quietEnd<24?v.quietEnd:8,
+  sessionSize:[5,10,15].includes(v.sessionSize)?v.sessionSize:5,
   sound:v.sound===true,translation:v.translation!==false,alwaysTop:v.alwaysTop===true,reduceMotion:v.reduceMotion===true,
   aiEnabled:v.aiEnabled===true,aiModel:typeof v.aiModel==='string'&&v.aiModel.length<=80&&/^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:\/[a-zA-Z0-9][a-zA-Z0-9._-]*)?(?::[a-zA-Z0-9][a-zA-Z0-9._-]*)?$/.test(v.aiModel)?v.aiModel:DEFAULTS.aiModel
  };
@@ -19,7 +25,7 @@ function safeRecord(rec){
  if(!rec||typeof rec!=='object')return null;
  return {seen:Math.max(0,Math.min(99999,Number(rec.seen)||0)),repetitions:Math.max(0,Math.min(99999,Number(rec.repetitions)||0)),
   interval:Math.max(0,Math.min(3650,Number(rec.interval)||0)),ease:Math.max(1.3,Math.min(3,Number(rec.ease)||2.5)),
-  due:Number.isFinite(rec.due)?Math.max(0,rec.due):0,learned:Boolean(rec.learned),lastSeen:Math.max(0,Number(rec.lastSeen)||0)};
+  due:Number.isFinite(rec.due)?Math.max(0,rec.due):0,learned:Boolean(rec.learned),lastSeen:Number.isFinite(rec.lastSeen)?Math.max(0,rec.lastSeen):0};
 }
 function normalizeRecords(value){
  if(!value||typeof value!=='object'||Array.isArray(value))return {};

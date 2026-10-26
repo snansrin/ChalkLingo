@@ -6,8 +6,9 @@
  const dialog=$('practiceOverlay'),prompt=$('practicePrompt'),typeInput=$('practiceInput'),choices=$('practiceChoices'),feedback=$('practiceFeedback');
  let card=null,question=null,attempts=0,usedHint=false,finished=false,selected='',lastFocus=null;
  let stats={attempted:0,correct:0};
+ let goal=5;
  const storageKey='chalklingo.v1';
- function data(){try{return JSON.parse(localStorage.getItem(storageKey)||'{}')||{};}catch{return {};}}
+ function data(){try{const parsed=JSON.parse(localStorage.getItem(storageKey)||'{}');return parsed&&typeof parsed==='object'&&!Array.isArray(parsed)?parsed:{};}catch{return {};}}
  function updateReview(id,grade){
    const current=data();const records=engine.normalizeRecords(current.records);
    current.records=engine.review(records,id,grade);
@@ -21,7 +22,7 @@
    dialog.hidden=false;
    document.dispatchEvent(new Event('chalk:practiceOpened'));
    document.body.classList.add('practicing');
-   stats={attempted:0,correct:0};
+   stats={attempted:0,correct:0};goal=engine.sanitizeSettings(data().settings).sessionSize;
    next();
    $('practiceClose').focus();
  }
@@ -31,6 +32,8 @@
    document.dispatchEvent(new Event('chalk:practiceClosed'));
  }
  function render(){
+   $('sessionSummary').hidden=true;$('practiceContinue').textContent='Sonraki alıştırma →';
+   $('sessionFill').style.width=(stats.attempted/goal*100)+'%';
    finished=false;attempts=0;usedHint=false;selected='';
    $('practiceContinue').hidden=true;$('practiceCheck').hidden=false;
    $('practiceHint').hidden=false;
@@ -51,11 +54,12 @@
        choices.querySelectorAll('button').forEach(b=>{const active=b===button;b.setAttribute('aria-pressed',String(active));b.classList.toggle('selected',active);});
      });choices.append(button);
    }
-   const due=deck().filter(c=>{const r=data().records?.[c.id];return r&&r.due&&r.due<=Date.now();}).length;
-   setText($('practiceProgress'),`${stats.correct}/${stats.attempted} doğru · ${due} tekrar bekliyor`);
+   const saved=data();const due=deck().filter(c=>{const r=saved.records?.[c.id];return r&&r.due&&r.due<=Date.now();}).length;
+   setText($('practiceProgress'),`${stats.attempted}/${goal} tamamlandı · ${due} tekrar bekliyor`);
    if(question.kind==='type')typeInput.focus();else choices.querySelector('button')?.focus();
  }
  function next(){
+   if(stats.attempted>=goal)stats={attempted:0,correct:0};
    const current=data();const records=engine.normalizeRecords(current.records);
    card=tutor.planNext(deck(),records,card?.id);
    if(!card){setText(prompt,'Seçili derste kart bulunamadı. Ayarlardan seviye değiştir.');return;}
@@ -79,6 +83,10 @@
    }
    finished=true;stats.attempted++;if(result.status==='correct')stats.correct++;
    updateReview(card.id,result.grade);
+   const complete=stats.attempted>=goal;
+   document.dispatchEvent(new CustomEvent('chalk:feedback',{detail:complete?'complete':result.status==='correct'?'correct':'retry'}));
+   $('sessionFill').style.width=(stats.attempted/goal*100)+'%';
+   if(complete){$('sessionSummary').hidden=false;setText($('sessionSummary'),'✦ Oturum tamamlandı · '+stats.correct+'/'+goal+' doğru. Kısa bir mola iyi gelir.');$('practiceContinue').textContent='Yeni oturum →';}
    feedback.className='practice-feedback '+(result.status==='correct'?'success':'warn');setText(feedback,result.message);
    setText($('practiceExample'),`${question.example}\n${question.explanation}`);
    $('practiceContinue').hidden=false;$('practiceCheck').hidden=true;$('practiceHint').hidden=true;
@@ -113,7 +121,7 @@
    if(dialog.hidden)return;
    if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();close();return;}
    if(e.key!=='Tab')return;
-   const controls=[...dialog.querySelectorAll('button:not([hidden]):not(:disabled),input:not([hidden]):not(:disabled),textarea:not([hidden]):not(:disabled)')];
+   const controls=[...dialog.querySelectorAll('button:not(:disabled),input:not(:disabled),textarea:not(:disabled),summary')].filter(el=>el.getClientRects().length);
    const first=controls[0],last=controls.at(-1);
    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
    if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}

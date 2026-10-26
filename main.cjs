@@ -8,8 +8,12 @@ const { requestLocalTutor } = require('./ui/ollama-bridge.cjs');
 protocol.registerSchemesAsPrivileged([{scheme:'chalk',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
 let mainWindow;
 let tray;
-const WIDTH = 490, HEIGHT = 555;
+const WIDTH = 520, HEIGHT = 640;
 let lastTutorRequest = 0;
+let tutorBusy=false;
+let saveTimer=null;
+if(!app.requestSingleInstanceLock()){app.quit();}
+app.on('second-instance',()=>{if(mainWindow&&!mainWindow.isDestroyed()){if(mainWindow.isMinimized())mainWindow.restore();mainWindow.show();mainWindow.focus();}});
 
 function preferencesPath(){return path.join(app.getPath('userData'),'window.json');}
 function readWindowState(){try{return JSON.parse(fs.readFileSync(preferencesPath(),'utf8'));}catch{return {};}}
@@ -18,7 +22,7 @@ function saveWindowState(){
   const [x,y]=mainWindow.getPosition();
   try{fs.mkdirSync(path.dirname(preferencesPath()),{recursive:true});fs.writeFileSync(preferencesPath(),JSON.stringify({x,y}),{mode:0o600});}catch{/* Nonfatal */}
 }
-function safeSender(event){return event.sender === mainWindow?.webContents && event.sender.getURL().startsWith('chalk://app/');}
+function safeSender(event){return event.sender === mainWindow?.webContents && event.sender.getURL()==='chalk://app/index.html' && event.senderFrame === event.sender.mainFrame;}
 function createWindow(){
   const state=readWindowState();
   const bounds=screen.getAllDisplays().some(d=>Number.isInteger(state.x)&&Number.isInteger(state.y)&&state.x>=d.workArea.x-150&&state.y>=d.workArea.y-150&&state.x<d.workArea.x+d.workArea.width-120&&state.y<d.workArea.y+d.workArea.height-100);
@@ -35,13 +39,18 @@ function createWindow(){
   });
   mainWindow.loadURL('chalk://app/index.html');
   mainWindow.once('ready-to-show',()=>mainWindow?.show());
-  mainWindow.on('moved',saveWindowState);
+  for(const event of ['minimize','hide','restore','show'])mainWindow.on(event,()=>{
+    mainWindow.webContents.send('window:visibility',mainWindow.isMinimized()||!mainWindow.isVisible());
+  });
+  mainWindow.on('moved',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(saveWindowState,400);});
+  mainWindow.on('closed',()=>{mainWindow=null;clearTimeout(saveTimer);});
   mainWindow.on('close',saveWindowState);
   mainWindow.webContents.setWindowOpenHandler(()=>({action:'deny'}));
-  mainWindow.webContents.on('will-navigate',(event,url)=>{if(!url.startsWith('chalk://app/'))event.preventDefault();});
+  mainWindow.webContents.on('will-navigate',(event,url)=>{if(url!=='chalk://app/index.html')event.preventDefault();});
 }
 app.whenReady().then(()=>{
   protocol.handle('chalk',request=>{
+    try {
     const target=new URL(request.url);
     if(target.hostname!=='app')return new Response('Forbidden',{status:403});
     const relative=decodeURIComponent(target.pathname).replace(/^\/+/, '') || 'index.html';
@@ -50,6 +59,7 @@ app.whenReady().then(()=>{
     const file=path.resolve(base,normalized);
     if(!file.startsWith(base+path.sep))return new Response('Forbidden',{status:403});
     return net.fetch(pathToFileURL(file).toString());
+    }catch{return new Response('Bad request',{status:400});}
   });
   const disallow=permission=>false;
   const session= require('electron').session.defaultSession;
@@ -69,9 +79,10 @@ app.whenReady().then(()=>{
   ipcMain.handle('tutor:ask',async(event,args)=>{
     if(!safeSender(event))throw new Error('Unauthorized IPC sender');
     const now=Date.now();
-    if(now-lastTutorRequest<1000)throw new Error('Lütfen bir an sonra tekrar dene');
+    if(tutorBusy||now-lastTutorRequest<1000)throw new Error('Lütfen bir an sonra tekrar dene');
     lastTutorRequest=now;
-    return requestLocalTutor(args);
+    tutorBusy=true;
+    try{return await requestLocalTutor(args);}finally{tutorBusy=false;}
   });
   createWindow();
   const iconPath=app.isPackaged

@@ -1,0 +1,49 @@
+/* A quiet desktop atelier. System fonts, vector character, no remote assets. */
+.widget{width:520px;height:640px;border-radius:24px;background:radial-gradient(ellipse at 90% 0,#41615166,transparent 50%),linear-gradient(155deg,#203c34,#112a24);border-color:#5f7f6966}
+.titlebar{height:57px;padding:0 20px;border-bottom-color:#d2e4ce16}
+.brand-name{font-size:19px}.brand-tag{font-size:8px;letter-spacing:1.4px;color:#b0c7b9}
+.classroom{padding:19px 24px}.upper-label{font-size:8px;letter-spacing:1.5px}.upper-label #todayDate{font-size:9px}
+.scene{height:326px;margin-top:12px}
+.board-shell{left:39px;height:290px;padding:9px;border-radius:10px;background:linear-gradient(115deg,#c09262,#735134 25%,#bd9468 60%,#795034);box-shadow:0 7px 0 #4d3527,0 15px 24px #0005}
+.board{border-radius:4px;background:radial-gradient(ellipse at 50% 20%,#2b5145,#112f28);border-color:#263b2d}
+.board-head{left:82px;top:17px}.lesson-surface{top:52px;left:82px;right:17px;bottom:34px}
+.chalk-word{font-size:32px;line-height:1.2}.chalk-word.long-word{font-size:22px}
+.chalk-example{font-size:12px;max-height:51px;line-height:1.4}.chalk-translation{font-size:17px}
+.board-footer{left:66px;bottom:14px;font-size:7px}.level-pill{border-radius:20px;background:#ffffff08}
+.teacher{left:-23px;bottom:0;width:152px;height:275px;animation:studioBreathe 6s ease-in-out infinite;filter:drop-shadow(2px 8px 4px #001a2080)}
+.teacher svg{overflow:visible}.teacher-head{transform-box:fill-box;transform-origin:50% 95%;animation:headListen 9s ease-in-out infinite}
+.teacher .chalk-arm{animation:none;transform:rotate(-5deg);transition:transform .65s cubic-bezier(.2,.8,.3,1)}
+.board-shell.is-erasing+.teacher .chalk-arm{animation:writeArm .48s ease-in-out 1}
+.teacher-eye{transform-box:fill-box;transform-origin:center}
+body[data-mood=correct] .teacher-head,body[data-mood=complete] .teacher-head{animation:teacherNod .7s ease-in-out 2}
+body[data-mood=thinking] .teacher .chalk-arm{transform:rotate(9deg)}
+.teacher-mouth{transform-box:fill-box;transform-origin:center}
+body.speaking .teacher-mouth{animation:teacherTalk .24s ease-in-out infinite alternate}
+.chalk-tray{bottom:22px;left:94px;right:-3px}.rhythm-bar{height:27px;display:flex;align-items:center;justify-content:space-between;color:#b4cbbb;font-size:10px;margin-top:-6px}
+.rhythm-bar button{background:#d8e3d312;border:1px solid #c5d4c32e;color:#e7dbb9;border-radius:6px;padding:4px 9px;font-size:10px}
+.message-line{height:34px;font-size:11px;color:#d2decf}.message-line .sparkle{font-size:21px}
+.actions-card{height:59px;padding:9px;border-radius:14px;background:#78947d12;border-color:#a4bda42b;gap:8px!important}
+.actions-card #practiceBtn{background:#e8c78e;border-radius:10px;padding:0 15px;font-size:12px}
+.actions-card .learn-action{background:#b3d1b7;color:#17372b}.bottom-strip{margin-top:18px}
+.progress-track{height:4px}.footer-hint{padding-top:15px;color:#9db2a5;font-size:8px;letter-spacing:.55px}
+.settings-overlay{padding:11px;backdrop-filter:none;background:#081e18e8}.settings-panel{padding:19px 21px;background:linear-gradient(150deg,#2c463b,#172f27);border-color:#78977b66}
+.settings-head h1{font-size:26px}.settings-intro{line-height:1.5;margin:7px 0 17px}.setting-fields{gap:12px}
+.setting-fields select{height:37px}.sound-studio{margin-top:18px;border:1px solid #8da88c40;border-radius:12px;padding:13px;background:#0e251d44}
+.sound-studio h2{font-size:14px;margin:0 0 6px;color:#f1d49f}.sound-studio p{font-size:10px;color:#adc1ae;line-height:1.5;margin:0 0 8px}
+.sound-studio .setting-fields{margin-top:10px}.setting-fields input[type=range]{width:100%;accent-color:#e5c184;height:20px;margin:0}
+.toggle-row{min-height:44px;gap:10px}.toggle-row small{line-height:1.4}.quiet-hours{display:flex;gap:15px;margin-top:9px;color:#bdcdbd;font-size:11px}.quiet-hours select{background:#142d23;border:1px solid #617b62;color:#eae8d4;border-radius:6px;padding:5px;margin-left:5px}
+.model-label{font-size:10px;color:#d6d9c8}.save-btn{height:41px;margin-top:12px}.settings-footnote{margin-top:10px}
+.practice-overlay{inset:57px 11px 11px;padding:18px;background:linear-gradient(145deg,#2b4538,#142d25)}
+.practice-heading{font-size:26px;margin-top:8px}.practice-sub{margin-top:11px}.session-track{height:4px;border-radius:9px;background:#92aa8e26;overflow:hidden;margin:3px 0}
+#sessionFill{height:100%;width:0;background:#dfc38b;transition:width .3s}
+#sessionSummary{padding:12px;margin-top:10px;border:1px solid #a8cda770;border-radius:9px;background:#547b4b33;color:#d2e5bd;font-size:12px;line-height:1.5}
+.practice-feedback{font-size:12px}.practice-blackboard{min-height:125px}.practice-controls{margin-top:14px}.practice-btn{height:40px}
+body.settings-open .teacher *,body.practicing .teacher *,body.suspended *,body.suspended *:before{animation-play-state:paused!important}
+body.settings-open .teacher,body.practicing .teacher{animation-play-state:paused}
+@keyframes studioBreathe{0%,100%{transform:translateY(0) rotate(-.2deg)}50%{transform:translateY(1.4px) rotate(.2deg)}}
+@keyframes headListen{0%,35%,100%{transform:rotate(0)}50%,70%{transform:rotate(-2deg)}}
+@keyframes teacherNod{0%,100%{transform:rotate(0)}50%{transform:rotate(4deg) translateY(2px)}}
+@keyframes teacherTalk{to{transform:scaleY(1.6)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation:none!important;transition:none!important}
+[hidden]{display:none!important}

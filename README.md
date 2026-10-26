@@ -1,6 +1,47 @@
-# ChalkLingo · a tiny chalkboard teacher for your desktop
+# ChalkLingo · Learning Studio 0.3.0
 
-**ChalkLingo 0.2.2** is an illustrated, offline-first desktop widget that helps you *retrieve* language knowledge instead of only rereading translations. Click the chalkboard for another lesson; right-click to customize your classroom; choose **✎ Çalış** for active exercises. An optional on-device language model (Ollama) can answer lesson questions without a cloud API.
+Masaüstünde küçük bir sınıf, sana uygun bir öğrenme ritmi.
+
+![Gerçek Windows uygulaması](docs/screenshots/classroom.png)
+
+## 0.3.0 yenilikleri
+
+- Yenilenen 520 × 640 sınıf, daha okunaklı tahta; nefes, göz kırpma, baş eğme, yazma ve telaffuza eşlik eden ağız hareketleri. Karakter hafif SVG çizimidir; fotogerçekçi 3D avatar değildir.
+- Otomatik geçiş: kapalı, 30 saniye, 1/2/5/10/15/30 dakika, 1/2 saat. Duraklat/devam et kalan süreyi korur.
+- Kelime değişim sesi, ders efektleri ve otomatik telaffuz bağımsız tercihlerdir; başlangıçta kapalıdır. Üç ton, ses seviyesi, önizleme ve geceyi aşabilen sessiz saatler bulunur.
+- 5/10/15 alıştırmalık oturum hedefleri, ilerleme çizgisi ve bitiş özeti. Mevcut 212 kart ve aralıklı tekrar sistemi korunur; bu bir tam CEFR müfredatı değildir.
+- Ayarlar/alıştırma açıkken veya pencere gizli/küçültülmüşken otomatik geçiş durur. Geri dönünce birikmiş bildirimler çalmaz. Gizli animasyonlar durur; azaltılmış hareket ve işletim sistemi tercihi desteklenir.
+- Tek uygulama örneği, toplu konum kaydı, tek zamanlayıcı, kullanılan ses düğümlerinin temizlenmesi ve boşta ses motorunun askıya alınması.
+- Daha sıkı ana frame/URL IPC doğrulaması; tek eşzamanlı yerel model isteği; yanıt akarken uygulanan gerçek 160 KB sınırı. Model için 2 CPU iş parçacığı, 2.048 bağlam, 280 çıktı token ve yanıt sonrası bellekten çıkma talebi.
+
+| Ders stüdyosu | Ses ve zamanlama |
+| --- | --- |
+| ![Aktif hatırlama](docs/screenshots/practice.png) | ![Tercihler](docs/screenshots/preferences.png) |
+
+![Tamamlanan oturum](docs/screenshots/session.png)
+
+Ekran görüntüleri gerçek Windows/Electron penceresinden alınmıştır.
+
+### Tercihler nasıl çalışır?
+
+⚙ veya sağ tık → dili, ritmi, sesleri ve hedefi seç → **Tahtaya dön** ile kaydet. Uzun ayar paneli kaydırılabilir. Sessiz saatlerde otomatik sesler susar, kartlar ilerleyebilir. Başlangıç ve bitiş aynıysa gün boyu sessizdir. **Sesi dene** ve elle telaffuz düğmesi bilinçli eylemler olduğundan sessiz saatlerde de çalışır.
+
+Ses uygulama içindeki **otomatik kart değişiminde** çalar; Windows bildirim merkezi mesajı gönderilmez. Küçültülmüş uygulama arkadan kelime veya ses göndermez. Telaffuz sistem seslerine bağlıdır; bazı sesler ağ kullanabilir. Oturum hedefi desteden büyükse kartlar tekrar edilir. Windows'ta kapat düğmesi çıkar; küçültme görev çubuğuna indirir. Otomatik başlangıç veya sistem ayarı değişikliği yapılmaz.
+
+### Doğrulama
+
+26 Ekim 2026: **24 test**, gerçek Electron arayüz testi ve npm bağımlılık taraması geçti; tarama bilinen açık bildirmedi. Kısa geliştirme ölçümünde animasyonlu açık pencere toplam yaklaşık **%1,56 CPU**, küçültülmüş pencere **%0,10 CPU** gösterdi. Süreç çalışma kümelerinin toplamı yaklaşık **512 MiB** idi; paylaşılan bellek çift sayılabilir. Bu bir stres testi veya her cihazda donmama garantisi değildir. Ollama kaynak tüketimi ayrıca artabilir; istek seçenekleri işletim sistemi kotası değildir.
+
+Windows yükleyici ve portable paketleri üretildi; **imzasızdır**. Temiz fiziksel cihazda kurulum/kaldırma, uzun süreli kullanım, bütün dillerin ses kalitesi ve gerçek Ollama modeli ayrıca test edilmelidir. [Doğrulama raporu](docs/VALIDATION.md).
+
+Masaüstü regresyon testi: **npm run test:desktop**. Test görünür pencere açar; çalışırken pencereyle etkileşmeyin. Kişisel veri yerine ayrı profil kullanır; rapor ve görüntüler Git dışında tutulan **.qa/** klasörüne yazılır. README görüntülerini yenilemek için PowerShell ortam değişkeni **CHALK_SCREENSHOTS=1**, paketlenmiş uygulamayı test etmek için **CHALK_EXECUTABLE** değişkeninde win-unpacked/ChalkLingo.exe mutlak yolunu kullanın.
+
+Yeni modüller: ui/rhythm.js (zamanlama), ui/audio.js (yerel ses), ui/studio.css (görünüm), tests/rhythm.test.cjs ve tests/desktop.cjs.
+
+---
+
+
+**ChalkLingo 0.3.0** is an illustrated, offline-first desktop widget that helps you *retrieve* language knowledge instead of only rereading translations. Click the chalkboard for another lesson; right-click to customize your classroom; choose **✎ Çalış** for active exercises. An optional on-device language model (Ollama) can answer lesson questions without a cloud API.
 
 ## What's in the classroom
 
@@ -19,7 +60,7 @@ Install Node.js 24+ and Git, then open PowerShell:
 ```powershell
 git clone https://github.com/snansrin/ChalkLingo.git
 cd ChalkLingo
-npm install
+npm ci
 npm run check
 npm start
 ```
@@ -30,7 +71,7 @@ To build an **unsigned** Windows installer and portable EXE on a Windows machine
 npm run dist:win
 ```
 
-Outputs are in `release/`. Windows SmartScreen may warn about unsigned binaries. `Actions → Verify and package` also builds distributables on its configured workflow; **Windows installation has not been verified on physical hardware**.
+Outputs are in `release/`. Windows SmartScreen may warn about unsigned binaries. `Actions → Verify and package` also builds distributables on its configured workflow; **clean-machine install/uninstall has not been verified on physical hardware**.
 
 ## Interactive study
 
@@ -64,7 +105,7 @@ ui/tutor-ui.js               Accessible teaching flow, hints, feedback, Q&A UI
 ui/ollama-bridge.cjs         Bounded local-only model requests
 ui/app.js                    Existing widget controls, TTS, import/export
 assets/                      Application icons
-tests/                        18 Node unit and security tests
+tests/                        24 Node unit and security tests
 .github/workflows/ci.yml     CI and optional Windows package build
 ```
 
@@ -84,6 +125,6 @@ ChalkLingo makes no claims that its own teaching efficacy has been clinically or
 
 ## Development
 
-`npm run check` performs syntax verification and 18 automated tests. The test suite covers lesson data in seven languages, safe storage handling, scheduling, Unicode answer checks, graded feedback and restricted AI requests. Browser-level/Windows-packaged QA should still be conducted before release.
+`npm run check` performs syntax verification and 24 automated tests. The test suite covers lesson data in seven languages, safe storage handling, scheduling, Unicode answer checks, graded feedback and restricted AI requests. Browser-level/Windows-packaged QA should still be conducted before release.
 
 MIT licensed. This project is independent of DendroGeo.
