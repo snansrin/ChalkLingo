@@ -1,12 +1,12 @@
 # CL · ChalkLingo
 
-**v0.3.8 — Mimo adlı sevimli hafıza filiyle, küçük ve sesli masaüstü kelime widget’ı.**
+**v0.3.8 — Necati çizgi film görünümündeki fil karakteriyle, küçük ve sesli masaüstü kelime widget’ı.**
 
 <img src="assets/icon.png" width="64" alt="CL uygulama simgesi" />
 
 CL, Yapışkan Notlar gibi küçük ve çerçevesiz bir Windows masaüstü widget’ıdır. Yeni normal görünüm **320 × 280** mantıksal pikseldir; görev çubuğunda düğmesi yoktur. Yönetim için sistem tepsisinde CL simgesi bulunur. Windows Widget panosunun parçası değildir; arka planda bir masaüstü uygulaması çalışır.
 
-Mimo'nun hortumu yüzünün ortasından aşağı uzanan, boğumlu ve ucu yukarı kıvrılan bir fil hortumudur. Belirgin burun deliği **320 × 280** kompakt boyutta da okunabilecek şekilde yerel SVG ile çizilir. Necati Fil yalnızca hortumun anatomisi için görsel referanstır; Mimo'nun karakteri ve renkleri özgündür.
+Necati'nin lila gövdesi, geniş sarkık kulakları, koyu mor bıyığı, iri gözleri, **kalından inceye uzanan parçalı hortumu**, yeşil üstü ve mavi pantolonu yerel SVG ile yeniden çizildi. Bu çizim resmî bir karakter görseli değildir. Üst bardaki **MASAÜSTÜ DİL WIDGET'I** metni üzerine gelince veya klavye odağıyla açılır; kompakt yazılar okunabilirlik için büyütüldü.
 
 ## Güncel görünüm
 
