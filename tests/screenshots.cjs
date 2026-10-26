@@ -19,8 +19,13 @@ fs.mkdirSync(output,{recursive:true});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.waitForSelector('#lessonFront:not(:empty)');
   const trunk=await page.locator('.scene > .teacher .elephant-trunk').evaluate(node=>{const b=node.getBBox();return {x:b.x,y:b.y,width:b.width,height:b.height};});
-  assert.ok(trunk.width>45&&trunk.height>80&&trunk.y+trunk.height>194,'Hortum yüzün altına kadar uzanmalı: '+JSON.stringify(trunk));
+  assert.ok(trunk.width>40&&trunk.height>100&&trunk.y+trunk.height>224,'Hortum yüzün altına kadar uzanmalı: '+JSON.stringify(trunk));
   assert.equal(await page.locator('.scene > .teacher .elephant-nostril').count(),1);
+  assert.equal(await page.locator('.brand-tag').textContent(),"MASAÜSTÜ DİL WIDGET'I");
+  await page.locator('.titlebar').hover();
+  await page.waitForFunction(()=>getComputedStyle(document.querySelector('.brand-tag')).visibility==='visible');
+  await page.mouse.move(150,130);
+  await page.waitForFunction(()=>getComputedStyle(document.querySelector('.brand-tag')).visibility==='hidden');
   await page.evaluate(()=>{
    const key='chalklingo.v1',saved=JSON.parse(localStorage.getItem(key)||'{}');
    saved.settings={...saved.settings,language:'en',level:'A1',mode:'vocab'};
