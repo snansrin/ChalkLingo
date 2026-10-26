@@ -128,3 +128,23 @@ ChalkLingo makes no claims that its own teaching efficacy has been clinically or
 `npm run check` performs syntax verification and 24 automated tests. The test suite covers lesson data in seven languages, safe storage handling, scheduling, Unicode answer checks, graded feedback and restricted AI requests. Browser-level/Windows-packaged QA should still be conducted before release.
 
 MIT licensed. This project is independent of DendroGeo.
+
+
+## v0.3.1 · Sticky Notes tarzı Windows widget
+
+ChalkLingo artık normal durumda **360 × 340 piksel** yer kaplar. Etkileşimli ders veya sağ tık ayarlarını açtığında geçici olarak **520 × 640** olur. Panel kapanınca otomatik küçülür. Konumunu hatırlar. Windows görev çubuğunda pencere düğmesi göstermez; **sistem tepsisi** simgesinden yeniden açılır.
+
+- **− / ×**: Pencereyi tepsiye gizler; uygulama çalışmaya devam eder. Sistem tepsisi → **Uygulamadan çık** gerçek çıkıştır.
+- **Windows ile başlat**: Kurulu Windows sürümünde ilk açılışta kullanıcı oturumuna başlangıç girdisi eklenmeye çalışılır; sağ tık ayarlarından kapatılabilir. Geliştirme modunda etkinleştirilmez. Taşınabilir EXE yeri değiştirilirse yeniden ayarlamak gerekir.
+- **TELAFFUZ SESİ**: Seçilen dile ait yerel Windows sesi kullanılır. Örneğin `en-US` veya `en-GB` bulunmazsa Türkçe sesle hatalı İngilizce okumak yerine uyarı gösterilir. Ses kalitesi bilgisayarda yüklü ses motoruna bağlıdır.
+- **Güvenlik**: Yönetici izni, Defender/güvenlik duvarı değişikliği, kalıcı arka plan servisi veya dış servise hesap bilgisi gönderimi yoktur. Başlangıç ayarı işletim sisteminin kendi API'sinden yalnızca mevcut kullanıcı için değiştirilir.
+- **Kaynak kullanımı**: Pencere gizlendiğinde seslendirme ve otomatik kart zamanlayıcısı duraklatılır; ancak Electron'ın arka plan belleği tamamen sıfırlanmaz.
+
+```powershell
+npm ci
+npm run check
+npm run test:widget  # Windows Electron duman testi
+npm run dist:win
+```
+
+Kurulum dosyasını GitHub Actions → **Verify and package** iş akışının **ChalkLingo-Windows** artifact bölümünden alabilirsin. İmzasız EXE'de Windows SmartScreen uyarısı görülebilir; sistem güvenliği kapatılmamalıdır. Bu sürüm gerçek Windows kullanımında ayrıca doğrulanmalıdır.
