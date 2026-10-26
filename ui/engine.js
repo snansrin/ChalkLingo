@@ -3,7 +3,7 @@
 'use strict';
 const LEVELS=['A1','A2','B1','B2','C1','C2'];
 const MODES=['mix','vocab','sentence','grammar'];
-const DEFAULTS=Object.freeze({language:'en',level:'A1',mode:'mix',interval:0,sound:false,translation:true,alwaysTop:false,reduceMotion:false,aiEnabled:false,aiModel:'gemma3:4b'});
+const DEFAULTS=Object.freeze({language:'en',level:'A1',mode:'mix',interval:0,sound:false,translation:true,alwaysTop:false,reduceMotion:false,voiceId:'auto',aiEnabled:false,aiModel:'gemma3:4b'});
 function sanitizeSettings(value, languages=['en','de','fr','es','it','ru','ja']){
  const v=value&&typeof value==='object'?value:{};
  const str=(key,allowed,fallback)=>allowed.includes(v[key])?v[key]:fallback;
@@ -16,7 +16,7 @@ function sanitizeSettings(value, languages=['en','de','fr','es','it','ru','ja'])
   quietEnabled:v.quietEnabled===true,quietStart:Number.isInteger(v.quietStart)&&v.quietStart>=0&&v.quietStart<24?v.quietStart:22,
   quietEnd:Number.isInteger(v.quietEnd)&&v.quietEnd>=0&&v.quietEnd<24?v.quietEnd:8,
   sessionSize:[5,10,15].includes(v.sessionSize)?v.sessionSize:5,
-  sound:v.sound===true,translation:v.translation!==false,alwaysTop:v.alwaysTop===true,reduceMotion:v.reduceMotion===true,
+  sound:v.sound===true,voiceId:typeof v.voiceId==='string'&&v.voiceId.length<=180?v.voiceId:'auto',translation:v.translation!==false,alwaysTop:v.alwaysTop===true,reduceMotion:v.reduceMotion===true,
   aiEnabled:v.aiEnabled===true,aiModel:typeof v.aiModel==='string'&&v.aiModel.length<=80&&/^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:\/[a-zA-Z0-9][a-zA-Z0-9._-]*)?(?::[a-zA-Z0-9][a-zA-Z0-9._-]*)?$/.test(v.aiModel)?v.aiModel:DEFAULTS.aiModel
  };
 }
