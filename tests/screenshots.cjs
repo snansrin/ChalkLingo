@@ -42,7 +42,7 @@ fs.mkdirSync(output,{recursive:true});
    assert.equal(png.readUInt32BE(0),0x89504e47);
    console.log(name,rect.width+'x'+rect.height,png.length+' bytes');
   }
-  await snap('widget-compact.png',360,340);
+  await snap('widget-compact.png',320,280);
   await page.evaluate(()=>{
    const key='chalklingo.v1',saved=JSON.parse(localStorage.getItem(key));let records={};
    for(const id of saved.dayDeckIds)records=window.ChalkEngine.review(records,id,'good');
@@ -51,7 +51,7 @@ fs.mkdirSync(output,{recursive:true});
   await page.reload();
   await page.waitForFunction(()=>document.getElementById('nextBtn').textContent.includes('Yeni kelime günü'));
   await page.waitForTimeout(300);
-  await snap('widget-next-day.png',360,340);
+  await snap('widget-next-day.png',320,280);
   await page.locator('#board').click();
   await page.waitForTimeout(600);
   await page.locator('#settingsBtn').click();
@@ -71,7 +71,7 @@ fs.mkdirSync(output,{recursive:true});
   await page.locator('#practiceClose').click();
   await page.waitForTimeout(250);
   const end=await windowBounds();
-  assert.equal(end.width,360);assert.ok(Math.abs(end.height-340)<=3);
+  assert.equal(end.width,320);assert.ok(Math.abs(end.height-280)<=3);
   assert.deepEqual(errors,[]);
  }finally{await application.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

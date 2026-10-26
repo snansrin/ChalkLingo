@@ -15,6 +15,7 @@
 .teacher .chalk-arm{animation:none;transform:rotate(-5deg);transition:transform .65s cubic-bezier(.2,.8,.3,1)}
 .board-shell.is-erasing+.teacher .chalk-arm{animation:writeArm .48s ease-in-out 1}
 .teacher-eye{transform-box:fill-box;transform-origin:center}
+.elephant-trunk{transform-box:fill-box;transform-origin:50% 4%;animation:trunkSway 5.2s ease-in-out infinite}
 body[data-mood=correct] .teacher-head,body[data-mood=complete] .teacher-head{animation:teacherNod .7s ease-in-out 2}
 body[data-mood=thinking] .teacher .chalk-arm{transform:rotate(9deg)}
 .teacher-mouth{transform-box:fill-box;transform-origin:center}
@@ -44,41 +45,42 @@ body.settings-open .teacher,body.practicing .teacher{animation-play-state:paused
 @keyframes headListen{0%,35%,100%{transform:rotate(0)}50%,70%{transform:rotate(-2deg)}}
 @keyframes teacherNod{0%,100%{transform:rotate(0)}50%{transform:rotate(4deg) translateY(2px)}}
 @keyframes teacherTalk{to{transform:scaleY(1.6)}}
+@keyframes trunkSway{0%,100%{transform:rotate(0)}42%{transform:rotate(-2deg)}72%{transform:rotate(1.5deg)}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation:none!important;transition:none!important}
 [hidden]{display:none!important}
 
 
-/* Sticky-note sized 360×340 widget; lessons and settings expand on demand. */
+/* Compact sticky-note widget; lessons and settings expand on demand. */
 .widget{width:100%;height:100%;border-radius:17px}
-.titlebar{height:37px;padding:0 9px 0 13px}
+.titlebar{height:33px;padding:0 8px 0 11px}
 .brand-mark{font-size:18px}.brand-name{font-size:13px}.brand-tag{display:none}
 .window-actions{gap:2px}.icon-btn{width:25px;height:25px;font-size:16px}
-.classroom{padding:3px 12px 8px}
+.classroom{padding:2px 11px 5px}
 .upper-label{display:none}
-.scene{height:194px;margin:0}
-.board-shell{top:4px;left:27px;right:0;height:175px;padding:6px;border-radius:6px}
-.board-head{left:57px;right:6px;top:7px}.card-type{font-size:7px;letter-spacing:.6px}
+.scene{height:151px;margin:0}
+.board-shell{top:3px;left:25px;right:0;height:137px;padding:5px;border-radius:6px}
+.board-head{left:49px;right:5px;top:5px}.card-type{font-size:6px;letter-spacing:.5px}
 .level-pill{font-size:8px;padding:3px 5px}
-.lesson-surface{top:31px;left:57px;right:7px;bottom:23px}
-.chalk-word{font-size:22px;line-height:1.17;max-height:50px}.chalk-word.long-word{font-size:15px}
-.chalk-word.japanese{font-size:18px}.chalk-word.long-word.japanese{font-size:14px}
-.phonetic{font-size:9px;min-height:11px;margin-top:2px}
-.chalk-divider{margin-top:5px}
-.chalk-translation{font-size:12px;margin-top:5px;max-height:30px}
-.chalk-example{font-size:9px;margin-top:3px;line-height:1.2;max-height:26px}
-.board-footer{bottom:6px;left:54px;right:6px;font-size:6px;gap:3px}.chalk-progress{font-size:7px}
-.teacher{left:-20px;bottom:14px;width:99px;height:178px}
-.chalk-tray{bottom:15px;left:55px;right:0}
-.rhythm-bar{height:17px;margin:0;font-size:9px}.rhythm-bar button{font-size:9px;padding:1px 6px}
+.lesson-surface{top:25px;left:49px;right:6px;bottom:18px}
+.chalk-word{font-size:19px;line-height:1.12;max-height:40px}.chalk-word.long-word{font-size:13px}
+.chalk-word.japanese{font-size:16px}.chalk-word.long-word.japanese{font-size:12px}
+.phonetic{font-size:8px;min-height:9px;margin-top:1px}
+.chalk-divider{margin-top:3px}
+.chalk-translation{font-size:11px;margin-top:3px;max-height:26px}
+.chalk-example{font-size:8px;margin-top:2px;line-height:1.15;max-height:21px}
+.board-footer{bottom:4px;left:47px;right:5px;font-size:5px;gap:2px}.chalk-progress{font-size:6px}
+.teacher{left:-4px;bottom:11px;width:84px;height:151px}
+.chalk-tray{bottom:2px;left:49px;right:0}
+.rhythm-bar{height:15px;margin:0;font-size:8px}.rhythm-bar button{font-size:8px;padding:1px 5px}
 .message-line{display:none}
-.actions-card{height:38px;padding:4px;margin-top:3px;gap:3px!important;border-radius:9px}
-.round-action{width:29px;height:27px;font-size:17px}
-.learn-action{height:27px;gap:3px;padding:0 7px;font-size:10px;border-radius:6px}
-.actions-card #practiceBtn{height:27px;padding:0 8px;font-size:10px;border-radius:6px;white-space:nowrap}
-.next-action{height:27px;padding:0 3px;font-size:9px}.next-action span{font-size:12px}
-.bottom-strip{margin-top:6px}.progress-label{font-size:8px;letter-spacing:.5px}
-.progress-numbers{font-size:9px}.progress-track{margin-top:4px;height:3px}.footer-hint{display:none}
+.actions-card{height:34px;padding:3px;margin-top:2px;gap:2px!important;border-radius:8px}
+.round-action{width:26px;height:25px;font-size:16px}
+.learn-action{height:25px;gap:2px;padding:0 6px;font-size:9px;border-radius:6px}
+.actions-card #practiceBtn{height:25px;padding:0 6px;font-size:9px;border-radius:6px;white-space:nowrap}
+.next-action{height:25px;padding:0 2px;font-size:8px}.next-action span{font-size:11px}
+.bottom-strip{margin-top:4px}.progress-label{font-size:7px;letter-spacing:.4px}
+.progress-numbers{font-size:8px}.progress-track{margin-top:3px;height:3px}.footer-hint{display:none}
 .settings-overlay{inset:0;padding:12px}.settings-panel{height:100%;max-height:100%;padding:14px 17px;overflow:auto}
 .practice-overlay{inset:37px 9px 9px;padding:14px}
 .voice-setting{display:flex;flex-direction:column;gap:5px;color:#d6c49e;font-size:10px;margin:10px 0}

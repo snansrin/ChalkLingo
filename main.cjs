@@ -8,7 +8,7 @@ const { requestLocalTutor } = require('./ui/ollama-bridge.cjs');
 protocol.registerSchemesAsPrivileged([{scheme:'chalk',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
 let mainWindow;
 let tray;
-const SMALL={width:360,height:340},LARGE={width:520,height:640};
+const SMALL={width:320,height:280},LARGE={width:520,height:640};
 let quitting=false;
 let layoutExpanded=false,compactPosition=null;
 function startupExe(){return process.env.PORTABLE_EXECUTABLE_FILE||process.execPath;}

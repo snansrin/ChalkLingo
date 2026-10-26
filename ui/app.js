@@ -78,7 +78,7 @@ function setCurrent(card){
  elements.lessonExample.textContent=card.example;
  elements.lessonExample.setAttribute('title',card.note);
  elements.teacherTip.title=card.note;
- elements.teacherTip.textContent=persisted.dayIsReview&&activeDay()?'Lumi: Bildiklerini sağlamlaştırıyoruz. Bu kelimeler kalıcı hafızana yerleşiyor.':activeDay()?`Lumi: Gün ${persisted.dayNumber}. “${card.front}” kelimesini örneğinde yakala.`:(card.note||'Lumi: Her gün küçük bir adım, güçlü bir alışkanlık kurar.');
+   elements.teacherTip.textContent=persisted.dayIsReview&&activeDay()?'Mimo: Bildiklerini sağlamlaştırıyoruz. Bu kelimeler kalıcı hafızana yerleşiyor.':activeDay()?`Mimo: Gün ${persisted.dayNumber}. “${card.front}” kelimesini örneğinde yakala.`:(card.note||'Mimo: Her gün küçük bir adım, güçlü bir alışkanlık kurar.');
  const list=deck();
  const index=list.findIndex(x=>x.id===card.id)+1;
  elements.lessonIndex.textContent=`${String(index).padStart(2,'0')} / ${String(list.length).padStart(2,'0')}`;
@@ -306,7 +306,7 @@ function attach(){
  document.addEventListener('chalk:practiceOpened',()=>{panel('expanded');cancelTransition();scheduler.pause();clearTimeout(speakTimer);cancelPronunciation();mood('thinking');});
  document.addEventListener('chalk:feedback',e=>{
   mood(e.detail);
-  const lines={correct:'Lumi: Güzel hatırladın. Şimdi bu kelimeyi kendi cümlende kullan.',retry:'Lumi: Acele yok. İpucuna bak, bir kez daha dene; hatalar öğrenmenin parçası.',complete:'Lumi: Oturum tamamlandı. Kısa bir nefes al; hazır olduğunda yeni kelimeler seni bekliyor.'};
+  const lines={correct:'Mimo: Güzel hatırladın. Şimdi bu kelimeyi kendi cümlende kullan.',retry:'Mimo: Acele yok. İpucuna bak, bir kez daha dene; hatalar öğrenmenin parçası.',complete:'Mimo: Oturum tamamlandı. Kısa bir nefes al; hazır olduğunda yeni kelimeler seni bekliyor.'};
   if(lines[e.detail])elements.teacherTip.textContent=lines[e.detail];
   if(settings.lessonSound)cue(e.detail);
  });
