@@ -102,22 +102,41 @@ function rate(score){
  updateProgress();
  next();
 }
+let speechTimer=null,startupState=null;
+function panel(mode){document.body.dataset.panel=mode;window.chalkDesktop?.layout?.(mode)?.catch(()=>{});}
+function feedback(message){const el=$('speechFeedback');el.textContent=message;el.hidden=!message;clearTimeout(speechTimer);if(message)speechTimer=setTimeout(()=>{el.hidden=true;},6500);}
+function voices(language=$('languageSelect').value||settings.language){
+ if(!window.speechSynthesis)return;
+ const select=$('voiceSelect'),list=window.ChalkSpeech.available(window.speechSynthesis.getVoices(),language);
+ select.replaceChildren();const auto=document.createElement('option');auto.value='auto';auto.textContent='Otomatik · doğru dil';select.append(auto);
+ for(const v of list){const opt=document.createElement('option');opt.value=v.voiceURI||v.name;opt.textContent=v.name+' · '+v.lang;select.append(opt);}
+ const wanted=language===settings.language?settings.voiceId:'auto';
+ select.value=list.some(v=>(v.voiceURI||v.name)===wanted)?wanted:'auto';
+ $('voiceStatus').textContent=list.length?list.length+' uygun ses yüklü.':'Bu dilin sesi yok. Windows → Saat ve Dil → Konuşma bölümünden ses yükle.';
+}
+async function startup(){
+ try{
+  startupState=await window.chalkDesktop?.getStartup?.();
+  if(!startupState)return;
+  $('startupToggle').checked=startupState.enabled;$('startupToggle').disabled=!startupState.supported;
+  $('startupStatus').textContent=startupState.supported?'Windows açılışında: '+(startupState.enabled?'aktif':'kapalı'):'Kurulu Windows sürümünde kullanılabilir.';
+ }catch{$('startupStatus').textContent='Başlangıç ayarı okunamadı.';}
+}
 function speak(){
- if(!current||!('speechSynthesis' in window))return;
+ if(!current||!window.speechSynthesis)return;
  window.speechSynthesis.cancel();
+ const voice=window.ChalkSpeech.choose(window.speechSynthesis.getVoices(),current.language,settings.voiceId);
+ if(!voice){feedback('Bu dilde uygun ses yok. Yanlış aksana düşmek yerine telaffuzu durdurdum. Windows dil ayarlarından ses yükle.');return;}
+ feedback('');
  try{
   const text=current.front.replace(/[（(][^)）]+[)）]/g,'').replace(/\s*\/\s*/g,' / ');
   const utterance=new SpeechSynthesisUtterance(text);
-  utterance.lang=voiceFallback[current.language];
-  utterance.rate=current.language==='ja'?0.83:0.87;
-  utterance.pitch=1.03;utterance.volume=settings.volume;
+  utterance.lang=voice.lang;utterance.voice=voice;utterance.rate=current.language==='ja'?0.85:0.91;
+  utterance.pitch=1;utterance.volume=settings.volume;
   utterance.onstart=()=>document.body.classList.add('speaking');
   utterance.onend=utterance.onerror=()=>document.body.classList.remove('speaking');
-  const candidates=window.speechSynthesis.getVoices();
-  const same=candidates.find(v=>v.lang.toLowerCase()===utterance.lang.toLowerCase())||candidates.find(v=>v.lang.toLowerCase().startsWith(current.language));
-  if(same)utterance.voice=same;
   window.speechSynthesis.speak(utterance);
- }catch{/* System may not provide a voice */}
+ }catch{feedback('Seslendirme başlatılamadı.');}
 }
 function restartAuto(){
  if(configuredInterval!==settings.interval){configuredInterval=settings.interval;scheduler.configure(settings.interval);}
@@ -148,7 +167,7 @@ function syncForm(){
  $('alwaysTopToggle').checked=settings.alwaysTop;
  $('motionToggle').checked=settings.reduceMotion;
  $('aiToggle').checked=settings.aiEnabled;
- $('aiModel').value=settings.aiModel;
+ $('aiModel').value=settings.aiModel;voices();void startup();
  updateProgress();
 }
 function applySettings(){
@@ -161,14 +180,15 @@ function applySettings(){
   quietEnabled:$('quietToggle').checked,quietStart:Number($('quietStart').value),quietEnd:Number($('quietEnd').value),
   sessionSize:Number($('sessionSize').value),interval:Number($('intervalSelect').value),sound:$('soundToggle').checked,
   translation:$('translationToggle').checked,alwaysTop:$('alwaysTopToggle').checked,
-  reduceMotion:$('motionToggle').checked,aiEnabled:$('aiToggle').checked,aiModel:$('aiModel').value.trim()
+  reduceMotion:$('motionToggle').checked,voiceId:$('voiceSelect').value,aiEnabled:$('aiToggle').checked,aiModel:$('aiModel').value.trim()
  },Object.keys(packs));
  document.body.classList.toggle('reduce-motion',settings.reduceMotion);
  persist();
  if(old.alwaysTop!==settings.alwaysTop&&window.chalkDesktop?.setAlwaysOnTop){
   window.chalkDesktop.setAlwaysOnTop(settings.alwaysTop).catch(()=>{});
  }
- if(old.language!==settings.language||old.level!==settings.level||old.mode!==settings.mode)next(true);
+ if(old.language!==settings.language){settings.voiceId='auto';persist();voices(settings.language);}
+  if(old.language!==settings.language||old.level!==settings.level||old.mode!==settings.mode)next(true);
  else if(current)setCurrentWithoutCounting();
  restartAuto();
  updateProgress();
@@ -184,12 +204,12 @@ function openSettings(){
  scheduler.pause();
  modalWasOpenedFrom=document.activeElement;
  syncForm();
- elements.modal.hidden=false;
+ elements.modal.hidden=false;panel('expanded');
  $('closeSettings').focus();
 }
 function closeSettings(){
  applySettings();
- elements.modal.hidden=true;document.body.classList.remove('settings-open');
+ elements.modal.hidden=true;document.body.classList.remove('settings-open');panel('compact');
  if(modalWasOpenedFrom instanceof HTMLElement)modalWasOpenedFrom.focus();
  restartAuto();
 }
@@ -223,6 +243,15 @@ function attach(){
  for(let h=0;h<24;h++)for(const id of ['quietStart','quietEnd']){const o=document.createElement('option');o.value=String(h);o.textContent=String(h).padStart(2,'0')+':00';$(id).append(o);}
  syncForm();
  $('pauseAuto').addEventListener('click',()=>{manuallyPaused=!manuallyPaused;restartAuto();});
+ window.speechSynthesis?.addEventListener('voiceschanged',()=>voices());
+ $('languageSelect').addEventListener('change',()=>voices());
+ $('startupToggle').addEventListener('change',async e=>{
+  const el=e.currentTarget,wanted=el.checked;el.disabled=true;
+  try{startupState=await window.chalkDesktop.setStartup(wanted);el.checked=startupState.enabled;
+   $('startupStatus').textContent='Windows açılışında: '+(startupState.enabled?'aktif':'kapalı');}
+  catch{el.checked=!wanted;$('startupStatus').textContent='Başlangıç değiştirilemedi.';}
+  finally{el.disabled=!startupState?.supported;}
+ });
  $('previewSound').addEventListener('click',()=>window.ChalkAudio.play($('toneSelect').value,Number($('volumeRange').value)/100));
  $('todayDate').textContent=new Intl.DateTimeFormat('tr-TR',{day:'numeric',month:'short'}).format(new Date()).toUpperCase();
  document.body.classList.toggle('reduce-motion',settings.reduceMotion);
@@ -234,9 +263,9 @@ function attach(){
  $('speakBtn').addEventListener('click',speak);
  $('settingsBtn').addEventListener('click',openSettings);
  document.addEventListener('chalk:review',()=>{try{records=engine.normalizeRecords(JSON.parse(localStorage.getItem(STORAGE)||'{}').records);}catch{}updateProgress();});
- document.addEventListener('chalk:practiceOpened',()=>{cancelTransition();scheduler.pause();clearTimeout(speakTimer);window.speechSynthesis?.cancel();mood('thinking');});
+ document.addEventListener('chalk:practiceOpened',()=>{panel('expanded');cancelTransition();scheduler.pause();clearTimeout(speakTimer);window.speechSynthesis?.cancel();mood('thinking');});
  document.addEventListener('chalk:feedback',e=>{mood(e.detail);if(settings.lessonSound)cue(e.detail);});
- document.addEventListener('chalk:practiceClosed',()=>{next(true);restartAuto();});
+ document.addEventListener('chalk:practiceClosed',()=>{panel('compact');next(true);restartAuto();});
  $('closeSettings').addEventListener('click',closeSettings);
  $('doneSettings').addEventListener('click',closeSettings);
  $('exportBtn').addEventListener('click',exportData);
@@ -282,6 +311,6 @@ function attach(){
  const initial=engine.selectNext(deck(),records);
  setCurrent(initial);
 }
-window.addEventListener('beforeunload',()=>{removeVisibilityListener?.();scheduler.dispose();window.speechSynthesis?.cancel();clearTimeout(speakTimer);clearTimeout(eraseTimer);});
+window.addEventListener('beforeunload',()=>{removeVisibilityListener?.();scheduler.dispose();window.speechSynthesis?.cancel();clearTimeout(speakTimer);clearTimeout(eraseTimer);clearTimeout(speechTimer);});
 attach();
 })();
