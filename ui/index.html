@@ -54,6 +54,7 @@
           <linearGradient id="elephantEar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd9ce"/><stop offset="1" stop-color="#e99691"/></linearGradient>
           <linearGradient id="elephantVest" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#78b39a"/><stop offset="1" stop-color="#397765"/></linearGradient>
           <linearGradient id="elephantGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffebb5"/><stop offset="1" stop-color="#e0a452"/></linearGradient>
+          <linearGradient id="elephantTrunk" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#d7e8dd"/><stop offset=".5" stop-color="#accbc2"/><stop offset="1" stop-color="#88aca4"/></linearGradient>
         </defs>
         <ellipse cx="87" cy="316" rx="48" ry="8" fill="#00130e" opacity=".25"/>
         <path d="M59 247 Q53 272 56 302 Q66 312 81 307 L87 273 L98 307 Q114 313 126 302 L119 244Z" fill="#607a76" stroke="#3d5e58" stroke-width="3"/>
@@ -78,12 +79,19 @@
           <circle class="teacher-eye" cx="69" cy="86" r="5.5" fill="#304f4b"/><circle class="teacher-eye" cx="105" cy="86" r="5.5" fill="#304f4b"/>
           <circle cx="71" cy="83.5" r="2" fill="#fff"/><circle cx="107" cy="83.5" r="2" fill="#fff"/>
           <path d="M53 68 Q64 60 76 67 M98 67 Q110 60 121 68" stroke="#6f918a" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <g class="elephant-trunk">
-            <path d="M82 94 C73 106 71 119 76 131 C82 144 97 146 107 137 C118 128 116 116 108 111 C101 106 93 110 91 117 C89 122 94 127 99 125 C102 124 103 121 101 119" fill="none" stroke="#6f918a" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M82 101 C77 112 76 121 81 129" fill="none" stroke="#e4efeb" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
-            <circle cx="99" cy="119" r="1.2" fill="#527b75"/><circle cx="103" cy="120" r="1.2" fill="#527b75"/>
-          </g>
           <path class="teacher-mouth" d="M78 151 Q87 157 96 150" stroke="#587b74" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <g class="elephant-trunk">
+            <!-- Mimo's long, downturned elephant trunk curls upward at its open tip. -->
+            <path class="trunk-outline" d="M87 113 C83 131 82 149 86 164 C89 181 94 197 108 197 C120 198 129 190 125 180 C123 174 119 173 116 177" fill="none" stroke="#648a86" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="trunk-shape" d="M87 113 C83 131 82 149 86 164 C89 181 94 197 108 197 C120 198 129 190 125 180 C123 174 119 173 116 177" fill="none" stroke="url(#elephantTrunk)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M81 117 C77 130 78 143 81 153" fill="none" stroke="#eff8ef" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+            <path d="M76 137 Q87 145 99 137 M77 155 Q89 163 100 154 M83 175 Q96 181 105 168" fill="none" stroke="#608a84" stroke-width="2.6" stroke-linecap="round" opacity=".75"/>
+            <path d="M79 139 Q87 144 96 140 M81 158 Q89 162 96 158" fill="none" stroke="#d7e9df" stroke-width="1.5" stroke-linecap="round" opacity=".68"/>
+            <ellipse class="elephant-nostril-rim" cx="116" cy="177" rx="10.5" ry="7" transform="rotate(-32 116 177)" fill="#90b4ac" stroke="#638e87" stroke-width="2"/>
+            <ellipse class="elephant-nostril" cx="116" cy="177" rx="5.3" ry="3.5" transform="rotate(-32 116 177)" fill="#315950"/>
+            <ellipse cx="114.5" cy="175.6" rx="2.1" ry="1" transform="rotate(-32 114.5 175.6)" fill="#c0ddd1" opacity=".45"/>
+          </g>
+
           <ellipse cx="52" cy="113" rx="8" ry="5" fill="#ec9f9c" opacity=".58"/><ellipse cx="122" cy="113" rx="8" ry="5" fill="#ec9f9c" opacity=".58"/>
           <path d="M73 36 Q71 28 77 25 Q83 22 86 32 Q90 22 97 25 Q103 28 100 36" fill="#789b9d" stroke="#759791" stroke-width="2" stroke-linecap="round"/>
         </g>

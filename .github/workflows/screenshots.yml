@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/screenshots.yml'
       - 'tests/screenshots.cjs'
+      - 'ui/index.html'
+      - 'ui/styles.css'
+      - 'ui/studio.css'
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   windows-real-screenshots:
-    name: Capture four real Electron views and commit PNGs
+    name: Capture five real Electron views and commit PNGs
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +34,7 @@ jobs:
         run: npm run test:screenshots
       - uses: actions/upload-artifact@v4
         with:
-          name: ChalkLingo-v031-screenshots
+          name: ChalkLingo-v038-screenshots
           path: docs/screenshots/widget-*.png
           if-no-files-found: error
       - name: Publish screenshots to main
@@ -39,13 +42,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/screenshots/widget-compact.png docs/screenshots/widget-settings.png docs/screenshots/widget-voice.png docs/screenshots/widget-practice.png
+          git add docs/screenshots/widget-compact.png docs/screenshots/widget-next-day.png docs/screenshots/widget-settings.png docs/screenshots/widget-voice.png docs/screenshots/widget-practice.png
           $changed = git diff --cached --name-only
           if (-not $changed) {
             Write-Host "Screenshots already match repository"
             exit 0
           }
-          git commit -m "docs: capture real v0.3.1 Windows widget screenshots [skip ci]"
+          git commit -m "docs: refresh real Windows widget screenshots [skip ci]"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main

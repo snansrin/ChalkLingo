@@ -1,10 +1,12 @@
 # CL · ChalkLingo
 
-**v0.3.7 — Mimo adlı sevimli hafıza filiyle, küçük ve sesli masaüstü kelime widget’ı.**
+**v0.3.8 — Mimo adlı sevimli hafıza filiyle, küçük ve sesli masaüstü kelime widget’ı.**
 
 <img src="assets/icon.png" width="64" alt="CL uygulama simgesi" />
 
 CL, Yapışkan Notlar gibi küçük ve çerçevesiz bir Windows masaüstü widget’ıdır. Yeni normal görünüm **320 × 280** mantıksal pikseldir; görev çubuğunda düğmesi yoktur. Yönetim için sistem tepsisinde CL simgesi bulunur. Windows Widget panosunun parçası değildir; arka planda bir masaüstü uygulaması çalışır.
+
+Mimo'nun hortumu yüzünün ortasından aşağı uzanan, boğumlu ve ucu yukarı kıvrılan bir fil hortumudur. Belirgin burun deliği **320 × 280** kompakt boyutta da okunabilecek şekilde yerel SVG ile çizilir. Necati Fil yalnızca hortumun anatomisi için görsel referanstır; Mimo'nun karakteri ve renkleri özgündür.
 
 ## Güncel görünüm
 
@@ -14,7 +16,7 @@ Yeni kelime günü 12 sözcükle açılır; set tamamlandığında Sonraki düğ
 
 <a href="docs/screenshots/widget-next-day.png"><img src="docs/screenshots/widget-next-day.png" width="320" alt="Tamamlanan kelime gününden sonra yeni kelime setini açma düğmesi" /></a>
 
-Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 640** olur; kapatınca küçük hâline ve önceki konumuna döner. Windows ekran ölçeklendirmesi ve kenarlık yuvarlaması birkaç piksellik fark yaratabilir. Görüntüler gerçek Windows uygulamasından alınmıştır.
+Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 640** olur; kapatınca küçük hâline ve önceki konumuna döner. Windows ekran ölçeklendirmesi ve kenarlık yuvarlaması birkaç piksellik fark yaratabilir. Görüntüler gerçek Windows Electron penceresinden alınır. SVG değiştiğinde [GitHub Actions ekran görüntüsü iş akışı](https://github.com/snansrin/ChalkLingo/actions/workflows/screenshots.yml) beş görüntüyü yeniden üretir; en son başarılı çalışma doğrulanmalıdır.
 
 | Ders ve ritim ayarları | Telaffuz ve başlangıç | Aktif hatırlama |
 | --- | --- | --- |
@@ -22,7 +24,7 @@ Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 6
 
 ## Windows’a kurulum
 
-1. **ChalkLingo Setup 0.3.7.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
+1. **ChalkLingo Setup 0.3.8.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
 2. Masaüstünde ve Başlat menüsünde **CL** kısayolu oluşur. CL’yi aç.
 3. İlk açılışta kullanıcı oturumuyla başlama etkinleştirilmeye çalışılır. Ayarlar → **Windows ile başlat** durumunu kontrol edebilir veya kapatabilirsin.
 

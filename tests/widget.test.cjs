@@ -31,6 +31,9 @@ test('compact tutor is Mimo the memory elephant',()=>{
  assert.match(html,/elephantEar/);
  assert.match(html,/rx="60" ry="68"/);
  assert.match(html,/elephant-trunk/);
+ assert.match(html,/elephantTrunk/);
+ assert.match(html,/elephant-nostril/);
+ assert.match(html,/class="trunk-shape"/);
  assert.equal((html.match(/class="elephant-trunk"/g)||[]).length,1);
  assert.equal((html.match(/class="teacher-mouth"/g)||[]).length,1);
  assert.doesNotMatch(html,/owlBody|owlFeather/);

@@ -65,3 +65,10 @@ Paket doğrulaması: release/win-unpacked/ChalkLingo.exe aynı masaüstü testin
 
 - Mimo'nun SVG çizimi daha yuvarlak yavru fil oranlarıyla yenilendi: geniş pembe iç kulaklar, yumuşak mavi-yeşil tonlar, daha büyük/parlak gözler, yanaklar, kıvrık hortum ve küçük altın yıldız rozeti.
 - Gerçek 320×280 kompakt pencere ve 520×640 açılır paneller için ekran görüntüleri yenilendi. Çizim yerel SVG ve hafif CSS animasyonlarıdır; uzak varlık veya ek bağımlılık yoktur.
+
+## 0.3.8 · Mimo'nun hortumu ve ekran görüntüsü otomasyonu
+
+- SVG hortumu yüzün ortasından aşağı sarkacak, üç belirgin kıvrım çizgisi ve yukarı kalkmış ucu olacak şekilde yeniden çizildi. Ucuna ayrı burun deliği eklendi; özgün karakter renkleri korundu.
+- Normal pencere **320 × 280**, ayarlar ve ders paneli **520 × 640** olarak korundu. Yerel SVG dışında görsel bağımlılık yok.
+- Ekran görüntüsü iş akışı artık karakter SVG'si değişince tetiklenir; kompakt, sonraki gün, ayarlar, ses ve alıştırma ekranlarının beşini de main'e gönderir. Görsel test SVG hortum yüksekliğini ve burun deliğini ayrıca denetler.
+- Bu bölüm gerçekleştirilen kod değişikliklerini anlatır; Windows'ta fiziksel kurulum ve yeni CPU/RAM ölçümü henüz doğrulanmadı. GitHub Actions test sonuçları çalıştırma sonrası kontrol edilmelidir.
