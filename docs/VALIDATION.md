@@ -72,3 +72,9 @@ Paket doğrulaması: release/win-unpacked/ChalkLingo.exe aynı masaüstü testin
 - Normal pencere **320 × 280**, ayarlar ve ders paneli **520 × 640** olarak korundu. Yerel SVG dışında görsel bağımlılık yok.
 - Ekran görüntüsü iş akışı artık karakter SVG'si değişince tetiklenir; kompakt, sonraki gün, ayarlar, ses ve alıştırma ekranlarının beşini de main'e gönderir. Görsel test SVG hortum yüksekliğini ve burun deliğini ayrıca denetler.
 - Bu bölüm gerçekleştirilen kod değişikliklerini anlatır; Windows'ta fiziksel kurulum ve yeni CPU/RAM ölçümü henüz doğrulanmadı. GitHub Actions test sonuçları çalıştırma sonrası kontrol edilmelidir.
+
+## 26 Ekim 2026 · Necati karakter çizimi ve kompakt okunabilirlik
+
+- Yerel SVG yeniden çizildi: lila gövde, geniş sarkık kulaklar, koyu mor bıyık, iri gözler, yeşil kıyafet, mavi pantolon ve kökten uca incelen dört belirgin hortum segmenti. Resmî görsel dosyası kopyalanmadı.
+- Üst bardaki **MASAÜSTÜ DİL WIDGET'I** başlığı yalnızca fareyle üzerine gelince/klavye odaklanınca görünür; içerik aşağı itilmez. Ana pencere 320×280, geniş panel 520×640 ölçüsünde kalır. Kompakt yazılar büyütüldü.
+- Otomatik ekran görüntüsü testine karakterin çizim sınırları, burun deliği ve açılır üst bar kontrolleri eklendi. Gerçek Windows ekran görüntüsü ve paketleme sonuçları GitHub Actions üzerinden ayrıca doğrulanmalıdır.
