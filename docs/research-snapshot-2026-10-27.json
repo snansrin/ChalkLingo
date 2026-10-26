@@ -1,0 +1,254 @@
+{
+  "observedDate": "2026-10-27",
+  "method": "Purposive comparison: category search plus established learning/typing benchmarks; not an exhaustive global ranking.",
+  "queries": [
+    "topic:desktop-pet sort:stars-desc",
+    "topic:spaced-repetition sort:stars-desc",
+    "topic:language-learning sort:stars-desc",
+    "desktop pet stars:>1000 sort:stars-desc"
+  ],
+  "repositories": [
+    {
+      "repo": "ayangweb/BongoCat",
+      "url": "https://github.com/ayangweb/BongoCat",
+      "stars": 24265,
+      "forks": 1214,
+      "archived": false,
+      "license": "Apache-2.0",
+      "description": "🐱 BongoCat — A cross-platform interactive desktop pet that brings fun to your desktop!",
+      "api": "https://api.github.com/repos/ayangweb/BongoCat"
+    },
+    {
+      "repo": "LorisYounger/VPet",
+      "url": "https://github.com/LorisYounger/VPet",
+      "stars": 7052,
+      "forks": 703,
+      "archived": false,
+      "license": "Apache-2.0",
+      "description": "虚拟桌宠模拟器 一个开源的桌宠软件, 可以内置到任何WPF应用程序",
+      "api": "https://api.github.com/repos/LorisYounger/VPet"
+    },
+    {
+      "repo": "ankitects/anki",
+      "url": "https://github.com/ankitects/anki",
+      "stars": 32312,
+      "forks": 3381,
+      "archived": false,
+      "license": "NOASSERTION",
+      "description": "Anki is a smart spaced repetition flashcard program",
+      "api": "https://api.github.com/repos/ankitects/anki"
+    },
+    {
+      "repo": "open-spaced-repetition/fsrs4anki",
+      "url": "https://github.com/open-spaced-repetition/fsrs4anki",
+      "stars": 4118,
+      "forks": 165,
+      "archived": false,
+      "license": "MIT",
+      "description": "A modern Anki custom scheduling based on Free Spaced Repetition Scheduler algorithm",
+      "api": "https://api.github.com/repos/open-spaced-repetition/fsrs4anki"
+    },
+    {
+      "repo": "mengxi-ream/read-frog",
+      "url": "https://github.com/mengxi-ream/read-frog",
+      "stars": 10186,
+      "forks": 767,
+      "archived": false,
+      "license": "GPL-3.0",
+      "description": "🐸 Read Frog - Open-source AI language learning & flashcards, an Immersive Translate alternative | 🐸 陪读蛙 - 开源 AI 语言学习与闪词卡，沉浸式翻译替代",
+      "api": "https://api.github.com/repos/mengxi-ream/read-frog"
+    },
+    {
+      "repo": "umlx5h/LLPlayer",
+      "url": "https://github.com/umlx5h/LLPlayer",
+      "stars": 4406,
+      "forks": 275,
+      "archived": false,
+      "license": "GPL-3.0",
+      "description": "The media player for language learning, with dual subtitles, AI-generated subtitles, real-time translation, and more!",
+      "api": "https://api.github.com/repos/umlx5h/LLPlayer"
+    },
+    {
+      "repo": "lingdojo/kana-dojo",
+      "url": "https://github.com/lingdojo/kana-dojo",
+      "stars": 3723,
+      "forks": 3747,
+      "archived": false,
+      "license": "AGPL-3.0",
+      "description": "Aesthetic, minimalist platform for learning Japanese inspired by Duolingo and Monkeytype, built with Next.js and sponsored by Vercel. Beginner-friendly with plenty of good first issues - all contributions are welcome!",
+      "api": "https://api.github.com/repos/lingdojo/kana-dojo"
+    },
+    {
+      "repo": "HabitRPG/habitica",
+      "url": "https://github.com/HabitRPG/habitica",
+      "stars": 14253,
+      "forks": 4462,
+      "archived": false,
+      "license": "NOASSERTION",
+      "description": "A habit tracker app which treats your goals like a Role Playing Game.",
+      "api": "https://api.github.com/repos/HabitRPG/habitica"
+    },
+    {
+      "repo": "RealKai42/qwerty-learner",
+      "url": "https://github.com/RealKai42/qwerty-learner",
+      "stars": 23551,
+      "forks": 2696,
+      "archived": false,
+      "license": "GPL-3.0",
+      "description": "为键盘工作者设计的单词记忆与英语肌肉记忆锻炼软件 / Words learning and English muscle memory training software designed for keyboard workers",
+      "api": "https://api.github.com/repos/RealKai42/qwerty-learner"
+    },
+    {
+      "repo": "monkeytypegame/monkeytype",
+      "url": "https://github.com/monkeytypegame/monkeytype",
+      "stars": 20940,
+      "forks": 3394,
+      "archived": false,
+      "license": "GPL-3.0",
+      "description": "The most customizable typing website with a minimalistic design and a ton of features. Test yourself in various modes, track your progress and improve your speed.",
+      "api": "https://api.github.com/repos/monkeytypegame/monkeytype"
+    }
+  ],
+  "issues": [
+    {
+      "key": "VPet261",
+      "url": "https://github.com/LorisYounger/VPet/issues/261",
+      "title": "Please make the core game with longer progression and better english",
+      "reactions": {
+        "url": "https://api.github.com/repos/LorisYounger/VPet/issues/261/reactions",
+        "total_count": 5,
+        "+1": 5,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "comments": 3,
+      "state": "closed",
+      "created": "2023-10-07T21:42:32Z"
+    },
+    {
+      "key": "VPet409",
+      "url": "https://github.com/LorisYounger/VPet/issues/409",
+      "title": "给《虚拟桌宠模拟器》的一封建议书",
+      "reactions": {
+        "url": "https://api.github.com/repos/LorisYounger/VPet/issues/409/reactions",
+        "total_count": 5,
+        "+1": 1,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 3,
+        "eyes": 1
+      },
+      "comments": 5,
+      "state": "open",
+      "created": "2024-07-23T07:48:28Z"
+    },
+    {
+      "key": "Qwerty904",
+      "url": "https://github.com/RealKai42/qwerty-learner/issues/904",
+      "title": "Frontend in English",
+      "reactions": {
+        "url": "https://api.github.com/repos/RealKai42/qwerty-learner/issues/904/reactions",
+        "total_count": 10,
+        "+1": 10,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "comments": 12,
+      "state": "open",
+      "created": "2025-01-13T16:16:46Z"
+    },
+    {
+      "key": "Bongo1041",
+      "url": "https://github.com/ayangweb/BongoCat/issues/1041",
+      "title": "[bug] maxFPS 不生效：模型仍按屏幕刷新率渲染（Ticker.shared 与 app.ticker 不是同一个）",
+      "reactions": {
+        "url": "https://api.github.com/repos/ayangweb/BongoCat/issues/1041/reactions",
+        "total_count": 1,
+        "+1": 1,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "comments": 0,
+      "state": "closed",
+      "created": "2026-09-21T04:42:19Z"
+    },
+    {
+      "key": "Qwerty511",
+      "url": "https://github.com/RealKai42/qwerty-learner/issues/511",
+      "title": "希望能增加自定义词典和收藏功能",
+      "reactions": {
+        "url": "https://api.github.com/repos/RealKai42/qwerty-learner/issues/511/reactions",
+        "total_count": 4,
+        "+1": 4,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "comments": 1,
+      "state": "closed",
+      "created": "2023-05-25T02:14:33Z"
+    },
+    {
+      "key": "Qwerty737",
+      "url": "https://github.com/RealKai42/qwerty-learner/issues/737",
+      "title": "更新计划",
+      "reactions": {
+        "url": "https://api.github.com/repos/RealKai42/qwerty-learner/issues/737/reactions",
+        "total_count": 8,
+        "+1": 0,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 8,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "comments": 9,
+      "state": "open",
+      "created": "2024-01-12T07:20:50Z"
+    },
+    {
+      "key": "Monkey44",
+      "url": "https://github.com/monkeytypegame/monkeytype/issues/44",
+      "title": "Keep a list of most mistyped words / letters",
+      "reactions": {
+        "url": "https://api.github.com/repos/monkeytypegame/monkeytype/issues/44/reactions",
+        "total_count": 88,
+        "+1": 88,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "comments": 29,
+      "state": "open",
+      "created": "2020-05-21T19:24:08Z"
+    }
+  ]
+}

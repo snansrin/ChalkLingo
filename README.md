@@ -19,7 +19,7 @@ Masaüstünde yaşayan, seninle öğrenen küçük bir arkadaş. Mochi’ye doku
 
 ## Kurulum
 
-Windows için `Mochi-Setup-1.0.0.exe` kurulum paketini veya `Mochi-Portable-1.0.0.exe` taşınabilir sürümünü kullan. Pencerenin üstünden sürükleyerek yerini değiştir. `−` sistem tepsisine gizler; tepsi menüsündeki **Çıkış** uygulamayı tamamen kapatır. Otomatik başlangıç varsayılan olarak kapalıdır.
+Windows için `Mochi-Setup-1.1.0.exe` kurulum paketini veya `Mochi-Portable-1.1.0.exe` taşınabilir sürümünü kullan. Pencerenin üstünden sürükleyerek yerini değiştir. `−` sistem tepsisine gizler; tepsi menüsündeki **Çıkış** uygulamayı tamamen kapatır. Otomatik başlangıç varsayılan olarak kapalıdır.
 
 İngilizce başlangıç telaffuzları pakette WAV olarak bulunur. Diğer içeriklerde işletim sisteminin ilgili dildeki konuşma sesi kullanılır; uygun ses yüklü değilse dinleme çalışmayabilir. Mikrofonla konuşma değerlendirmesi yapılmaz.
 
@@ -51,6 +51,23 @@ npm run dist:win
 
 ## Güvenlik ve kaynak kullanımı
 
-Electron sandbox, context isolation, kapalı Node integration, dar IPC yüzeyi, izin engelleme ve CSP kullanılır. Dış ağ istekleri ve yeni pencereler engellenir. Animasyonlar CSS/SVG ile çalışır; fare güncellemeleri `requestAnimationFrame` ile sınırlandırılır. Gizlenen pencerede animasyonlar ve ses durur; tek bir 15 saniyelik zamanlayıcı keşif aralığını kontrol eder. Electron çalışma zamanı nedeniyle bellek maliyeti sıfır değildir. [Doğrulama kaydı](docs/VALIDATION.md).
+Electron sandbox, context isolation, kapalı Node integration, dar IPC yüzeyi, izin engelleme ve CSP kullanılır. Dış ağ istekleri ve yeni pencereler engellenir. Animasyonlar CSS/SVG ile çalışır; fare güncellemeleri `requestAnimationFrame` ile sınırlandırılır. Gizlenen pencerede animasyonlar ve ses durur; tek bir 15 saniyelik zamanlayıcı keşif aralığını kontrol eder. Electron çalışma zamanı nedeniyle bellek maliyeti sıfır değildir. [Doğrulama kaydı](docs/VALIDATION-1.1.md).
 
 Eski ChalkLingo tahta arayüzü, fil karakteri ve yerel LLM köprüsü bu sürümde kaldırıldı. Önceki kaynaklar Git geçmişinde bulunabilir. MIT lisansı.
+
+## Mochi 1.1 - araştırmadan gelen yeni etkileşimler
+
+[27 Ekim 2026 tarihli kaynaklı araştırma](docs/RESEARCH-2026-10-27.md), 10 yüksek yıldızlı ilgili projeyi ve kullanıcı geri bildirimlerini karşılaştırır. [Sayısal gözlem kaydı](docs/research-snapshot-2026-10-27.json) yıldızları, issue tepkilerini ve kaynak uç noktalarını içerir. Bu karşılaştırma bütün GitHub’ın kesin sıralaması veya temsilî bir kullanıcı anketi değildir.
+
+- **Bugünkü rotam:** 3 / 5 / 10 farklı doğru hatırlama hedefi, son yedi gün ve anlam seçimiyle yazmayı birleştiren kısa bir tur. Zamanı geçmiş tekrarlar yeni kartlardan önce gelir.
+- **Kelime defteri:** arama, favoriler, 500 adede kadar kişisel kelime/anlam/örnek, arşivleme ve geri alma. Listendeki kartlarla doğrudan çalışabilirsin; yedekler özel kayıtları da taşır.
+- **Hata atölyesi:** son denemede zorlandığın kelimeler kapanıp açılınca kaybolmaz. İleri tarihli kartlarla serbest çalışma takvimi, XP’yi ve günlük hedefi ilerletmez; yardımsız doğru hatırlama aktif hata kaydını çözebilir.
+- **Küçük hazineler:** 3 / 10 / 20 / 35 farklı başarılı kartla özgün yaprak, çiçek, gezgin ve yıldız aksesuarları açılır. Kazanılan aksesuarlar sonraki hatada kaybolmaz; sevmek öğrenme puanı kazandırmaz.
+- **Daha akıcı etkileşim:** seçeneklerde 1-4, cevap sonrasında Enter, dinlemede R; cümle kelimelerini sürükleyebilir veya dokunarak taşıyabilirsin.
+- **Masaüstüne uyum:** kısa ekranlarda pencere yüksekliği çalışma alanına sığar. Küçük arkadaş modundaki ◇ tıklamaları masaüstüne geçirir; tepsideki Mochi’ye tıklayarak etkileşimi geri açarsın. Yeni sakin boşta pozları mevcut zamanlayıcıyı kullanır.
+
+<table><tr><td><img src="docs/screenshots/mochi-route.png" width="280" alt="Günlük rota"></td><td><img src="docs/screenshots/mochi-journal.png" width="280" alt="Kişisel kelime defteri"></td><td><img src="docs/screenshots/mochi-wardrobe.png" width="280" alt="Öğrenmeyle açılan aksesuarlar"></td></tr></table>
+
+1.0 ilerlemesi ve ayarları otomatik okunur; eski sürümün tutmadığı ayrıntılı günlük/hata olayları geriye dönük uydurulmaz. Yeni olay geçmişi son 2.000 kayıtla sınırlıdır. Aksesuar açılımları ve kartların ulaştığı en iyi seviye ayrıca korunur. Bu sürüm FSRS, mikrofonla değerlendirme veya otomatik çeviri eklemez. Kullanıcının eklediği içeriğin doğruluğu otomatik denetlenmez.
+
+Yeni masaüstü akışlarını test etmek için `npm run test:studio` çalıştır. [1.1 doğrulama kaydı](docs/VALIDATION-1.1.md) kapsamı ve sınırlamaları açıklar. Kurulum dosyaları artık `Mochi-Setup-1.1.0.exe` ve `Mochi-Portable-1.1.0.exe` adlarını taşır.
