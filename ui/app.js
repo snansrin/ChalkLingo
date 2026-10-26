@@ -83,7 +83,7 @@ function setCurrent(card){
 function next(immediate=false){
  if(transitioning)return;
  scheduler.pause();clearTimeout(speakTimer);
- if(window.speechSynthesis)window.speechSynthesis.cancel();
+ cancelPronunciation();
  const show=()=>setCurrent(engine.selectNext(deck(),records,current?.id));
  if(immediate||settings.reduceMotion){show();return;}
  transitioning=true;
@@ -103,6 +103,9 @@ function rate(score){
  next();
 }
 let speechTimer=null,startupState=null;
+const recordedVoice=new Audio();recordedVoice.preload='none';
+recordedVoice.onended=()=>document.body.classList.remove('speaking');
+function cancelPronunciation(){recordedVoice.pause();recordedVoice.currentTime=0;window.speechSynthesis?.cancel();document.body.classList.remove('speaking');}
 function panel(mode){document.body.dataset.panel=mode;window.chalkDesktop?.layout?.(mode)?.catch(()=>{});}
 function feedback(message){const el=$('speechFeedback');el.textContent=message;el.hidden=!message;clearTimeout(speechTimer);if(message)speechTimer=setTimeout(()=>{el.hidden=true;},6500);}
 function voices(language=$('languageSelect').value||settings.language){
@@ -112,6 +115,7 @@ function voices(language=$('languageSelect').value||settings.language){
  for(const v of list){const opt=document.createElement('option');opt.value=v.voiceURI||v.name;opt.textContent=v.name+' · '+v.lang;select.append(opt);}
  const wanted=language===settings.language?settings.voiceId:'auto';
  select.value=list.some(v=>(v.voiceURI||v.name)===wanted)?wanted:'auto';
+ if(language==='en'){auto.textContent='Otomatik · çevrimdışı İngilizce (Zira)';$('voiceStatus').textContent='32 İngilizce ders kaydı hazır · Microsoft Zira (ABD). İstersen kurulu bir İngilizce sesi seç.';return;}
  $('voiceStatus').textContent=list.length?list.length+' uygun ses yüklü.':'Bu dilin sesi yok. Windows → Saat ve Dil → Konuşma bölümünden ses yükle.';
 }
 async function startup(){
@@ -123,8 +127,13 @@ async function startup(){
  }catch{$('startupStatus').textContent='Başlangıç ayarı okunamadı.';}
 }
 function speak(){
- if(!current||!window.speechSynthesis)return;
- window.speechSynthesis.cancel();
+ if(!current)return;
+ if(current.language==='en'&&settings.voiceId==='auto'){
+  cancelPronunciation();feedback('');recordedVoice.src='pronunciation/'+current.id.replaceAll(':','-')+'.wav';recordedVoice.volume=settings.volume;
+  document.body.classList.add('speaking');recordedVoice.play().catch(()=>{document.body.classList.remove('speaking');feedback('İngilizce ses kaydı açılamadı.');});return;
+ }
+ if(!window.speechSynthesis)return;
+ cancelPronunciation();
  const voice=window.ChalkSpeech.choose(window.speechSynthesis.getVoices(),current.language,settings.voiceId);
  if(!voice){feedback('Bu dilde uygun ses yok. Yanlış aksana düşmek yerine telaffuzu durdurdum. Windows dil ayarlarından ses yükle.');return;}
  feedback('');
@@ -172,7 +181,7 @@ function syncForm(){
 }
 function applySettings(){
  const old={...settings};
- cancelTransition();clearTimeout(speakTimer);window.speechSynthesis?.cancel();
+ cancelTransition();clearTimeout(speakTimer);cancelPronunciation();
  settings=engine.sanitizeSettings({
   language:$('languageSelect').value,level:$('levelSelect').value,mode:$('modeSelect').value,
   notificationSound:$('notificationToggle').checked,lessonSound:$('lessonSoundToggle').checked,
@@ -200,7 +209,7 @@ function setCurrentWithoutCounting(){
 }
 function openSettings(){
  if(!$('practiceOverlay').hidden)return;
- cancelTransition();clearTimeout(speakTimer);window.speechSynthesis?.cancel();document.body.classList.add('settings-open');
+ cancelTransition();clearTimeout(speakTimer);cancelPronunciation();document.body.classList.add('settings-open');
  scheduler.pause();
  modalWasOpenedFrom=document.activeElement;
  syncForm();
@@ -263,7 +272,7 @@ function attach(){
  $('speakBtn').addEventListener('click',speak);
  $('settingsBtn').addEventListener('click',openSettings);
  document.addEventListener('chalk:review',()=>{try{records=engine.normalizeRecords(JSON.parse(localStorage.getItem(STORAGE)||'{}').records);}catch{}updateProgress();});
- document.addEventListener('chalk:practiceOpened',()=>{panel('expanded');cancelTransition();scheduler.pause();clearTimeout(speakTimer);window.speechSynthesis?.cancel();mood('thinking');});
+ document.addEventListener('chalk:practiceOpened',()=>{panel('expanded');cancelTransition();scheduler.pause();clearTimeout(speakTimer);cancelPronunciation();mood('thinking');});
  document.addEventListener('chalk:feedback',e=>{mood(e.detail);if(settings.lessonSound)cue(e.detail);});
  document.addEventListener('chalk:practiceClosed',()=>{panel('compact');next(true);restartAuto();});
  $('closeSettings').addEventListener('click',closeSettings);
@@ -275,7 +284,7 @@ function attach(){
  const visibilityChanged=()=>{
   const hidden=document.hidden||desktopHidden;
   document.body.classList.toggle('suspended',hidden);
-  if(hidden){cancelTransition();scheduler.pause();clearTimeout(speakTimer);window.speechSynthesis?.cancel();}else restartAuto();
+  if(hidden){cancelTransition();scheduler.pause();clearTimeout(speakTimer);cancelPronunciation();}else restartAuto();
  };
  document.addEventListener('visibilitychange',visibilityChanged);
  removeVisibilityListener=window.chalkDesktop?.onVisibility(hidden=>{desktopHidden=hidden;visibilityChanged();});
@@ -311,6 +320,6 @@ function attach(){
  const initial=engine.selectNext(deck(),records);
  setCurrent(initial);
 }
-window.addEventListener('beforeunload',()=>{removeVisibilityListener?.();scheduler.dispose();window.speechSynthesis?.cancel();clearTimeout(speakTimer);clearTimeout(eraseTimer);clearTimeout(speechTimer);});
+window.addEventListener('beforeunload',()=>{removeVisibilityListener?.();scheduler.dispose();cancelPronunciation();clearTimeout(speakTimer);clearTimeout(eraseTimer);clearTimeout(speechTimer);});
 attach();
 })();

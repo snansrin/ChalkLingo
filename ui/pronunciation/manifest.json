@@ -1,0 +1,162 @@
+[
+  {
+    "id": "en:vocab:000",
+    "text": "hello",
+    "file": "en-vocab-000.wav"
+  },
+  {
+    "id": "en:vocab:001",
+    "text": "thank you",
+    "file": "en-vocab-001.wav"
+  },
+  {
+    "id": "en:vocab:002",
+    "text": "water",
+    "file": "en-vocab-002.wav"
+  },
+  {
+    "id": "en:vocab:003",
+    "text": "book",
+    "file": "en-vocab-003.wav"
+  },
+  {
+    "id": "en:vocab:004",
+    "text": "friend",
+    "file": "en-vocab-004.wav"
+  },
+  {
+    "id": "en:vocab:005",
+    "text": "today",
+    "file": "en-vocab-005.wav"
+  },
+  {
+    "id": "en:vocab:006",
+    "text": "please",
+    "file": "en-vocab-006.wav"
+  },
+  {
+    "id": "en:vocab:007",
+    "text": "home",
+    "file": "en-vocab-007.wav"
+  },
+  {
+    "id": "en:vocab:008",
+    "text": "appointment",
+    "file": "en-vocab-008.wav"
+  },
+  {
+    "id": "en:vocab:009",
+    "text": "usually",
+    "file": "en-vocab-009.wav"
+  },
+  {
+    "id": "en:vocab:010",
+    "text": "improve",
+    "file": "en-vocab-010.wav"
+  },
+  {
+    "id": "en:vocab:011",
+    "text": "reliable",
+    "file": "en-vocab-011.wav"
+  },
+  {
+    "id": "en:vocab:012",
+    "text": "sustainable",
+    "file": "en-vocab-012.wav"
+  },
+  {
+    "id": "en:vocab:013",
+    "text": "although",
+    "file": "en-vocab-013.wav"
+  },
+  {
+    "id": "en:vocab:014",
+    "text": "nevertheless",
+    "file": "en-vocab-014.wav"
+  },
+  {
+    "id": "en:vocab:015",
+    "text": "scrutinize",
+    "file": "en-vocab-015.wav"
+  },
+  {
+    "id": "en:vocab:016",
+    "text": "notwithstanding",
+    "file": "en-vocab-016.wav"
+  },
+  {
+    "id": "en:vocab:017",
+    "text": "ubiquitous",
+    "file": "en-vocab-017.wav"
+  },
+  {
+    "id": "en:sentence:000",
+    "text": "How are you?",
+    "file": "en-sentence-000.wav"
+  },
+  {
+    "id": "en:sentence:001",
+    "text": "What is your name?",
+    "file": "en-sentence-001.wav"
+  },
+  {
+    "id": "en:sentence:002",
+    "text": "Could you help me?",
+    "file": "en-sentence-002.wav"
+  },
+  {
+    "id": "en:sentence:003",
+    "text": "I have been learning English for a year.",
+    "file": "en-sentence-003.wav"
+  },
+  {
+    "id": "en:sentence:004",
+    "text": "If I had more time, I would travel.",
+    "file": "en-sentence-004.wav"
+  },
+  {
+    "id": "en:sentence:005",
+    "text": "Had I known, I would have called.",
+    "file": "en-sentence-005.wav"
+  },
+  {
+    "id": "en:sentence:006",
+    "text": "Rarely have I encountered such clarity.",
+    "file": "en-sentence-006.wav"
+  },
+  {
+    "id": "en:grammar:000",
+    "text": "I am / You are / He is",
+    "file": "en-grammar-000.wav"
+  },
+  {
+    "id": "en:grammar:001",
+    "text": "a / an",
+    "file": "en-grammar-001.wav"
+  },
+  {
+    "id": "en:grammar:002",
+    "text": "Past simple",
+    "file": "en-grammar-002.wav"
+  },
+  {
+    "id": "en:grammar:003",
+    "text": "Present perfect",
+    "file": "en-grammar-003.wav"
+  },
+  {
+    "id": "en:grammar:004",
+    "text": "Passive voice",
+    "file": "en-grammar-004.wav"
+  },
+  {
+    "id": "en:grammar:005",
+    "text": "Inversion",
+    "file": "en-grammar-005.wav"
+  },
+  {
+    "id": "en:grammar:006",
+    "text": "Subjunctive in formal demands",
+    "file": "en-grammar-006.wav"
+  }
+]

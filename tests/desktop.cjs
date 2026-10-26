@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const repo=path.resolve(__dirname,'..');
 const qa=path.join(repo,'.qa');fs.mkdirSync(qa,{recursive:true});
 (async()=>{
- const app=await electron.launch({executablePath:process.env.CHALK_EXECUTABLE||require('electron'),args:[...(process.env.CHALK_EXECUTABLE?[]:[repo]),'--user-data-dir='+path.join(qa,'profile-'+Date.now())],timeout:30000});
+ const app=await electron.launch({executablePath:process.env.CHALK_EXECUTABLE||require('electron'),args:[...(process.env.CHALK_EXECUTABLE?[]:[repo]),'--chalk-test','--user-data-dir='+path.join(qa,'profile-'+Date.now())],timeout:30000});
  try{
  const page=await app.firstWindow();const errors=[];page.on('pageerror',e=>{errors.push(e.message);console.log('PAGE ERROR',e.stack);});
  await page.waitForSelector('#lessonFront:not(:empty)');

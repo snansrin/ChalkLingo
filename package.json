@@ -1,6 +1,6 @@
 {
   "name": "chalklingo",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A research-informed interactive chalkboard language tutor with optional local LLM",
   "author": "ChalkLingo Contributors",
   "license": "MIT",
@@ -47,7 +47,14 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "shortcutName": "CL",
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "runAfterFinish": false,
+      "uninstallDisplayName": "ChalkLingo (CL)"
     },
     "mac": {
       "category": "public.app-category.education",

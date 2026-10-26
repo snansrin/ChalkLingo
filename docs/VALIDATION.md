@@ -40,3 +40,7 @@ Gerçek Ollama modeli indirilmedi; cevap kalitesi ve kaynak tüketimi ayrıca s�
 IPC doğru ana frame ve tam URL gerektirir. Tek model isteği, gerçek akış boyutu sınırı, sabit yerel uç nokta, yönlendirme yasağı ve zaman aşımı vardır. Konum toplu yazılır; ikinci açılış mevcut pencereyi getirir. Başlangıç kaydı, sistem ayarı değişikliği, shell komutu veya uzak kod yürütme eklenmedi. Model için işletim sistemi seviyesinde CPU/RAM/GPU kotası uygulanmaz.
 
 Paket doğrulaması: release/win-unpacked/ChalkLingo.exe aynı masaüstü testinden geçti; renderer hatası yok. İlk etkileşim denemesi ayar paneli açık kaldığı için zaman aşımına uğradı; tek başına yeniden çalıştırılan tam test başarılı oldu.
+
+## 0.3.2 · CL kurulumu
+33 birim/güvenlik testi geçti. Gerçek Windows widget ve ders testleri, kurulu uygulama üzerinde ders/ritim testi başarılı. 32 İngilizce kartın Zira WAV kayıtları yaklaşık 2,5 MB; yüklenme ve oynatma/iptal davranışı test edildi. CL kullanıcı hesabına NSIS ile kuruldu (çıkış kodu 0); masaüstü CL kısayolu, sürüm 0.3.2.0, çalışan pencere ve HKCU kullanıcı başlangıç kaydı doğrulandı. Yeniden başlatma yapılmadı; oturum açma davranışı kayıt düzeyinde doğrulandı. Güvenlik ayarlarına müdahale edilmedi.
+%125 Windows ölçeğinde geçici panel içeriği 520×642 ölçülebildi. Testler kenarlık yuvarlamasında en fazla 3 mantıksal piksel sapmasına izin verir. README PNG'leri izole test profilinden alınmıştır; başlangıç kaydı test modunda oluşturulmaz.
