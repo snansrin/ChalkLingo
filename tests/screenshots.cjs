@@ -18,6 +18,16 @@ fs.mkdirSync(output,{recursive:true});
   const page=await application.firstWindow();
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.waitForSelector('#lessonFront:not(:empty)');
+  await page.evaluate(()=>{
+   const key='chalklingo.v1',saved=JSON.parse(localStorage.getItem(key)||'{}');
+   saved.settings={...saved.settings,language:'en',level:'A1',mode:'vocab'};
+   saved.records={};saved.dayNumber=1;saved.dayIsReview=false;
+   saved.dayDeckIds=Array.from({length:12},(_,i)=>`en:vocab:${String(18+i).padStart(3,'0')}`);
+   localStorage.setItem(key,JSON.stringify(saved));
+  });
+  await page.reload();
+  await page.waitForSelector('#lessonFront:not(:empty)');
+  await page.waitForFunction(()=>document.getElementById('progressText').textContent.includes('GÜN 1'));
   await page.waitForTimeout(900);
   const windowBounds=()=>application.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].getContentBounds());
   async function snap(name,width,height){
@@ -33,10 +43,20 @@ fs.mkdirSync(output,{recursive:true});
    console.log(name,rect.width+'x'+rect.height,png.length+' bytes');
   }
   await snap('widget-compact.png',360,340);
+  await page.evaluate(()=>{
+   const key='chalklingo.v1',saved=JSON.parse(localStorage.getItem(key));let records={};
+   for(const id of saved.dayDeckIds)records=window.ChalkEngine.review(records,id,'good');
+   saved.records=records;localStorage.setItem(key,JSON.stringify(saved));
+  });
+  await page.reload();
+  await page.waitForFunction(()=>document.getElementById('nextBtn').textContent.includes('Yeni kelime günü'));
+  await page.waitForTimeout(300);
+  await snap('widget-next-day.png',360,340);
   await page.locator('#board').click();
   await page.waitForTimeout(600);
   await page.locator('#settingsBtn').click();
   await page.waitForFunction(()=>document.getElementById('settingsOverlay').hidden===false);
+  assert.match(await page.locator('#voiceStatus').textContent(),/^49 İngilizce ders kaydı hazır/);
   await page.waitForTimeout(250);
   await snap('widget-settings.png',520,640);
   await page.locator('#startupToggle').scrollIntoViewIfNeeded();

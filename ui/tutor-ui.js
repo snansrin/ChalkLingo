@@ -15,7 +15,15 @@
    try{localStorage.setItem(storageKey,JSON.stringify(current));}catch{/* storage disabled */}
    document.dispatchEvent(new CustomEvent('chalk:review',{detail:{id,grade}}));
  }
- function deck(){const s=engine.sanitizeSettings(data().settings,Object.keys(window.CHALK_LESSONS.packs));return engine.getDeck(lessons,s);}
+ function deck(){
+   const saved=data(),s=engine.sanitizeSettings(saved.settings,Object.keys(window.CHALK_LESSONS.packs));
+   if(s.mode==='vocab'&&Array.isArray(saved.dayDeckIds)){
+     const byId=new Map(lessons.map(item=>[item.id,item]));
+     const daily=saved.dayDeckIds.map(id=>byId.get(id)).filter(item=>item?.language===s.language&&item.mode==='vocab');
+     if(daily.length)return daily;
+   }
+   return engine.getDeck(lessons,s);
+ }
  function setText(el,value){el.textContent=value||'';}
  function open(){
    lastFocus=document.activeElement;

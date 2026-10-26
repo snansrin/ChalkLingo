@@ -44,3 +44,12 @@ Paket doğrulaması: release/win-unpacked/ChalkLingo.exe aynı masaüstü testin
 ## 0.3.2 · CL kurulumu
 33 birim/güvenlik testi geçti. Gerçek Windows widget ve ders testleri, kurulu uygulama üzerinde ders/ritim testi başarılı. 32 İngilizce kartın Zira WAV kayıtları yaklaşık 2,5 MB; yüklenme ve oynatma/iptal davranışı test edildi. CL kullanıcı hesabına NSIS ile kuruldu (çıkış kodu 0); masaüstü CL kısayolu, sürüm 0.3.2.0, çalışan pencere ve HKCU kullanıcı başlangıç kaydı doğrulandı. Yeniden başlatma yapılmadı; oturum açma davranışı kayıt düzeyinde doğrulandı. Güvenlik ayarlarına müdahale edilmedi.
 %125 Windows ölçeğinde geçici panel içeriği 520×642 ölçülebildi. Testler kenarlık yuvarlamasında en fazla 3 mantıksal piksel sapmasına izin verir. README PNG'leri izole test profilinden alınmıştır; başlangıç kaydı test modunda oluşturulmaz.
+
+## 0.3.5 · Günlük kelime akışı ve Lumi
+
+- İngilizce A1'e 17 kelime eklendi. Önceki ders numaraları sabit kaldı; toplam ders sayısı 229, İngilizce çevrimdışı Microsoft Zira kaydı 49 oldu. Yeni kelimeler dahil manifest/dosya eşleşmesi doğrulandı.
+- Tamamlanan karışık deste Sonraki düğmesini **Yeni kelime günü** olarak gösteriyor. Her set 12 kart; yeni kartlar öğrenilmiş durumuna göre dilden ve seçili seviyeden başlayıp ilerliyor. Son yeni kelimelerden sonra tekrara döner. 5, 10 veya 15 alıştırma oturum hedefi oturumu sonlandırmıyor.
+- Beş gerçek Electron ekran görüntüsü güncel küçük widget, tamamlanan gün düğmesi, ayarlar, telaffuz ve ders ekranlarını gösteriyor. Ekran görüntüsü akışı ve UI JavaScript hataları geçti; `npm run lint` geçti.
+- Windows kullanıcı oturum açma API'si özel kayıt adına göre `openAtLogin: false` gösterse de `launchItems` içinde aynı EXE yolu için etkin kullanıcı kaydı verdi. Uygulama durumu bu kaydı kontrol edecek şekilde güncellendi; kurulu widget ayarında **Windows açılışında: aktif** doğrulandı.
+- NSIS 0.3.5 kullanıcı kurulum kodu 0 ile tamamlandı. EXE `0.3.5.0`, CL masaüstü kısayolu hedefi kurulu EXE ve simge kaynağı EXE. Kurulu widget çalışıyor ve 0.3.5 içerikleri gösteriyor. Kod imzalama sertifikası yok.
+- Ek bağımlılık veya sürekli kontrol döngüsü eklenmedi. Ders seçimi mevcut sabit listede çalışıyor; var olan tek zamanlayıcı ve gizli animasyonu askıya alma davranışı korundu. Bu sürüm için yeni CPU/RAM uzun süre ölçümü yapılmadı.

@@ -90,6 +90,91 @@
     "file": "en-vocab-017.wav"
   },
   {
+    "id": "en:vocab:018",
+    "text": "family",
+    "file": "en-vocab-018.wav"
+  },
+  {
+    "id": "en:vocab:019",
+    "text": "morning",
+    "file": "en-vocab-019.wav"
+  },
+  {
+    "id": "en:vocab:020",
+    "text": "evening",
+    "file": "en-vocab-020.wav"
+  },
+  {
+    "id": "en:vocab:021",
+    "text": "school",
+    "file": "en-vocab-021.wav"
+  },
+  {
+    "id": "en:vocab:022",
+    "text": "work",
+    "file": "en-vocab-022.wav"
+  },
+  {
+    "id": "en:vocab:023",
+    "text": "food",
+    "file": "en-vocab-023.wav"
+  },
+  {
+    "id": "en:vocab:024",
+    "text": "eat",
+    "file": "en-vocab-024.wav"
+  },
+  {
+    "id": "en:vocab:025",
+    "text": "drink",
+    "file": "en-vocab-025.wav"
+  },
+  {
+    "id": "en:vocab:026",
+    "text": "want",
+    "file": "en-vocab-026.wav"
+  },
+  {
+    "id": "en:vocab:027",
+    "text": "need",
+    "file": "en-vocab-027.wav"
+  },
+  {
+    "id": "en:vocab:028",
+    "text": "happy",
+    "file": "en-vocab-028.wav"
+  },
+  {
+    "id": "en:vocab:029",
+    "text": "small",
+    "file": "en-vocab-029.wav"
+  },
+  {
+    "id": "en:vocab:030",
+    "text": "big",
+    "file": "en-vocab-030.wav"
+  },
+  {
+    "id": "en:vocab:031",
+    "text": "where",
+    "file": "en-vocab-031.wav"
+  },
+  {
+    "id": "en:vocab:032",
+    "text": "when",
+    "file": "en-vocab-032.wav"
+  },
+  {
+    "id": "en:vocab:033",
+    "text": "family member",
+    "file": "en-vocab-033.wav"
+  },
+  {
+    "id": "en:vocab:034",
+    "text": "help",
+    "file": "en-vocab-034.wav"
+  },
+  {
     "id": "en:sentence:000",
     "text": "How are you?",
     "file": "en-sentence-000.wav"

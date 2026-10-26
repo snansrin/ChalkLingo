@@ -1,6 +1,6 @@
 # CL · ChalkLingo
 
-**v0.3.2 — Masaüstünde küçük, sesli bir dil öğrenme tahtası.**
+**v0.3.5 — Masaüstünde küçük, sesli bir dil öğrenme tahtası.**
 
 <img src="assets/icon.png" width="64" alt="CL uygulama simgesi" />
 
@@ -10,6 +10,10 @@ CL, Yapışkan Notlar gibi küçük ve çerçevesiz bir Windows masaüstü widge
 
 <a href="docs/screenshots/widget-compact.png"><img src="docs/screenshots/widget-compact.png" width="360" alt="CL küçük masaüstü widget'ı" /></a>
 
+Yeni kelime günü 12 sözcükle açılır; set tamamlandığında Sonraki düğmesi sıradaki güne dönüşür:
+
+<a href="docs/screenshots/widget-next-day.png"><img src="docs/screenshots/widget-next-day.png" width="360" alt="Tamamlanan kelime gününden sonra yeni kelime setini açma düğmesi" /></a>
+
 Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 640** olur; kapatınca küçük hâline ve önceki konumuna döner. Windows ekran ölçeklendirmesi ve kenarlık yuvarlaması birkaç piksellik fark yaratabilir. Görüntüler gerçek Windows uygulamasından alınmıştır.
 
 | Ders ve ritim ayarları | Telaffuz ve başlangıç | Aktif hatırlama |
@@ -18,7 +22,7 @@ Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 6
 
 ## Windows’a kurulum
 
-1. **ChalkLingo Setup 0.3.2.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
+1. **ChalkLingo Setup 0.3.5.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
 2. Masaüstünde ve Başlat menüsünde **CL** kısayolu oluşur. CL’yi aç.
 3. İlk açılışta kullanıcı oturumuyla başlama etkinleştirilmeye çalışılır. Ayarlar → **Windows ile başlat** durumunu kontrol edebilir veya kapatabilirsin.
 
@@ -29,9 +33,10 @@ Taşınabilir EXE de üretilebilir; sabit kurulum ve açılışta başlama için
 ## Günlük kullanım
 
 - Başlıktan sürükleyerek konumlandır; konum cihazda saklanır. **Her zaman üstte** isteğe bağlıdır, varsayılan kapalıdır.
-- Tahtaya tıkla veya **Sonraki / Space** ile yeni karta geç.
+- Tahtaya tıkla veya **Sonraki / Space** ile yeni karta geç. A1 karışık destesindeki 12 kart tamamlandığında **Yeni kelime günü** görünür; yeni İngilizce kelimeler otomatik açılır.
+- Her kelime günü 12 sözcükle başlar. Günlük set sınırı içerik sınırı değildir: **Sonraki** tamamlanan setten sonra sıradaki yeni kelimeleri getirir. Kelimeler seviyeler boyunca ilerler; yeni sözcükler bittiğinde aralıklı tekrar sürer. Günü beklemek gerekmez, sonraki sete hemen geçebilirsin.
 - **Öğrendim / 2** kartı işaretler; **↶ / 1** tekrar sırasına alır.
-- **Çalış** ile 5, 10 veya 15 alıştırmalık oturuma gir. Yanlış cevapta ipucu, ardından çözüm ve tekrar planı gösterilir.
+- **Çalış** ile 5, 10 veya 15 alıştırmalık oturum hedefi seç. Bu sayı alıştırma hedefidir; bitince yeni oturum başlatıp çalışmayı sürdürebilirsin. Yanlış cevapta ipucu, ardından çözüm ve aralıklı tekrar planı gösterilir.
 - **♫ / R** telaffuz; **⚙ / sağ tık / S** ayarlar; **Escape** panelden dönüş.
 - **− ve ×** uygulamayı kapatmak yerine tepsiye gizler. CL tepsi simgesine çift tıklayarak aç; gerçekten çıkmak için tepsi menüsündeki **Uygulamadan çık** seçeneğini kullan.
 
@@ -41,13 +46,13 @@ Otomatik geçiş kapalı olabilir veya **30 saniye, 1/2/5/10/15/30 dakika, 1/2 s
 
 Gizliyken, ayarlar veya ders açıkken otomatik kart akışı duraklar. Geri dönünce kaçırılan bildirimler üst üste çalmaz. Bildirimler uygulama içi sestir; Windows bildirim merkezine mesaj gönderilmez.
 
-**İngilizce:** 32 mevcut İngilizce dersin özgün metni, Windows’un **Microsoft Zira Desktop (en-US)** sesiyle hazırlanmış çevrimdışı WAV kayıtlarıyla gelir. Otomatik ses seçiminde bu kayıtlar kullanılır; internet veya İngilizce ses paketi kurulumu gerekmez. Bu sentetik İngilizce sestir, insan stüdyo kaydı değildir. Kurulu başka bir İngilizce sesi ayrıca seçebilirsin.
+**İngilizce:** 49 mevcut İngilizce dersin özgün metni, Windows’un **Microsoft Zira Desktop (en-US)** sesiyle hazırlanmış çevrimdışı WAV kayıtlarıyla gelir. Yeni başlangıç kelimeleri de bu kayıtlarla telaffuz edilir. Otomatik ses seçiminde kayıtlar kullanılır; internet veya İngilizce ses paketi kurulumu gerekmez. Bu sentetik İngilizce sestir, insan stüdyo kaydı değildir. Kurulu başka bir İngilizce sesi ayrıca seçebilirsin.
 
 Diğer dillerde hedef dile ait yerel sistem sesi gerekir. Uygun ses yoksa uyarı verilir; İngilizce veya başka dil Türkçe Tolga sesiyle okutulmaz. [Windows ses ekleme yönergesi](https://support.microsoft.com/en-us/accessibility/windows/narrator/appendix-a-supported-languages-and-voices).
 
 ## Eğitim kapsamı
 
-7 dilde 212 başlangıç kartı: İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca. Kelime, cümle ve gramer türleri; Türkçe açıklamalar; yaklaşık A1–C2 etiketleri. Tam CEFR müfredatı veya resmî yeterlilik ölçümü değildir. Cevap eşleştirme deterministiktir; bazı doğru alternatifleri tanımayabilir. İlerleme yereldir ve JSON olarak yedeklenebilir.
+7 dilde 229 başlangıç kartı: İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca. Kelime, cümle ve gramer türleri; Türkçe açıklamalar; yaklaşık A1–C2 etiketleri. Yeni kelime günleri, seçilen dilden ve seviyeden başlayıp daha ileri seviyelere doğru öğrenilmemiş sözcükleri 12'şer kartlık setlerle sunar. İngilizce A1'e 17 yeni temel kelime eklendi; var olan ders kimlikleri ve ilerleme kayıtları korunmuştur. Tüm yeni kelimeler öğrenilince aralıklı kelime tekrarı devam eder. Tam CEFR müfredatı veya resmî yeterlilik ölçümü değildir. Cevap eşleştirme deterministiktir; bazı doğru alternatifleri tanımayabilir. İlerleme yereldir ve JSON olarak yedeklenebilir.
 
 İsteğe bağlı Ollama öğretmeni yalnızca etkinleştirip soru gönderdiğinde sabit 127.0.0.1:11434 adresine bağlanır. Model ayrıca kurulur ve ek RAM/CPU/GPU kullanabilir. Tek istek, zaman aşımı ve yanıt boyutu sınırı uygulanır. Model yanıtı doğruluk garantisi taşımaz.
 

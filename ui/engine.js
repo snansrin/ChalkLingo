@@ -20,7 +20,18 @@ function sanitizeSettings(value, languages=['en','de','fr','es','it','ru','ja'])
   aiEnabled:v.aiEnabled===true,aiModel:typeof v.aiModel==='string'&&v.aiModel.length<=80&&/^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:\/[a-zA-Z0-9][a-zA-Z0-9._-]*)?(?::[a-zA-Z0-9][a-zA-Z0-9._-]*)?$/.test(v.aiModel)?v.aiModel:DEFAULTS.aiModel
  };
 }
-function getDeck(all,settings){return all.filter(x=>x.language===settings.language&&x.level===settings.level&&(settings.mode==='mix'||x.mode===settings.mode));}
+function getDeck(all,settings){return all.filter(x=>x.language===settings.language&&x.level===settings.level&&(settings.mode==='mix'||x.mode===settings.mode)&&!(settings.mode==='mix'&&x.pathOnly));}
+function nextVocabularyDay(all,records,language='en',startLevel='A1',count=12){
+ const start=Math.max(0,LEVELS.indexOf(startLevel));
+ const order=[...LEVELS.slice(start),...LEVELS.slice(0,start)];
+ const pool=order.flatMap(level=>all.filter(x=>x.language===language&&x.mode==='vocab'&&x.level===level));
+ const limit=Math.max(1,Math.min(30,Math.floor(Number(count)||12)));
+ const fresh=pool.filter(x=>!records[x.id]?.seen&&!records[x.id]?.learned);
+ if(fresh.length)return {cards:fresh.slice(0,limit),review:false};
+ const unfinished=pool.filter(x=>!records[x.id]?.learned);
+ if(unfinished.length)return {cards:unfinished.slice(0,limit),review:false};
+ return {cards:pool.slice(0,limit),review:pool.length>0};
+}
 function safeRecord(rec){
  if(!rec||typeof rec!=='object')return null;
  return {seen:Math.max(0,Math.min(99999,Number(rec.seen)||0)),repetitions:Math.max(0,Math.min(99999,Number(rec.repetitions)||0)),
@@ -70,7 +81,7 @@ function stats(deck,records,now=Date.now()){
  const due=deck.filter(x=>records[x.id]?.due&&records[x.id].due<=now).length;
  return {total:deck.length,seen,learned,due,pct:deck.length?Math.round(learned/deck.length*100):0};
 }
-const api=Object.freeze({DEFAULTS,LEVELS,MODES,sanitizeSettings,getDeck,normalizeRecords,markSeen,review,selectNext,stats});
+const api=Object.freeze({DEFAULTS,LEVELS,MODES,sanitizeSettings,getDeck,nextVocabularyDay,normalizeRecords,markSeen,review,selectNext,stats});
 global.ChalkEngine=api;
 if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);
