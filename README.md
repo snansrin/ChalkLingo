@@ -1,18 +1,18 @@
 # CL · ChalkLingo
 
-**v0.3.5 — Masaüstünde küçük, sesli bir dil öğrenme tahtası.**
+**v0.3.6 — Mimo adlı hafıza filiyle, daha küçük ve sesli masaüstü kelime widget’ı.**
 
 <img src="assets/icon.png" width="64" alt="CL uygulama simgesi" />
 
-CL, Yapışkan Notlar gibi küçük ve çerçevesiz bir Windows masaüstü widget’ıdır. Normal görünüm **360 × 340** mantıksal pikseldir; görev çubuğunda düğmesi yoktur. Yönetim için sistem tepsisinde CL simgesi bulunur. Windows Widget panosunun parçası değildir; arka planda bir masaüstü uygulaması çalışır.
+CL, Yapışkan Notlar gibi küçük ve çerçevesiz bir Windows masaüstü widget’ıdır. Yeni normal görünüm **320 × 280** mantıksal pikseldir; görev çubuğunda düğmesi yoktur. Yönetim için sistem tepsisinde CL simgesi bulunur. Windows Widget panosunun parçası değildir; arka planda bir masaüstü uygulaması çalışır.
 
 ## Güncel görünüm
 
-<a href="docs/screenshots/widget-compact.png"><img src="docs/screenshots/widget-compact.png" width="360" alt="CL küçük masaüstü widget'ı" /></a>
+<a href="docs/screenshots/widget-compact.png"><img src="docs/screenshots/widget-compact.png" width="320" alt="CL kompakt masaüstü widget'ı" /></a>
 
 Yeni kelime günü 12 sözcükle açılır; set tamamlandığında Sonraki düğmesi sıradaki güne dönüşür:
 
-<a href="docs/screenshots/widget-next-day.png"><img src="docs/screenshots/widget-next-day.png" width="360" alt="Tamamlanan kelime gününden sonra yeni kelime setini açma düğmesi" /></a>
+<a href="docs/screenshots/widget-next-day.png"><img src="docs/screenshots/widget-next-day.png" width="320" alt="Tamamlanan kelime gününden sonra yeni kelime setini açma düğmesi" /></a>
 
 Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 640** olur; kapatınca küçük hâline ve önceki konumuna döner. Windows ekran ölçeklendirmesi ve kenarlık yuvarlaması birkaç piksellik fark yaratabilir. Görüntüler gerçek Windows uygulamasından alınmıştır.
 
@@ -22,7 +22,7 @@ Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 6
 
 ## Windows’a kurulum
 
-1. **ChalkLingo Setup 0.3.5.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
+1. **ChalkLingo Setup 0.3.6.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
 2. Masaüstünde ve Başlat menüsünde **CL** kısayolu oluşur. CL’yi aç.
 3. İlk açılışta kullanıcı oturumuyla başlama etkinleştirilmeye çalışılır. Ayarlar → **Windows ile başlat** durumunu kontrol edebilir veya kapatabilirsin.
 
