@@ -4,23 +4,26 @@
 
 ## Gerçek uygulama ekran görüntüleri
 
-Bu görüntüler, **Windows GitHub Actions üzerinde çalışan Electron penceresinden** otomatik olarak alınır; tasarım mockup’ı değildir.
+**Önemli:** Masaüstünde sürekli görünen normal widget yalnızca **360 × 340 piksel**. Aşağıdaki ilk görüntü bu **gerçek normal boyuta** aittir. Diğer üç ekran **yalnızca ayarlar veya Çalış açılınca geçici olarak 520 × 640 piksele büyür**. README’deki küçük fotoğraflar sunum için ölçeklendirilmiştir; uygulamanın pencere boyutunu değiştirmez.
 
-### 1 · Masaüstünde küçük widget (360 × 340)
+### Normal görünüm — küçük masaüstü widget'ı
 
-![ChalkLingo 360x340 masaüstü dil öğrenme kara tahtası](docs/screenshots/widget-compact.png)
+<a href="docs/screenshots/widget-compact.png" title="Orijinal 360×340 ekran görüntüsünü aç">
+  <img src="docs/screenshots/widget-compact.png" width="280" alt="ChalkLingo küçük masaüstü widget'ı, gerçek pencere boyutu 360 × 340 piksel" />
+</a>
 
-Normal görünüm küçük kalır. Tahtaya tıkla → yeni kelime, cümle veya gramer kartı. Sol taraftaki öğretmen SVG animasyonludur.
+**Pencere: 360 × 340 px** · Yapışkan not benzeri kara tahta · Sol tıkla yeni kelime · Görev çubuğunda düğme yok · Sistem tepsisinden açılır.
 
-| 2 · Sağ tık ayarlar (520 × 640) | 3 · Telaffuz ve Windows başlangıcı |
-| --- | --- |
-| ![Dil, seviye ve öğrenme ritmi ayarları](docs/screenshots/widget-settings.png) | ![Doğru dilde ses seçimi ve otomatik Windows açılış ayarı](docs/screenshots/widget-voice.png) |
+### Yalnızca açıldığında büyüyen paneller
 
-### 4 · Etkileşimli öğretmen (520 × 640)
+| Sağ tık → Ayarlar | Telaffuz & başlangıç | ✎ Çalış → Öğretmen |
+| :---: | :---: | :---: |
+| <a href="docs/screenshots/widget-settings.png"><img src="docs/screenshots/widget-settings.png" width="168" alt="Ayar paneli, geçici 520×640 pencere" /></a> | <a href="docs/screenshots/widget-voice.png"><img src="docs/screenshots/widget-voice.png" width="168" alt="Ses seçimi, geçici 520×640 pencere" /></a> | <a href="docs/screenshots/widget-practice.png"><img src="docs/screenshots/widget-practice.png" width="168" alt="Etkileşimli öğretmen, geçici 520×640 pencere" /></a> |
+| Geçici **520×640** | Geçici **520×640** | Geçici **520×640** |
 
-![Cevap yazma, ipucu ve alıştırma alanı](docs/screenshots/widget-practice.png)
+Küçük resimlere tıklayarak orijinal PNG'leri açabilirsin. Görüntüler gerçek Windows/Electron pencerelerinden otomatik alınmıştır; çizim veya temsili tasarım değildir.
 
-**Pencere davranışı:** Ayarlar veya **✎ Çalış** açıldığında geçici olarak **520 × 640** olur; kapatıldığında otomatik **360 × 340** görünümüne geri döner. Eksi ve çarpı düğmeleri pencereyi **sistem tepsisine gizler**, programı sonlandırmaz. Gerçekten çıkmak için tepsi simgesi → **Uygulamadan çık**.
+**Kullanım:** Widget normalde 360×340 kalır. ⚙ / sağ tık veya **✎ Çalış** düğmesi geçici genişletir; pencere kapatıldığında küçük hâline döner. **− / ×** widget'ı tepsiye gizler; çıkış için sistem tepsisi → **Uygulamadan çık**.
 
 ## Özellikler ve gerçek sınırlar
 
