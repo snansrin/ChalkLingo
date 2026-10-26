@@ -1,6 +1,6 @@
 {
   "name": "chalklingo",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A research-informed interactive chalkboard language tutor with optional local LLM",
   "author": "ChalkLingo Contributors",
   "license": "MIT",
@@ -9,15 +9,17 @@
   "scripts": {
     "start": "electron .",
     "test": "node --test tests/*.test.cjs",
-    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/lessons.js && node --check ui/engine.js && node --check ui/tutor.js && node --check ui/tutor-ui.js && node --check ui/ollama-bridge.cjs && node --check ui/app.js",
+    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/lessons.js && node --check ui/engine.js && node --check ui/tutor.js && node --check ui/tutor-ui.js && node --check ui/ollama-bridge.cjs && node --check ui/app.js && node --check ui/rhythm.js && node --check ui/audio.js",
     "check": "npm run lint && npm test",
     "dist:win": "electron-builder --win nsis portable --x64 --publish never",
     "dist:mac": "electron-builder --mac dmg --publish never",
-    "dist:linux": "electron-builder --linux AppImage --publish never"
+    "dist:linux": "electron-builder --linux AppImage --publish never",
+    "test:desktop": "node tests/desktop.cjs"
   },
   "devDependencies": {
     "electron": "45.0.0",
-    "electron-builder": "26.18.0"
+    "electron-builder": "26.18.0",
+    "playwright": "1.62.1"
   },
   "build": {
     "appId": "org.chalklingo.desktop",

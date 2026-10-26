@@ -41,7 +41,7 @@ test('local AI chat has no arbitrary endpoint and validates reply',async()=>{
  const inp={question:'Selamı açıkla',language:'en',level:'A1',model:'gemma3:4b'};
  const result=await A.requestLocalTutor(inp,async(url,options)=>{
   assert.equal(url,A.LOCAL_ENDPOINT);assert.equal(options.redirect,'error');
-  return {ok:true,headers:{get:()=>null},json:async()=>({message:{content:'Merhaba!'}})};
+  return new Response(JSON.stringify({message:{content:'Merhaba!'}}));
  });
  assert.equal(result,'Merhaba!');
 });

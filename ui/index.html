@@ -8,16 +8,19 @@
   <title>ChalkLingo · Masaüstü dil öğretmeni</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="tutor.css" />
+  <link rel="stylesheet" href="studio.css" />
   <script defer src="lessons.js"></script>
   <script defer src="engine.js"></script>
   <script defer src="tutor.js"></script>
+  <script defer src="rhythm.js"></script>
+  <script defer src="audio.js"></script>
   <script defer src="app.js"></script>
   <script defer src="tutor-ui.js"></script>
 </head>
 <body>
  <main class="widget" id="widget" aria-label="ChalkLingo dil öğrenme widget'ı">
   <header class="titlebar" title="Buradan sürükleyerek taşıyın">
-    <div class="brand"><span class="brand-mark">✳</span><span class="brand-name">chalk<span>lingo</span></span><span class="brand-tag">daily learning</span></div>
+    <div class="brand"><span class="brand-mark">✳</span><span class="brand-name">chalk<span>lingo</span></span><span class="brand-tag">LEARNING STUDIO</span></div>
     <div class="window-actions">
       <button type="button" class="icon-btn" id="settingsBtn" aria-label="Ayarlar" title="Ayarlar (S)">⚙</button>
       <button type="button" class="icon-btn minus" id="minimizeBtn" aria-label="Küçült" title="Küçült">−</button>
@@ -26,7 +29,7 @@
   </header>
   <div class="classroom">
    <div class="ambient-glow" aria-hidden="true"></div>
-   <div class="upper-label"><span class="tiny-star">✦</span> HER GÜN BİR ADIM <span class="line"></span> <span id="todayDate">BUGÜN</span></div>
+   <div class="upper-label"><span class="tiny-star">✦</span> KÜÇÜK ADIMLAR. BÜYÜK KEŞİFLER. <span class="line"></span> <span id="todayDate">BUGÜN</span></div>
    <div class="scene">
     <div class="board-shell" id="boardShell">
       <div class="board" id="board" role="button" tabindex="0" aria-label="Yeni derse geçmek için tıkla">
@@ -60,21 +63,22 @@
         <circle cx="43" cy="253" r="11" fill="#d99a75"/>
         <g class="chalk-arm"><path d="M113 180 Q131 174 141 153 L152 105" fill="none" stroke="#b16b4b" stroke-width="24" stroke-linecap="round"/><path d="M152 105 L160 98" fill="none" stroke="#e3aa83" stroke-width="19" stroke-linecap="round"/><path d="M160 97 L169 85" fill="none" stroke="#f4f1db" stroke-width="5" stroke-linecap="round"/></g>
         <rect x="77" y="128" width="20" height="31" rx="8" fill="#da9a76"/>
-        <ellipse cx="86" cy="80" rx="50" ry="63" fill="#e9b18a" stroke="#c08d6b" stroke-width="2"/>
+        <g class="teacher-head"><ellipse cx="86" cy="80" rx="50" ry="63" fill="#e9b18a" stroke="#c08d6b" stroke-width="2"/>
         <path d="M38 69 Q25 20 57 18 Q101 -6 126 43 Q131 62 119 74 Q106 32 79 42 Q55 43 38 69" fill="#35363e"/>
         <path d="M36 82 Q31 68 22 78 Q16 89 27 99 Q32 104 40 102" fill="#e3a981"/>
         <circle class="teacher-eye" cx="71" cy="86" r="4" fill="#2c2930"/><circle class="teacher-eye" cx="106" cy="86" r="4" fill="#2c2930"/>
         <path d="M61 71 Q69 65 77 71 M97 71 Q105 65 114 71" stroke="#3b2f33" fill="none" stroke-width="4" stroke-linecap="round"/>
-        <path d="M81 105 Q91 111 99 104" stroke="#a35e57" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path class="teacher-mouth" d="M81 105 Q91 111 99 104" stroke="#a35e57" stroke-width="3" fill="none" stroke-linecap="round"/>
         <path d="M60 126 Q89 141 113 124" stroke="#e6aa86" stroke-width="2" fill="none"/>
         <path d="M49 88 Q46 81 50 76" stroke="#cf9073" stroke-width="2" fill="none"/>
         <rect x="49" y="78" width="32" height="19" rx="7" fill="none" stroke="#654f45" stroke-width="3"/>
         <rect x="95" y="78" width="32" height="19" rx="7" fill="none" stroke="#654f45" stroke-width="3"/>
         <path d="M81 84 L95 84" stroke="#654f45" stroke-width="3"/>
-       </svg>
+       </g></svg>
     </div>
     <div class="chalk-tray" aria-hidden="true"><span class="chalk-stick"></span><span class="chalk-stick peach"></span><span class="chalk-eraser"></span></div>
    </div>
+   <div class="rhythm-bar"><span id="rhythmStatus" role="status">Kendi ritminde öğren</span><button type="button" id="pauseAuto" hidden>Duraklat</button></div>
    <div class="message-line"><span class="sparkle">✺</span><span id="teacherTip">Harika! Her gün küçük bir adım.</span></div>
    <div class="actions-card">
       <button type="button" class="round-action" id="repeatBtn" title="Tekrar çalış (1)" aria-label="Bu kartı tekrar çalış">↶</button>
@@ -90,6 +94,7 @@
   <section class="practice-overlay" id="practiceOverlay" role="dialog" aria-modal="true" aria-label="Etkileşimli dil dersi" hidden>
     <div class="practice-top"><span class="practice-kicker">CHALKLINGO · ÖĞRETMEN STÜDYOSU</span><button type="button" class="practice-close" id="practiceClose" aria-label="Dersi kapat">×</button></div>
     <h2 class="practice-heading">Kendin hatırla</h2>
+    <div class="session-track"><div id="sessionFill"></div></div><div id="sessionSummary" role="status" hidden></div>
     <div class="practice-sub"><span id="practiceSection">İngilizce · A1</span> <span> · </span> <span id="practiceProgress">0/0 doğru</span></div>
     <div class="practice-blackboard"><div class="practice-kind" id="practiceKind">HATIRLA</div><p class="practice-prompt" id="practicePrompt"></p></div>
     <div class="practice-answer"><label for="practiceInput">SIRA SENDE</label><input id="practiceInput" class="practice-input" type="text" maxlength="250" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Cevabını yaz…" /><div id="practiceChoices" class="practice-choices" hidden></div></div>
@@ -107,7 +112,16 @@
        <label>ÖĞRENDİĞİM DİL<select id="languageSelect"></select></label>
        <label>SEVİYEM<select id="levelSelect"><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select></label>
        <label>ÇALIŞMA TÜRÜ<select id="modeSelect"><option value="mix">Karışık · Akıllı</option><option value="vocab">Kelime</option><option value="sentence">Cümle</option><option value="grammar">Gramer</option></select></label>
-       <label>OTOMATİK GEÇİŞ<select id="intervalSelect"><option value="0">Kapalı · Tıklayarak</option><option value="30">30 saniye</option><option value="60">1 dakika</option><option value="120">2 dakika</option><option value="300">5 dakika</option></select></label>
+       <label>OTOMATİK GEÇİŞ<select id="intervalSelect"><option value="0">Kapalı · Tıklayarak</option><option value="30">30 saniye</option><option value="60">1 dakika</option><option value="120">2 dakika</option><option value="300">5 dakika</option><option value="600">10 dakika</option><option value="900">15 dakika</option><option value="1800">30 dakika</option><option value="3600">1 saat</option><option value="7200">2 saat</option></select></label>
+      </div>
+      <div class="sound-studio">
+       <h2>Ses & odak</h2><p>Sesler isteğe bağlıdır. Gizli veya küçültülmüş pencere otomatik geçişi duraklatır.</p>
+       <label class="toggle-row"><span><b>Kelime değişim sesi</b><small>Otomatik yeni kart geldiğinde hafif bir işaret</small></span><input type="checkbox" id="notificationToggle" /></label>
+       <label class="toggle-row"><span><b>Ders sesleri</b><small>Doğru cevap, tekrar ve oturum bitişi</small></span><input type="checkbox" id="lessonSoundToggle" /></label>
+       <div class="setting-fields"><label>BİLDİRİM TONU<select id="toneSelect"><option value="soft">Yumuşak</option><option value="bell">Çan</option><option value="wood">Tok vuruş</option></select></label><label>SES SEVİYESİ<input id="volumeRange" type="range" min="0" max="100" step="5" aria-label="Ses seviyesi" /><button type="button" id="previewSound" class="subtle-btn">Sesi dene ♪</button></label>
+       <label>OTURUM HEDEFİ<select id="sessionSize"><option value="5">5 alıştırma</option><option value="10">10 alıştırma</option><option value="15">15 alıştırma</option></select></label></div>
+       <label class="toggle-row"><span><b>Sessiz saatler</b><small>Bildirim, ders ve otomatik telaffuz susar</small></span><input type="checkbox" id="quietToggle" /></label>
+       <div class="quiet-hours"><label>Başlangıç <select id="quietStart" aria-label="Sessiz saat başlangıcı"></select></label><label>Bitiş <select id="quietEnd" aria-label="Sessiz saat bitişi"></select></label></div>
       </div>
       <div class="setting-toggles">
        <label class="toggle-row"><span><b>Sesli telaffuz</b><small>Yeni kelimelerde seslendir</small></span><input type="checkbox" id="soundToggle" /></label>
@@ -117,7 +131,7 @@
       </div>
       <section class="ai-setting" aria-label="Yerel yapay zekâ öğretmeni">
         <label class="toggle-row"><span><b>Yerel yapay zekâ öğretmeni</b><small>İsteğe bağlı Ollama entegrasyonu</small></span><input type="checkbox" id="aiToggle" /></label>
-        <label style="font-size:10px;color:#d6d9c8">Ollama model adı<input id="aiModel" type="text" value="gemma3:4b" maxlength="80" autocomplete="off" spellcheck="false" /></label>
+        <label class="model-label">Ollama model adı<input id="aiModel" type="text" value="gemma3:4b" maxlength="80" autocomplete="off" spellcheck="false" /></label>
         <div class="ai-disclosure">Yalnızca etkinleştirildiğinde sorduğun metin yerel 127.0.0.1:11434 adresine gönderilir. Modeli ayrıca indirmen gerekir. İnternet kullanılmaz.</div>
       </section>
       <div class="stats-banner"><div><strong id="seenStat">0</strong><span>Gösterilen</span></div><div><strong id="learnedStat">0</strong><span>Öğrenilen</span></div><div><strong id="dueStat">0</strong><span>Tekrar zamanı</span></div></div>
