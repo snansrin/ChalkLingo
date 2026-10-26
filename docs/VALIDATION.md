@@ -27,3 +27,7 @@ The obsolete ChalkLingo installed application was removed through its uninstalle
 ## Limits
 
 Only Windows was executed. macOS/Linux package definitions were retained but are unverified. OS TTS voice availability varies; English starter recordings are bundled. The 229-row corpus is a starter dataset, includes grammar rows not used by the new games, and does not supply a full A1–C2 curriculum. Exact schedule and garden mechanics have not undergone an educational efficacy study. Security checks are bounded regression tests, not an independent security audit.
+
+## Installed build result
+
+The NSIS installer exited with code 0. The complete desktop regression suite was then rerun with `MOCHI_EXE` pointing to `C:\Users\snans\AppData\Local\Programs\Mochi\Mochi.exe`; it passed. All seven runtime source/data files in the packaged ASAR match the final source after normalizing Windows line endings, and the packaged name/version match Mochi 1.0.0. Installer, portable, source archive and checksums are delivered together.
