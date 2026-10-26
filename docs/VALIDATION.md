@@ -1,4 +1,18 @@
-# 0.3.0 doğrulama — 26 Ekim 2026
+# v0.3.1 doğrulama ve README denetimi — 26 Ekim 2026
+
+Bu bölüm güncel `v0.3.1` widget’ına aittir. Aşağıdaki `0.3.0` bölümü tarihsel rapordur; yeni sürümün RAM/CPU ölçümü olarak gösterilmez.
+
+- **Kod/README karşılaştırması:** eski 520×640 ana pencere bilgisi ve görev çubuğuna küçültme davranışı artık geçerli değil; README güncellendi. Ana görünüm 360×340, ayar ve alıştırma görünümü 520×640. Tepsiye gizleme ve yalnızca kurulu Windows sürümünde kullanıcı açılışına kaydolma README’de açıklandı.
+- **Birim testleri:** GitHub Linux CI üzerinde `npm run check` **32 test / 32 başarılı / 0 hata**, 26 Ekim 2026.
+- **Windows küçük widget duman testi:** GitHub Actions üzerinde `npm run test:widget` başarılı. Görünüm geçişleri ve tepsiye gizleme doğrulandı.
+- **Dört gerçek Windows ekran görüntüsü:** `tests/screenshots.cjs`, `docs/screenshots/widget-{compact,settings,voice,practice}.png` dosyalarını GitHub Windows Electron runner üzerinden kaydetti; görüntülerin varlığı ve boyutları test edildi. Ekran görüntüsü otomasyonu başarılı ve dosyalar `main` dalına eklendi.
+- **Telaffuz:** sadece seçilen dil etiketine uygun sesler kabul edilir; dil eşleşmezse diğer dile otomatik geçiş yoktur. Beş birim testi bulunmaktadır. İnsan kulağıyla aksan kalite kontrolü **henüz yapılmadı**; sistem seslerinin kalitesi cihaza bağlıdır.
+- **Windows başlangıcı:** `app.setLoginItemSettings` ve korumalı IPC testi var. Gerçek kurulum sonrası Windows oturum açılış davranışı ve kapat/aç tercihi fiziksel kullanıcı cihazında **henüz doğrulanmadı**.
+- **Performans:** 0.3.1 için yeni ölçülmüş CPU/RAM verisi bulunmuyor; 0.3.0 ölçümlerini yeni sürüm için performans garantisi olarak kullanmayın.
+- **Güvenlik:** Otomatik başlangıç yalnızca kullanıcı oturumuna kayıt girişidir; Defender, güvenlik duvarı, yönetici ayrıcalıkları ve ayrı bir servis değiştirilmez.
+
+## 0.3.0 için tarihsel kayıt
+
 
 - npm run check: 24/24 test; JavaScript sözdizimi kontrolü geçti.
 - npm audit: 286 pakette 0 bilinen açık; bütün risklerin yok olduğu anlamına gelmez.
@@ -21,7 +35,7 @@ Paylaşılan bellek çift sayılabilir. Donanım, ekran ölçeği, ses sürücü
 
 Gerçek Ollama modeli indirilmedi; cevap kalitesi ve kaynak tüketimi ayrıca sınanmalı. Ses tetikleyicileri test edildi, fiziksel dinleme ayrıca yapılmalı. NSIS ve portable paketler üretildi; temiz cihaz kurulum/kaldırma testi ayrıca gerekli. Paketler imzasız. macOS/Linux çalıştırılmadı. Fotogerçekçi karakter veya tam A1–C2 müfredat iddiası yoktur.
 
-## Güvenlik
+## 0.3.0 güvenlik
 
 IPC doğru ana frame ve tam URL gerektirir. Tek model isteği, gerçek akış boyutu sınırı, sabit yerel uç nokta, yönlendirme yasağı ve zaman aşımı vardır. Konum toplu yazılır; ikinci açılış mevcut pencereyi getirir. Başlangıç kaydı, sistem ayarı değişikliği, shell komutu veya uzak kod yürütme eklenmedi. Model için işletim sistemi seviyesinde CPU/RAM/GPU kotası uygulanmaz.
 
