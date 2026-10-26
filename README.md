@@ -1,61 +1,51 @@
-# ChalkLingo · Learning Studio 0.3.0
+# ChalkLingo · Küçük kara tahta dil öğretmeni
 
-Masaüstünde küçük bir sınıf, sana uygun bir öğrenme ritmi.
+**ChalkLingo v0.3.1** — Windows masaüstünde Yapışkan Notlar kadar küçük, etkileşimli ve tepsiye gizlenebilen dil öğrenme widget’ı. Bağımsızdır; DendroGeo ile ilişkili değildir.
 
-![Gerçek Windows uygulaması](docs/screenshots/classroom.png)
+## Gerçek uygulama ekran görüntüleri
 
-## 0.3.0 yenilikleri
+Bu görüntüler, **Windows GitHub Actions üzerinde çalışan Electron penceresinden** otomatik olarak alınır; tasarım mockup’ı değildir.
 
-- Yenilenen 520 × 640 sınıf, daha okunaklı tahta; nefes, göz kırpma, baş eğme, yazma ve telaffuza eşlik eden ağız hareketleri. Karakter hafif SVG çizimidir; fotogerçekçi 3D avatar değildir.
-- Otomatik geçiş: kapalı, 30 saniye, 1/2/5/10/15/30 dakika, 1/2 saat. Duraklat/devam et kalan süreyi korur.
-- Kelime değişim sesi, ders efektleri ve otomatik telaffuz bağımsız tercihlerdir; başlangıçta kapalıdır. Üç ton, ses seviyesi, önizleme ve geceyi aşabilen sessiz saatler bulunur.
-- 5/10/15 alıştırmalık oturum hedefleri, ilerleme çizgisi ve bitiş özeti. Mevcut 212 kart ve aralıklı tekrar sistemi korunur; bu bir tam CEFR müfredatı değildir.
-- Ayarlar/alıştırma açıkken veya pencere gizli/küçültülmüşken otomatik geçiş durur. Geri dönünce birikmiş bildirimler çalmaz. Gizli animasyonlar durur; azaltılmış hareket ve işletim sistemi tercihi desteklenir.
-- Tek uygulama örneği, toplu konum kaydı, tek zamanlayıcı, kullanılan ses düğümlerinin temizlenmesi ve boşta ses motorunun askıya alınması.
-- Daha sıkı ana frame/URL IPC doğrulaması; tek eşzamanlı yerel model isteği; yanıt akarken uygulanan gerçek 160 KB sınırı. Model için 2 CPU iş parçacığı, 2.048 bağlam, 280 çıktı token ve yanıt sonrası bellekten çıkma talebi.
+### 1 · Masaüstünde küçük widget (360 × 340)
 
-| Ders stüdyosu | Ses ve zamanlama |
+![ChalkLingo 360x340 masaüstü dil öğrenme kara tahtası](docs/screenshots/widget-compact.png)
+
+Normal görünüm küçük kalır. Tahtaya tıkla → yeni kelime, cümle veya gramer kartı. Sol taraftaki öğretmen SVG animasyonludur.
+
+| 2 · Sağ tık ayarlar (520 × 640) | 3 · Telaffuz ve Windows başlangıcı |
 | --- | --- |
-| ![Aktif hatırlama](docs/screenshots/practice.png) | ![Tercihler](docs/screenshots/preferences.png) |
+| ![Dil, seviye ve öğrenme ritmi ayarları](docs/screenshots/widget-settings.png) | ![Doğru dilde ses seçimi ve otomatik Windows açılış ayarı](docs/screenshots/widget-voice.png) |
 
-![Tamamlanan oturum](docs/screenshots/session.png)
+### 4 · Etkileşimli öğretmen (520 × 640)
 
-Ekran görüntüleri gerçek Windows/Electron penceresinden alınmıştır.
+![Cevap yazma, ipucu ve alıştırma alanı](docs/screenshots/widget-practice.png)
 
-### Tercihler nasıl çalışır?
+**Pencere davranışı:** Ayarlar veya **✎ Çalış** açıldığında geçici olarak **520 × 640** olur; kapatıldığında otomatik **360 × 340** görünümüne geri döner. Eksi ve çarpı düğmeleri pencereyi **sistem tepsisine gizler**, programı sonlandırmaz. Gerçekten çıkmak için tepsi simgesi → **Uygulamadan çık**.
 
-⚙ veya sağ tık → dili, ritmi, sesleri ve hedefi seç → **Tahtaya dön** ile kaydet. Uzun ayar paneli kaydırılabilir. Sessiz saatlerde otomatik sesler susar, kartlar ilerleyebilir. Başlangıç ve bitiş aynıysa gün boyu sessizdir. **Sesi dene** ve elle telaffuz düğmesi bilinçli eylemler olduğundan sessiz saatlerde de çalışır.
+## Özellikler ve gerçek sınırlar
 
-Ses uygulama içindeki **otomatik kart değişiminde** çalar; Windows bildirim merkezi mesajı gönderilmez. Küçültülmüş uygulama arkadan kelime veya ses göndermez. Telaffuz sistem seslerine bağlıdır; bazı sesler ağ kullanabilir. Oturum hedefi desteden büyükse kartlar tekrar edilir. Windows'ta kapat düğmesi çıkar; küçültme görev çubuğuna indirir. Otomatik başlangıç veya sistem ayarı değişikliği yapılmaz.
+| Konu | v0.3.1 davranışı |
+| --- | --- |
+| Görev çubuğu | Normal pencere düğmesi yok (`skipTaskbar: true`); tepside küçük simge |
+| Windows açılışı | **Kurulu sürümde** ilk açılışta yalnızca mevcut kullanıcı için girişe eklemeyi dener; sağ tık → **Windows ile başlat** üzerinden kapatılabilir |
+| Konum | Widget’ın ekrandaki yeri cihazda saklanır |
+| Dil | İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça, Japonca |
+| Seviye | A1–C2 *örnek içerik bantları*; resmî yeterlilik veya tam müfredat değil |
+| Ders | 212 başlangıç kartı; kelime, cümle ve dil bilgisi |
+| Etkileşim | Türkçe açıklama, aktif hatırlama, cevap yazma/seçme, ipuçları ve aralıklı tekrar |
+| Telaffuz | Seçilen dille eşleşen sistem seslerinden seçim; **İngilizce ses yoksa Türkçe aksana düşmez, uyarı verir** |
+| Ses kalitesi | Windows’ta kurulu ses motoruna bağlıdır; insan sesi veya tüm kelimelerde kusursuz aksan garanti edilmez |
+| Otomatik ders | Kapalı veya 30 saniye–2 saat; gizliyken ve ayarlar/alıştırma açıkken zamanlayıcı duraklatılır |
+| Yapay zekâ | İsteğe bağlı yerel Ollama; internetten model indirmek ayrıca gerekir, model kapalıyken hizmet çağrılmaz |
+| Kaynak kullanımı | Gizliyken animasyon/ses/timer durdurulur; Electron arka planda bir miktar RAM tüketir |
 
-### Doğrulama
+Windows girişine ekleme işletim sisteminin **Electron `app.setLoginItemSettings`** API’siyle yapılır. Yönetici izni istemez, Defender veya güvenlik duvarını kapatmaz, ayrı servis kurmaz. **Taşınabilir EXE başka klasöre taşınırsa** açılış kaydı yeniden ayarlanmalıdır. Geliştirme modunda girişe ekleme kapalıdır.
 
-26 Ekim 2026: **24 test**, gerçek Electron arayüz testi ve npm bağımlılık taraması geçti; tarama bilinen açık bildirmedi. Kısa geliştirme ölçümünde animasyonlu açık pencere toplam yaklaşık **%1,56 CPU**, küçültülmüş pencere **%0,10 CPU** gösterdi. Süreç çalışma kümelerinin toplamı yaklaşık **512 MiB** idi; paylaşılan bellek çift sayılabilir. Bu bir stres testi veya her cihazda donmama garantisi değildir. Ollama kaynak tüketimi ayrıca artabilir; istek seçenekleri işletim sistemi kotası değildir.
+**Telaffuz:** Sesli oku (♫) ya da **R** ile dinle. Sağ tık → **TELAFFUZ SESİ** altında hedef dilin uygun seslerini seç. Uygun ses görünmüyorsa Windows dil/konuşma paketlerine bak. Sesin doğru dil etiketine sahip olması doğal veya kusursuz telaffuz garantisi değildir. Başka dildeki sistem sesiyle yanlış telaffuza otomatik geçiş yapılmaz.
 
-Windows yükleyici ve portable paketleri üretildi; **imzasızdır**. Temiz fiziksel cihazda kurulum/kaldırma, uzun süreli kullanım, bütün dillerin ses kalitesi ve gerçek Ollama modeli ayrıca test edilmelidir. [Doğrulama raporu](docs/VALIDATION.md).
+## Kurulum ve kullanım
 
-Masaüstü regresyon testi: **npm run test:desktop**. Test görünür pencere açar; çalışırken pencereyle etkileşmeyin. Kişisel veri yerine ayrı profil kullanır; rapor ve görüntüler Git dışında tutulan **.qa/** klasörüne yazılır. README görüntülerini yenilemek için PowerShell ortam değişkeni **CHALK_SCREENSHOTS=1**, paketlenmiş uygulamayı test etmek için **CHALK_EXECUTABLE** değişkeninde win-unpacked/ChalkLingo.exe mutlak yolunu kullanın.
-
-Yeni modüller: ui/rhythm.js (zamanlama), ui/audio.js (yerel ses), ui/studio.css (görünüm), tests/rhythm.test.cjs ve tests/desktop.cjs.
-
----
-
-
-**ChalkLingo 0.3.0** is an illustrated, offline-first desktop widget that helps you *retrieve* language knowledge instead of only rereading translations. Click the chalkboard for another lesson; right-click to customize your classroom; choose **✎ Çalış** for active exercises. An optional on-device language model (Ollama) can answer lesson questions without a cloud API.
-
-## What's in the classroom
-
-- **7 languages:** English, German, French, Spanish, Italian, Russian and Japanese. Turkish guidance; A1–C2 *indicative* bands.
-- **212 starter lessons:** curated examples and notes in three modes: vocabulary, sentences and grammar. This is an introductory collection, **not** a complete CEFR course or validated dictionary.
-- **Recall, don't just look:** for vocabulary, type the foreign-language expression from its Turkish meaning; for sentences and grammar, solve choices or short responses. Answers receive immediate feedback; incorrect answers get a hint and another attempt before the solution is shown. Matching is deterministic (not semantic evaluation); legitimate paraphrases may not be recognized.
-- **Review engine:** attempts grade the existing spaced-repetition cards; failed recall returns in approximately five minutes. Progress stays on your machine.
-- **Natural chalkboard atmosphere:** illustrated teacher, discreet movement, chalk writing, erasing, customizable reduced-motion mode, keyboard and screen-reader labels.
-- **Optional local AI teacher:** question-and-answer explanation through **Ollama** listening on `127.0.0.1:11434`. Disabled by default; no remote endpoint choice, account, keys or telemetry. Model installation and computational resources are the user's responsibility. Answers are generated and can be inaccurate; verify important claims.
-- System text-to-speech where available, manual word advance, on-top window, local JSON backup/restore.
-
-## Install and run (Windows)
-
-Install Node.js 24+ and Git, then open PowerShell:
+Windows’ta **Node.js 24+** ve Git kuruluysa:
 
 ```powershell
 git clone https://github.com/snansrin/ChalkLingo.git
@@ -65,86 +55,61 @@ npm run check
 npm start
 ```
 
-To build an **unsigned** Windows installer and portable EXE on a Windows machine:
+Kurulabilir ve taşınabilir **imzasız** Windows EXE dosyalarını üretmek için:
 
 ```powershell
 npm run dist:win
 ```
 
-Outputs are in `release/`. Windows SmartScreen may warn about unsigned binaries. `Actions → Verify and package` also builds distributables on its configured workflow; **clean-machine install/uninstall has not been verified on physical hardware**.
+[GitHub Actions → Verify and package](https://github.com/snansrin/ChalkLingo/actions/workflows/ci.yml) başarılı tamamlandığında **ChalkLingo-Windows** artifact’ını indir. Windows SmartScreen uyarısında korumayı devre dışı bırakma. Temiz fiziksel cihazda kurulum/kaldırma ve bütün sistem sesleri henüz topluca doğrulanmadı.
 
-## Interactive study
+### Kontroller
 
-1. Board: read the target expression, contextual example and Turkish explanation. Click it for another card.
-2. **✎ Çalış:** the tutor asks you to retrieve an answer; enter or select your response.
-3. **Cevabı kontrol et:** get immediate feedback. An incorrect answer offers a hint; on the next mistake the answer is shown and placed into your review queue.
-4. Continue the guided practice. The **review statistics** update across the widget and practice view.
+- **Tahtaya sol tık / Space:** yeni ders (tebeşir silinme animasyonu)
+- **Sağ tık / ⚙ / S:** öğretim dili, A1–C2 seviyesi, gramer/kelime/cümle, ses, otomatik başlangıç ve diğer seçenekler
+- **✎ Çalış:** etkileşimli aktif hatırlama oturumu; panel açılınca genişler
+- **↶ / 1:** tekrar gerek; **✓ Öğrendim / 2:** öğrendim
+- **♫ / R:** telaffuz; yalnızca hedef dilin sesi bulunursa çalışır
+- **− / ×:** tepsiye gizle; tepsiden tekrar aç veya çıkış yap
 
-### Optional on-device AI (Ollama)
+## Güvenlik ve gizlilik
 
-Install [Ollama](https://ollama.com/download), start its local service, and download a capable multilingual model, for example:
+Electron `contextIsolation:true`, `sandbox:true`, `nodeIntegration:false` kullanır. IPC yalnızca beklenen ana pencerenin isteğini kabul eder, dış gezinme ve açılır pencere engellenir. CSP ağdan script yüklenmesini yasaklar. Ders geçmişi cihazda saklanır. İsteğe bağlı Ollama, yalnızca kullanıcı etkinleştirip soru gönderirse sabit yerel `127.0.0.1:11434` adresine bağlanır. Uygulamanın amacı masaüstünü öğretim alanına çevirmektir, Windows güvenlik ayarlarıyla oynamak değildir.
 
-```powershell
-ollama pull gemma3:4b
-ollama list
-```
-
-Right-click ChalkLingo → **Yerel yapay zekâ öğretmeni** → enter `gemma3:4b` (or another model you have actually installed), save, then **✎ Çalış → Öğretmene sor**. Only when you submit a question with AI enabled does the desktop app send the lesson context and typed question to the local Ollama API. Your text never goes to a ChalkLingo server. No externally hosted model is included. Models differ in quality and multilingual ability; outputs must be treated as suggestions, not authoritative instruction.
-
-## Architecture
+## Mimari ve kalite kontrol
 
 ```text
-main.cjs                     Electron main process / safe local IPC / custom URL protocol
-preload.cjs                  Minimal context-isolated desktop bridge
-ui/index.html                Chalkboard and active tutoring studio
-ui/styles.css,ui/tutor.css   Design, illustration, reduced-motion styling
-ui/lessons.js                Indicative starter packs in 7 languages
-ui/engine.js                 Lesson filtering and simplified spaced review
-ui/tutor.js                  Active recall questions and deterministic evaluation
-ui/tutor-ui.js               Accessible teaching flow, hints, feedback, Q&A UI
-ui/ollama-bridge.cjs         Bounded local-only model requests
-ui/app.js                    Existing widget controls, TTS, import/export
-assets/                      Application icons
-tests/                        24 Node unit and security tests
-.github/workflows/ci.yml     CI and optional Windows package build
+main.cjs                     Electron pencere, tepsi, Windows oturum başlatma ve IPC
+preload.cjs                  Kısıtlı masaüstü API köprüsü
+ui/index.html                Tahta, öğretmen SVG, ayarlar ve alıştırmalar
+ui/styles.css,ui/studio.css  Widget ölçüleri ve temalar
+ui/app.js                    Ders akışı, form, telaffuz ve pencere geçişleri
+ui/speech.js                 Dil uyumlu ses seçimi / yanlış aksan engeli
+ui/rhythm.js,ui/audio.js     Tek zamanlayıcı ve hafif bildirim sesleri
+ui/engine.js,ui/lessons.js   7 dilde temel içerik ve tekrar planı
+ui/tutor.js,ui/tutor-ui.js   Aktif hatırlama ve ipuçları
+ui/ollama-bridge.cjs         İsteğe bağlı yerel model erişimi
+tests/                       Birim, güvenlik, Electron ve gerçek ekran görüntüsü testleri
+.github/workflows/           Windows CI + otomatik README ekran görüntüleri
 ```
-
-### Security and accessibility
-
-Electron uses context isolation, sandboxing and a restrictive CSP. The app does not enable arbitrary navigation or remote script execution. Ollama requests go exclusively to `http://127.0.0.1:11434/api/chat` with fixed size limits, fixed timeout, validated model names, and no redirects. No AI prompt or reply is persisted. Use a trusted Ollama installation, not a forwarded or shared instance. Voice reading relies on installed voices and may not be supported for every language. The small desktop form factor isn't intended to replace an extensive learning environment.
-
-## Research informing the design
-
-ChalkLingo makes no claims that its own teaching efficacy has been clinically or academically validated. It draws on evidence for distributed practice, retrieval and corrective feedback:
-
-- Belardi et al. (2021), *Spacing, feedback, and testing boost vocabulary learning in a web application*: https://pubmed.ncbi.nlm.nih.gov/34867656/
-- Karatas et al. (2025), *Improving second language vocabulary learning and retention*: https://doi.org/10.1177/13621688211053525
-- Gonçalves et al. (2025), *Retrieval Practice Versus Elaborative Encoding*: https://doi.org/10.1007/s10648-025-10076-6
-- Electron security guidance: https://www.electronjs.org/docs/latest/tutorial/security
-- Ollama API: https://docs.ollama.com/api
-
-## Development
-
-`npm run check` performs syntax verification and 24 automated tests. The test suite covers lesson data in seven languages, safe storage handling, scheduling, Unicode answer checks, graded feedback and restricted AI requests. Browser-level/Windows-packaged QA should still be conducted before release.
-
-MIT licensed. This project is independent of DendroGeo.
-
-
-## v0.3.1 · Sticky Notes tarzı Windows widget
-
-ChalkLingo artık normal durumda **360 × 340 piksel** yer kaplar. Etkileşimli ders veya sağ tık ayarlarını açtığında geçici olarak **520 × 640** olur. Panel kapanınca otomatik küçülür. Konumunu hatırlar. Windows görev çubuğunda pencere düğmesi göstermez; **sistem tepsisi** simgesinden yeniden açılır.
-
-- **− / ×**: Pencereyi tepsiye gizler; uygulama çalışmaya devam eder. Sistem tepsisi → **Uygulamadan çık** gerçek çıkıştır.
-- **Windows ile başlat**: Kurulu Windows sürümünde ilk açılışta kullanıcı oturumuna başlangıç girdisi eklenmeye çalışılır; sağ tık ayarlarından kapatılabilir. Geliştirme modunda etkinleştirilmez. Taşınabilir EXE yeri değiştirilirse yeniden ayarlamak gerekir.
-- **TELAFFUZ SESİ**: Seçilen dile ait yerel Windows sesi kullanılır. Örneğin `en-US` veya `en-GB` bulunmazsa Türkçe sesle hatalı İngilizce okumak yerine uyarı gösterilir. Ses kalitesi bilgisayarda yüklü ses motoruna bağlıdır.
-- **Güvenlik**: Yönetici izni, Defender/güvenlik duvarı değişikliği, kalıcı arka plan servisi veya dış servise hesap bilgisi gönderimi yoktur. Başlangıç ayarı işletim sisteminin kendi API'sinden yalnızca mevcut kullanıcı için değiştirilir.
-- **Kaynak kullanımı**: Pencere gizlendiğinde seslendirme ve otomatik kart zamanlayıcısı duraklatılır; ancak Electron'ın arka plan belleği tamamen sıfırlanmaz.
 
 ```powershell
-npm ci
-npm run check
-npm run test:widget  # Windows Electron duman testi
-npm run dist:win
+npm run check             # Sözdizimi + tüm birim testleri
+npm run test:widget       # Gerçek Electron’da küçük/geniş pencere ve gizleme
+npm run test:desktop      # Ayrıntılı ders/ritim regresyonu
+npm run test:screenshots  # Windows'tan dört gerçek PNG üret
 ```
 
-Kurulum dosyasını GitHub Actions → **Verify and package** iş akışının **ChalkLingo-Windows** artifact bölümünden alabilirsin. İmzasız EXE'de Windows SmartScreen uyarısı görülebilir; sistem güvenliği kapatılmamalıdır. Bu sürüm gerçek Windows kullanımında ayrıca doğrulanmalıdır.
+Ekran görüntüleri `tests/screenshots.cjs` tarafından Windows üzerinde üretilir ve yalnızca ilgili GitHub Actions işi başarılıysa repoya eklenir. Her ekran görüntüsü görünür widget penceresinden alınır. Kaynak görseller değiştirilmiş taslaklar değildir.
+
+**Test notu:** [0.3.0 doğrulama raporu](docs/VALIDATION.md) önceki sürüme aittir; oradaki CPU/RAM gözlemleri yeni küçük widget'ın bağımsız performans ölçümü değildir. CI sonucu için güncel [Actions](https://github.com/snansrin/ChalkLingo/actions) sayfasını esas al.
+
+## Araştırma dayanağı ve sınırlar
+
+Öğretim akışı, aralıklı tekrar, geri çağırma ve düzeltici geribildirim araştırmalarından esinlenmiştir. ChalkLingo’nun öğrenme başarısına dair bağımsız bilimsel doğrulama yapılmamıştır. 212 örnek kart tam A1–C2 kursu değildir; cevap eşleştirme deterministik olduğu için anlamdaş doğru cevapları bazen kabul etmeyebilir.
+
+- [Belardi et al., 2021 — Spacing, feedback, and testing](https://pubmed.ncbi.nlm.nih.gov/34867656/)
+- [Electron Security](https://www.electronjs.org/docs/latest/tutorial/security)
+- [Ollama API](https://docs.ollama.com/api)
+
+MIT lisanslı açık kaynak.
