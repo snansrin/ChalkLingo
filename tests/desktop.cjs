@@ -1,67 +1,37 @@
-const { _electron:electron }=require('playwright');
-const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-const repo=path.resolve(__dirname,'..');
-const qa=path.join(repo,'.qa');fs.mkdirSync(qa,{recursive:true});
+'use strict';
+const {_electron:electron}=require('playwright'),assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs');
+const root=path.resolve(__dirname,'..');
 (async()=>{
- const app=await electron.launch({executablePath:process.env.CHALK_EXECUTABLE||require('electron'),args:[...(process.env.CHALK_EXECUTABLE?[]:[repo]),'--chalk-test','--user-data-dir='+path.join(qa,'profile-'+Date.now())],timeout:30000});
+ const app=await electron.launch({executablePath:process.env.MOCHI_EXE||require('electron'),args:[root,'--mochi-test','--user-data-dir='+path.join(root,'.qa','mochi-'+Date.now())],timeout:45000});
  try{
- const page=await app.firstWindow();const errors=[];page.on('pageerror',e=>{errors.push(e.message);console.log('PAGE ERROR',e.stack);});
- await page.waitForSelector('#lessonFront:not(:empty)');
- await page.evaluate(()=>{localStorage.clear();});await page.reload();await page.waitForSelector('#lessonFront:not(:empty)');
- await page.locator('#settingsBtn').click();await page.locator('#motionToggle').check();
- await page.locator('#modeSelect').selectOption('vocab');await page.locator('#intervalSelect').selectOption('600');
- await page.locator('#notificationToggle').check();await page.locator('#lessonSoundToggle').check();
- await page.locator('#doneSettings').click();
- assert.match(await page.locator('#rhythmStatus').textContent(),/10 dakikada/);
- await page.locator('#pauseAuto').click();assert.match(await page.locator('#rhythmStatus').textContent(),/duraklatıldı/);await page.locator('#pauseAuto').click();
- const folder=path.join(repo,process.env.CHALK_SCREENSHOTS==='1'?'docs/screenshots':'.qa/screenshots');fs.mkdirSync(folder,{recursive:true});
- await page.screenshot({path:path.join(folder,'classroom.png')});
- await page.locator('#settingsBtn').click();await page.locator('#intervalSelect').selectOption('3600');
- await page.screenshot({path:path.join(folder,'preferences.png')});
- await page.locator('#doneSettings').click();await page.reload();await page.waitForSelector('#lessonFront:not(:empty)');
- await page.waitForFunction(()=>document.getElementById('rhythmStatus').textContent.includes('60 dakikada')); 
- await page.locator('#practiceBtn').click();
- await page.screenshot({path:path.join(folder,'practice.png')});
- for(let i=0;i<5;i++){
-  const answer=await page.evaluate(()=>{
-   const prompt=document.getElementById('practicePrompt').textContent,match=prompt.match(/^“([^”]+)”/);
-   return window.CHALK_LESSONS.lessons.find(c=>c.language==='en'&&c.mode==='vocab'&&c.answer===match?.[1])?.front||'__practice_test_retry__';
-  });
-  await page.locator('#practiceInput').fill(answer);
-  await page.locator('#practiceCheck').click();
-  // Several distinct words can share a Turkish translation. Exercise the hinted retry path if needed.
-  if(await page.locator('#practiceContinue').isHidden()){
-   await page.locator('#practiceInput').fill('__practice_test_retry__');
-   await page.locator('#practiceCheck').click();
-  }
-  await page.locator('#practiceContinue').waitFor({state:'visible',timeout:5000});
-  if(i<4)await page.locator('#practiceContinue').click();
- }
- assert.equal(await page.locator('#sessionSummary').isVisible(),true);
- await page.screenshot({path:path.join(folder,'session.png')});
- await page.locator('#practiceContinue').click();assert.equal(await page.locator('#sessionSummary').isVisible(),false);
- await page.locator('#practiceClose').click();
- await page.clock.install();
- await page.evaluate(()=>{window.__cues=[];window.ChalkAudio={play:kind=>window.__cues.push(kind)};});
- await page.locator('#settingsBtn').click();await page.locator('#intervalSelect').selectOption('30');await page.locator('#doneSettings').click();
- await page.clock.runFor(30010);assert.deepEqual(await page.evaluate(()=>window.__cues),['soft']);
- await page.locator('#pauseAuto').click();await page.clock.runFor(90000);assert.equal(await page.evaluate(()=>window.__cues.length),1);
- await page.locator('#pauseAuto').click();await page.clock.runFor(30010);assert.equal(await page.evaluate(()=>window.__cues.length),2);
- await page.locator('#settingsBtn').click();await page.locator('#quietToggle').check();await page.locator('#quietStart').selectOption('0');await page.locator('#quietEnd').selectOption('0');await page.locator('#doneSettings').click();
- await page.clock.runFor(30010);assert.equal(await page.evaluate(()=>window.__cues.length),2);
- await page.locator('#settingsBtn').click();await page.locator('#motionToggle').uncheck();await page.locator('#intervalSelect').selectOption('0');await page.locator('#doneSettings').click();
- await page.clock.resume();
- const security=await page.evaluate(()=>({node:typeof require,bridge:Object.keys(window.chalkDesktop)}));assert.equal(security.node,'undefined');
- const initial=await app.evaluate(({app})=>app.getAppMetrics().map(m=>({type:m.type,cpu:m.cpu.percentCPUUsage,memory:m.memory.workingSetSize})));
- await new Promise(r=>setTimeout(r,5000));
- const idle=await app.evaluate(({app})=>app.getAppMetrics().map(m=>({type:m.type,cpu:m.cpu.percentCPUUsage,memory:m.memory.workingSetSize})));
- console.log('TRAY-HIDE',await app.evaluate(({BrowserWindow})=>{const w=BrowserWindow.getAllWindows()[0];w.hide();return {visible:w.isVisible(),skipTaskbar:w.isSkipTaskbar?.(),windows:BrowserWindow.getAllWindows().length};}));
- await new Promise(r=>setTimeout(r,2000));
- assert.equal(await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].isVisible()),false);
- assert.equal(await page.evaluate(()=>document.body.classList.contains('suspended')),true);
- const minimized=await app.evaluate(({app})=>app.getAppMetrics().map(m=>({type:m.type,cpu:m.cpu.percentCPUUsage,memory:m.memory.workingSetSize})));
- assert.deepEqual(errors,[]);fs.writeFileSync(path.join(qa,'desktop-result.json'),JSON.stringify({errors,security,initial,idle,minimized},null,2));
- console.log(JSON.stringify({ok:true,errors,idle}));
+ const page=await app.firstWindow(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#word:not(:empty)');
+ const bounds=()=>app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].getContentBounds());assert.equal((await bounds()).width,400);
+ assert.equal(await page.evaluate(()=>typeof require),'undefined');assert.equal(await page.evaluate(()=>typeof window.mochiDesktop.exportData),'function');
+ const settings=await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());assert.equal(settings.sandbox,true);assert.equal(settings.contextIsolation,true);assert.equal(settings.nodeIntegration,false);
+ await page.screenshot({path:path.join(root,'docs/screenshots/mochi-widget.png')});
+ const word=await page.locator('#word').textContent();await page.locator('#reveal').click();assert.equal(await page.locator('#meaning').isVisible(),true);
+ const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('mochi.v1')||'{"xp":0}').xp);await page.locator('#next').click();assert.notEqual(await page.locator('#word').textContent(),word);assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('mochi.v1')||'{"xp":0}').xp),before);
+ await page.locator('#pet').click();assert.equal(await page.evaluate(()=>document.body.classList.contains('happy')),true);
+ await page.locator('#practice').click();await page.screenshot({path:path.join(root,'docs/screenshots/mochi-games.png')});await page.locator('[data-mode=recall]').click();
+ for(let i=0;i<5;i++){const answer=await page.evaluate(()=>activity.queue[activity.index].answer);await page.getByRole('button',{name:answer,exact:true}).click();await page.locator('#feedback .primary').click();}
+ assert.equal(await page.locator('#panel-title').textContent(),'Biraz daha büyüdük.');assert.equal(await page.evaluate(()=>Object.values(state.records).filter(r=>r.streak===1).length),5);
+ await page.locator('#finish').click();await page.locator('#garden').click();await page.screenshot({path:path.join(root,'docs/screenshots/mochi-garden.png')});assert.equal(await page.locator('.plant:not(.locked)').count(),5);await page.locator('#panel-close').click();
+ await page.locator('#practice').click();await page.locator('[data-mode=write]').click();const correct=await page.evaluate(()=>activity.queue[activity.index].front);await page.locator('#typed-answer').fill('wrong-on-purpose');await page.locator('#check').click();assert.ok((await page.locator('#feedback').textContent()).includes(correct));assert.equal(await page.evaluate(()=>state.records[activity.queue[0].id].streak),0);await page.locator('#panel-close').click();
+ await page.locator('#practice').click();await page.locator('[data-mode=build]').click();const tokenIDs=await page.evaluate(()=>activity.queue[0].example.split(/\s+/).map((_,i)=>i));for(const id of tokenIDs){const text=await page.evaluate(id=>activity.tokens.find(t=>t.id===id).text,id);await page.locator('#token-pool').getByRole('button',{name:text,exact:true}).first().click();}await page.locator('#check').click();assert.ok((await page.locator('#feedback').textContent()).includes('İşte bu'));await page.screenshot({path:path.join(root,'docs/screenshots/mochi-sentence.png')});await page.locator('#panel-close').click();
+ await page.locator('#practice').click();await page.locator('[data-mode=listen]').click();assert.equal(await page.locator('#listen-again').count(),1);const listenAnswer=await page.evaluate(()=>activity.queue[0].answer);await page.getByRole('button',{name:listenAnswer,exact:true}).click();assert.ok((await page.locator('#feedback').textContent()).includes('İşte bu'));await page.locator('#panel-close').click();
+ await page.locator('#settings').click();await page.locator('#language').selectOption('ja');await page.locator('#level').selectOption('C2');await page.locator('#theme').selectOption('dusk');await page.locator('#motion').uncheck();assert.equal(await page.evaluate(()=>document.body.classList.contains('no-motion')),true);await page.screenshot({path:path.join(root,'docs/screenshots/mochi-settings.png')});await page.locator('#panel-close').click();assert.ok((await page.locator('#level-badge').textContent()).includes('JA · C2'));
+ const recordCount=await page.evaluate(()=>Object.keys(state.records).length);await page.reload();await page.waitForSelector('#word:not(:empty)');assert.equal(await page.evaluate(()=>Object.keys(state.records).length),recordCount);assert.equal(await page.evaluate(()=>state.settings.language),'ja');
+ await page.locator('#settings').click();await page.locator('#language').selectOption('en');await page.locator('#level').selectOption('A1');await page.locator('#theme').selectOption('dawn');await page.locator('#motion').check();await page.locator('#panel-close').click();
+ await page.locator('#mini').click();assert.equal((await bounds()).width,280);await page.screenshot({path:path.join(root,'docs/screenshots/mochi-pet.png')});await page.locator('#expand').click();assert.equal((await bounds()).width,400);
+ await page.locator('#pin').click();assert.equal(await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].isAlwaysOnTop()),true);await page.locator('#pin').click();
+ const response=await page.evaluate(async()=>{try{return(await fetch('mochi://other/mochi.html')).status;}catch{return 0;}});assert.ok(response===0||response===403);
+ const traversal=await page.evaluate(async()=>{try{return(await fetch('mochi://app/..%2fmain.cjs')).status;}catch{return 0;}});assert.ok(traversal===0||traversal===403);
+ const backupFile=path.join(root,'.qa','backup-'+Date.now()+'.json');
+ await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},backupFile);
+ const exported=await page.evaluate(()=>window.mochiDesktop.exportData(JSON.stringify(state)));assert.equal(exported,true);assert.equal(JSON.parse(fs.readFileSync(backupFile,'utf8')).settings.language,'en');
+ await page.locator('#settings').click();await page.locator('#language').selectOption('de');await page.locator('#import').setInputFiles(backupFile);await page.waitForFunction(()=>state.settings.language==='en');assert.equal(await page.locator('#save-note').textContent(),'Yedek geri yüklendi.');await page.locator('#panel-close').click();
+ await page.locator('#hide').click();assert.equal(await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].isVisible()),false);assert.equal(await page.evaluate(()=>document.body.classList.contains('paused')),true);assert.deepEqual(errors,[]);
+ console.log('PASS: 4 games, scheduled recall, wrong-answer retry, no passive XP, garden, seven-language content, settings persistence, pet/widget resize, pin, tray hide, sandbox and origin checks.');
  }finally{await app.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
 

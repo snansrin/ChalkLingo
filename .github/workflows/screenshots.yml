@@ -1,54 +1,19 @@
-name: Refresh widget screenshots
+name: Capture Mochi screenshots
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/screenshots.yml'
-      - 'tests/screenshots.cjs'
-      - 'ui/index.html'
-      - 'ui/styles.css'
-      - 'ui/studio.css'
   workflow_dispatch:
 permissions:
-  contents: write
-concurrency:
-  group: chalklingo-screenshots-main
-  cancel-in-progress: false
+  contents: read
 jobs:
-  windows-real-screenshots:
-    name: Capture five real Electron views and commit PNGs
+  screenshots:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: 'npm'
-      - name: Install pinned dependencies
-        run: npm ci --no-audit --no-fund
-      - name: Verify application
-        run: npm run check
-      - name: Capture the actual visible Windows widget
-        run: npm run test:screenshots
+      - run: npm ci --no-audit --no-fund
+      - run: npm run test:desktop
       - uses: actions/upload-artifact@v4
         with:
-          name: ChalkLingo-v038-screenshots
-          path: docs/screenshots/widget-*.png
-          if-no-files-found: error
-      - name: Publish screenshots to main
-        shell: pwsh
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/screenshots/widget-compact.png docs/screenshots/widget-next-day.png docs/screenshots/widget-settings.png docs/screenshots/widget-voice.png docs/screenshots/widget-practice.png
-          $changed = git diff --cached --name-only
-          if (-not $changed) {
-            Write-Host "Screenshots already match repository"
-            exit 0
-          }
-          git commit -m "docs: refresh real Windows widget screenshots [skip ci]"
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+          name: Mochi-Screenshots
+          path: docs/screenshots/mochi-*.png

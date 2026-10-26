@@ -1,19 +1,3 @@
 'use strict';
-const { contextBridge, ipcRenderer }=require('electron');
-contextBridge.exposeInMainWorld('chalkDesktop',Object.freeze({
-  minimize:()=>ipcRenderer.invoke('window:control','minimize'),
-  close:()=>ipcRenderer.invoke('window:control','close'),
-  setAlwaysOnTop:(value)=>ipcRenderer.invoke('window:control','set-top',value),
-  getAlwaysOnTop:()=>ipcRenderer.invoke('window:control','get-top'),
-  layout:(value)=>ipcRenderer.invoke('window:control','layout',value),
-  getStartup:()=>ipcRenderer.invoke('startup:get'),
-  setStartup:(value)=>ipcRenderer.invoke('startup:set',value),
-  onVisibility:(callback)=>{
-    if(typeof callback!=='function')return ()=>{};
-    const listener=(_event,hidden)=>{if(typeof hidden==='boolean')callback(hidden);};
-    ipcRenderer.on('window:visibility',listener);
-    return ()=>ipcRenderer.removeListener('window:visibility',listener);
-  },
-  askTeacher:(args)=>ipcRenderer.invoke('tutor:ask',args),
-  platform:process.platform
-}));
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('mochiDesktop',Object.freeze({hide:()=>ipcRenderer.invoke('control','hide'),layout:value=>ipcRenderer.invoke('control','layout',value),setTop:value=>ipcRenderer.invoke('control','top',value),getStartup:()=>ipcRenderer.invoke('control','startup'),setStartup:value=>ipcRenderer.invoke('control','startup',value),exportData:data=>ipcRenderer.invoke('export',data),onVisibility:callback=>{if(typeof callback!=='function')return;ipcRenderer.on('visibility',(_e,value)=>{if(typeof value==='boolean')callback(value);});}}));

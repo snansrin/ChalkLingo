@@ -1,22 +1,22 @@
 {
-  "name": "chalklingo",
-  "version": "0.3.8",
-  "description": "A research-informed interactive chalkboard language tutor with optional local LLM",
-  "author": "ChalkLingo Contributors",
+  "name": "mochi-language",
+  "version": "1.0.0",
+  "description": "A living desktop language companion: tiny games, a growing memory garden, and spaced retrieval.",
+  "author": "Mochi Contributors",
   "license": "MIT",
   "main": "main.cjs",
   "type": "commonjs",
   "scripts": {
     "start": "electron .",
+    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/mochi.js && node --check ui/memory.js && node --check ui/lessons.js",
     "test": "node --test tests/*.test.cjs",
-    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/lessons.js && node --check ui/engine.js && node --check ui/tutor.js && node --check ui/tutor-ui.js && node --check ui/ollama-bridge.cjs && node --check ui/app.js && node --check ui/rhythm.js && node --check ui/audio.js && node --check ui/speech.js",
     "check": "npm run lint && npm test",
+    "test:desktop": "node tests/desktop.cjs",
+    "test:widget": "node tests/desktop.cjs",
+    "test:screenshots": "node tests/desktop.cjs",
     "dist:win": "electron-builder --win nsis portable --x64 --publish never",
     "dist:mac": "electron-builder --mac dmg --publish never",
-    "dist:linux": "electron-builder --linux AppImage --publish never",
-    "test:desktop": "node tests/desktop.cjs",
-    "test:widget": "node tests/widget-desktop.cjs",
-    "test:screenshots": "node tests/screenshots.cjs"
+    "dist:linux": "electron-builder --linux AppImage --publish never"
   },
   "devDependencies": {
     "electron": "45.0.0",
@@ -24,8 +24,8 @@
     "playwright": "1.62.1"
   },
   "build": {
-    "appId": "org.chalklingo.desktop",
-    "productName": "ChalkLingo",
+    "appId": "org.mochi.language",
+    "productName": "Mochi",
     "asar": true,
     "files": [
       "main.cjs",
@@ -50,11 +50,12 @@
       "allowToChangeInstallationDirectory": true,
       "perMachine": false,
       "allowElevation": false,
-      "shortcutName": "CL",
+      "shortcutName": "Mochi",
       "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
       "runAfterFinish": false,
-      "uninstallDisplayName": "ChalkLingo (CL)"
+      "uninstallDisplayName": "Mochi Language",
+      "artifactName": "Mochi-Setup-${version}.${ext}"
     },
     "mac": {
       "category": "public.app-category.education",
@@ -66,6 +67,9 @@
     },
     "asarUnpack": [
       "assets/*"
-    ]
+    ],
+    "portable": {
+      "artifactName": "Mochi-Portable-${version}.${ext}"
+    }
   }
 }

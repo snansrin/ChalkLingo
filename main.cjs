@@ -1,151 +1,36 @@
 'use strict';
-const { app, BrowserWindow, Tray, Menu, nativeImage, ipcMain, protocol, net, screen } = require('electron');
-const path = require('node:path');
-const fs = require('node:fs');
-const { pathToFileURL } = require('node:url');
-const { requestLocalTutor } = require('./ui/ollama-bridge.cjs');
-
-protocol.registerSchemesAsPrivileged([{scheme:'chalk',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
-let mainWindow;
-let tray;
-const SMALL={width:320,height:280},LARGE={width:520,height:640};
-let quitting=false;
-let layoutExpanded=false,compactPosition=null;
-function startupExe(){return process.env.PORTABLE_EXECUTABLE_FILE||process.execPath;}
-function startupSupported(){return process.platform==='win32'&&app.isPackaged&&!process.argv.includes('--chalk-test');}
-function startupFile(){return path.join(app.getPath('userData'),'startup.json');}
-function startupOptions(enabled){return {openAtLogin:enabled,enabled:true,path:startupExe(),args:[],name:'ChalkLingo'};}
-function getStartup(){
- if(!startupSupported())return {supported:false,enabled:false};
- const s=app.getLoginItemSettings({path:startupExe(),args:[]});
- const exe=path.resolve(startupExe()).toLowerCase();
- const item=(s.launchItems||[]).find(entry=>entry.scope==='user'&&typeof entry.path==='string'&&path.resolve(entry.path).toLowerCase()===exe&&JSON.stringify(entry.args||[])==='[]');
- const enabled=item?!!item.enabled&&s.executableWillLaunchAtLogin!==false:!!s.openAtLogin&&s.executableWillLaunchAtLogin!==false;
- return {supported:true,enabled};
-}
-function setStartup(enabled){
- if(!startupSupported())return getStartup();
- app.setLoginItemSettings(startupOptions(enabled));
- fs.mkdirSync(path.dirname(startupFile()),{recursive:true});
- fs.writeFileSync(startupFile(),'{"configured":true}',{mode:0o600});
- return getStartup();
-}
-function initializeStartup(){
- if(!startupSupported()||fs.existsSync(startupFile()))return;
- try{setStartup(true);}catch(e){console.warn('Startup unavailable:',e.message);}
-}
-function showWidget(){
- if(!mainWindow||mainWindow.isDestroyed())return;
- if(mainWindow.isMinimized())mainWindow.restore();
- mainWindow.show();mainWindow.focus();
-}
-function sizeContent(width,height){mainWindow.setContentSize(width,height,false);}
-function setLayout(layout){
- const expanded=layout==='expanded';
- if(expanded===layoutExpanded)return;
- if(expanded)compactPosition=mainWindow.getPosition();
- const target=layout==='expanded'?LARGE:SMALL;
- const b=mainWindow.getBounds(),work=screen.getDisplayMatching(b).workArea;
- const [anchorX,anchorY]=!expanded&&compactPosition?compactPosition:[b.x,b.y];
- const x=Math.max(work.x,Math.min(anchorX,work.x+work.width-target.width));
- const y=Math.max(work.y,Math.min(anchorY,work.y+work.height-target.height));
- layoutExpanded=expanded;
- sizeContent(target.width,target.height);
- const actual=mainWindow.getBounds();
- mainWindow.setPosition(Math.max(work.x,Math.min(x,work.x+work.width-actual.width)),Math.max(work.y,Math.min(y,work.y+work.height-actual.height)),false);
-}
-let lastTutorRequest = 0;
-let tutorBusy=false;
-let saveTimer=null;
-if(!app.requestSingleInstanceLock()){app.quit();}
-app.on('second-instance',()=>{if(mainWindow&&!mainWindow.isDestroyed()){if(mainWindow.isMinimized())mainWindow.restore();mainWindow.show();mainWindow.focus();}});
-
-function preferencesPath(){return path.join(app.getPath('userData'),'window.json');}
-function readWindowState(){try{return JSON.parse(fs.readFileSync(preferencesPath(),'utf8'))||{};}catch{return {};}}
-function saveWindowState(){
-  if(!mainWindow || mainWindow.isDestroyed() || mainWindow.isMinimized()) return;
-  const [x,y]=layoutExpanded&&compactPosition?compactPosition:mainWindow.getPosition();
-  try{fs.mkdirSync(path.dirname(preferencesPath()),{recursive:true});fs.writeFileSync(preferencesPath(),JSON.stringify({x,y}),{mode:0o600});}catch{/* Nonfatal */}
-}
-function safeSender(event){return event.sender === mainWindow?.webContents && event.sender.getURL()==='chalk://app/index.html' && event.senderFrame === event.sender.mainFrame;}
-function createWindow(){
-  const state=readWindowState();
-  const bounds=screen.getAllDisplays().some(d=>Number.isInteger(state.x)&&Number.isInteger(state.y)&&state.x>=d.workArea.x-150&&state.y>=d.workArea.y-150&&state.x<d.workArea.x+d.workArea.width-120&&state.y<d.workArea.y+d.workArea.height-100);
-  mainWindow=new BrowserWindow({
-    width:SMALL.width,height:SMALL.height,useContentSize:true,minWidth:300,minHeight:280,
-    ...(bounds?{x:state.x,y:state.y}:{center:true}),
-    frame:false,transparent:true,resizable:false,skipTaskbar:true,alwaysOnTop:false,
-    title:'ChalkLingo',show:false,backgroundColor:'#00000000',hasShadow:true,
-    webPreferences:{
-      preload:path.join(__dirname,'preload.cjs'),
-      nodeIntegration:false,contextIsolation:true,sandbox:true,
-      webSecurity:true,backgroundThrottling:true,devTools:!app.isPackaged
-    }
-  });
-  mainWindow.loadURL('chalk://app/index.html');
-  mainWindow.once('ready-to-show',()=>{sizeContent(SMALL.width,SMALL.height);mainWindow?.show();});
-  for(const event of ['minimize','hide','restore','show'])mainWindow.on(event,()=>{
-    mainWindow.webContents.send('window:visibility',mainWindow.isMinimized()||!mainWindow.isVisible());
-  });
-  mainWindow.on('moved',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(saveWindowState,400);});
-  mainWindow.on('closed',()=>{mainWindow=null;clearTimeout(saveTimer);});
-  mainWindow.on('close',event=>{saveWindowState();if(!quitting&&tray){event.preventDefault();mainWindow.hide();}});
-  mainWindow.webContents.setWindowOpenHandler(()=>({action:'deny'}));
-  mainWindow.webContents.on('will-navigate',(event,url)=>{if(url!=='chalk://app/index.html')event.preventDefault();});
-}
+const {app,BrowserWindow,Tray,Menu,nativeImage,ipcMain,protocol,net,screen,session,dialog}=require('electron');
+const path=require('node:path'),fs=require('node:fs');
+const {pathToFileURL}=require('node:url');
+const TEST=process.argv.includes('--mochi-test');
+app.setName('Mochi');
+protocol.registerSchemesAsPrivileged([{scheme:'mochi',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
+let win,tray,quitting=false,saveTimer,layout='widget',anchor;
+const SIZES={widget:{width:400,height:660},pet:{width:280,height:302}};
+const origin='mochi://app/mochi.html';
+const stateFile=()=>path.join(app.getPath('userData'),'window.json');
+function save(){if(!win||win.isDestroyed())return;try{const [x,y]=layout==='pet'&&anchor?anchor:win.getPosition();fs.mkdirSync(app.getPath('userData'),{recursive:true});fs.writeFileSync(stateFile(),JSON.stringify({x,y}));}catch{}}
+function saved(){try{return JSON.parse(fs.readFileSync(stateFile(),'utf8'));}catch{return {};}}
+function show(){if(win?.isDestroyed())return;win?.show();win?.focus();}
+function authorized(e){return e.sender===win?.webContents&&e.senderFrame===e.sender.mainFrame&&e.sender.getURL()===origin;}
+function size(mode){const b=win.getBounds(),area=screen.getDisplayMatching(b).workArea;if(mode==='pet')anchor=win.getPosition();const target=SIZES[mode];win.setContentSize(target.width,target.height);const actual=win.getBounds();const pos=mode==='widget'&&anchor?anchor:[b.x,b.y];win.setPosition(Math.round(Math.max(area.x,Math.min(pos[0],area.x+area.width-actual.width))),Math.round(Math.max(area.y,Math.min(pos[1],area.y+area.height-actual.height))));layout=mode;}
+function startup(enabled){if(TEST||!app.isPackaged)return false;if(typeof enabled==='boolean')app.setLoginItemSettings({openAtLogin:enabled,path:process.env.PORTABLE_EXECUTABLE_FILE||process.execPath,name:'Mochi'});return app.getLoginItemSettings({path:process.env.PORTABLE_EXECUTABLE_FILE||process.execPath}).openAtLogin;}
+const lock=app.requestSingleInstanceLock();
+if(!lock)app.quit();else{
+app.on('second-instance',show);
 app.whenReady().then(()=>{
-  protocol.handle('chalk',request=>{
-    try {
-    const target=new URL(request.url);
-    if(target.hostname!=='app')return new Response('Forbidden',{status:403});
-    const relative=decodeURIComponent(target.pathname).replace(/^\/+/, '') || 'index.html';
-    const normalized=path.normalize(relative);
-    const base=path.resolve(__dirname,'ui');
-    const file=path.resolve(base,normalized);
-    if(!file.startsWith(base+path.sep))return new Response('Forbidden',{status:403});
-    return net.fetch(pathToFileURL(file).toString());
-    }catch{return new Response('Bad request',{status:400});}
-  });
-  initializeStartup();
-  const disallow=permission=>false;
-  const session= require('electron').session.defaultSession;
-  session.setPermissionRequestHandler((_wc,_permission,callback)=>callback(false));
-  session.setPermissionCheckHandler(disallow);
-  ipcMain.handle('window:control',(event,action,value)=>{
-    if(!safeSender(event))throw new Error('Unauthorized IPC sender');
-    switch(action){
-      case 'minimize':mainWindow.hide();return true;
-      case 'close':mainWindow.hide();return true;
-      case 'set-top':if(typeof value!=='boolean')throw new TypeError('boolean required');mainWindow.setAlwaysOnTop(value);return true;
-      case 'get-top':return mainWindow.isAlwaysOnTop();
-      case 'show':showWidget();return true;
-      case 'layout':if(!['compact','expanded'].includes(value))throw new TypeError('Invalid layout');setLayout(value);return true;
-      default:throw new Error('Unknown action');
-    }
-  });
-  ipcMain.handle('startup:get',event=>{if(!safeSender(event))throw Error('Unauthorized IPC sender');return getStartup();});
-  ipcMain.handle('startup:set',(event,value)=>{if(!safeSender(event)||typeof value!=='boolean')throw Error('Unauthorized setting');return setStartup(value);});
-  ipcMain.handle('tutor:ask',async(event,args)=>{
-    if(!safeSender(event))throw new Error('Unauthorized IPC sender');
-    const now=Date.now();
-    if(tutorBusy||now-lastTutorRequest<1000)throw new Error('Lütfen bir an sonra tekrar dene');
-    lastTutorRequest=now;
-    tutorBusy=true;
-    try{return await requestLocalTutor(args);}finally{tutorBusy=false;}
-  });
-  createWindow();
-  const iconPath=app.isPackaged
-    ? path.join(process.resourcesPath,'app.asar.unpacked','assets','icon.png')
-    : path.join(__dirname,'assets','icon.png');
-  const icon=nativeImage.createFromPath(iconPath).resize({width:20,height:20});
-  tray=new Tray(icon);
-  tray.setToolTip('ChalkLingo · Bir tıkla yeni bir şey öğren');
-  tray.setContextMenu(Menu.buildFromTemplate([
-    {label:'Tahtayı aç',click:showWidget},
-    {label:'Uygulamadan çık',click:()=>{quitting=true;app.quit();}}
-  ]));
-  tray.on('double-click',showWidget);
-  app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)createWindow();});
+ protocol.handle('mochi',async request=>{try{const url=new URL(request.url);if(url.hostname!=='app'||!['GET','HEAD'].includes(request.method))return new Response('Forbidden',{status:403});const base=path.resolve(__dirname,'ui'),file=path.resolve(base,decodeURIComponent(url.pathname).replace(/^\/+/,''));if(!file.startsWith(base+path.sep))return new Response('Forbidden',{status:403});const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.wav':'audio/wav','.json':'application/json'};return new Response(await fs.promises.readFile(file),{headers:{'Content-Type':mime[path.extname(file)]||'application/octet-stream'}});}catch{return new Response('Bad request',{status:400});}});
+ session.defaultSession.setPermissionRequestHandler((_w,_p,cb)=>cb(false));session.defaultSession.setPermissionCheckHandler(()=>false);
+ session.defaultSession.webRequest.onBeforeRequest((details,cb)=>cb({cancel:!details.url.startsWith('mochi://app/')}));
+ const position=saved(),valid=screen.getAllDisplays().some(d=>Number.isFinite(position.x)&&Number.isFinite(position.y)&&position.x>=d.workArea.x&&position.y>=d.workArea.y&&position.x+400<=d.workArea.x+d.workArea.width&&position.y+660<=d.workArea.y+d.workArea.height);
+ win=new BrowserWindow({...SIZES.widget,useContentSize:true,...(valid?{x:position.x,y:position.y}:{center:true}),frame:false,transparent:true,resizable:false,skipTaskbar:true,show:false,hasShadow:false,title:'Mochi · Living language',backgroundColor:'#00000000',icon:path.join(__dirname,'assets','icon.png'),webPreferences:{preload:path.join(__dirname,'preload.cjs'),nodeIntegration:false,contextIsolation:true,sandbox:true,webSecurity:true,backgroundThrottling:true,devTools:TEST||!app.isPackaged}});
+ win.webContents.setWindowOpenHandler(()=>({action:'deny'}));win.webContents.on('will-navigate',(e,url)=>{if(url!==origin)e.preventDefault();});win.webContents.on('will-attach-webview',e=>e.preventDefault());
+ win.loadURL(origin);win.once('ready-to-show',()=>win.show());
+ for(const name of ['hide','show','minimize','restore'])win.on(name,()=>win.webContents.send('visibility',!win.isVisible()||win.isMinimized()));
+ win.on('moved',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(save,400);});win.on('close',e=>{save();if(!quitting&&tray){e.preventDefault();win.hide();}});
+ ipcMain.handle('control',(e,action,value)=>{if(!authorized(e))throw Error('Unauthorized');switch(action){case 'hide':win.hide();return true;case 'layout':if(!Object.hasOwn(SIZES,value))throw Error('Invalid layout');size(value);return true;case 'top':if(typeof value!=='boolean')throw Error('Boolean required');win.setAlwaysOnTop(value);return win.isAlwaysOnTop();case 'startup':if(value!==undefined&&typeof value!=='boolean')throw Error('Boolean required');return startup(value);default:throw Error('Unknown action');}});
+ ipcMain.handle('export',async(e,data)=>{if(!authorized(e)||typeof data!=='string'||data.length>2000000)throw Error('Invalid export');const raw=JSON.parse(data);if(!raw.records||!raw.settings)throw Error('Invalid data');const choice=await dialog.showSaveDialog(win,{defaultPath:'mochi-backup.json',filters:[{name:'Mochi backup',extensions:['json']}]});if(choice.canceled)return false;await fs.promises.writeFile(choice.filePath,data,'utf8');return true;});
+ tray=new Tray(nativeImage.createFromPath(path.join(__dirname,'assets','icon.png')).resize({width:20,height:20}));tray.setToolTip('Mochi · Küçük adımlar, yaşayan kelimeler');tray.setContextMenu(Menu.buildFromTemplate([{label:'Mochi’yi göster',click:show},{label:'Çıkış',click:()=>{quitting=true;app.quit();}}]));tray.on('click',show);tray.on('double-click',show);
 });
-app.on('before-quit',()=>{quitting=true;});
-app.on('window-all-closed',()=>{if(!tray&&process.platform!=='darwin')app.quit();});
+app.on('before-quit',()=>{quitting=true;save();clearTimeout(saveTimer);});app.on('window-all-closed',()=>{if(!tray)app.quit();});
+}
