@@ -24,16 +24,19 @@ test('voice controls, startup settings and bridge are present',()=>{
   assert.ok(html.includes('id="'+id+'"'));
  for(const api of ['layout','getStartup','setStartup'])assert.ok(js.includes(api+':'));
 });
-test('compact tutor is Mimo the memory elephant',()=>{
+test('compact tutor shows segmented Necati elephant',()=>{
  const html=read('ui/index.html');
- assert.match(html,/Mimo · hafıza filin/);
+ assert.match(html,/Necati · dil arkadaşın/);
+ assert.match(html,/MASAÜSTÜ DİL WIDGET'I/);
  assert.match(html,/elephantBody/);
  assert.match(html,/elephantEar/);
- assert.match(html,/rx="60" ry="68"/);
+ assert.match(html,/viewBox="0 0 200 320"/);
+ assert.match(html,/class="teacher-head"/);
  assert.match(html,/elephant-trunk/);
  assert.match(html,/elephantTrunk/);
  assert.match(html,/elephant-nostril/);
  assert.match(html,/class="trunk-shape"/);
+ assert.match(html,/rx="8.4" ry="5.9"/);
  assert.equal((html.match(/class="elephant-trunk"/g)||[]).length,1);
  assert.equal((html.match(/class="teacher-mouth"/g)||[]).length,1);
  assert.doesNotMatch(html,/owlBody|owlFeather/);
