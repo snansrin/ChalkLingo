@@ -29,3 +29,7 @@ Son kaynaklardan Windows NSIS ve taşınabilir paket oluşturulur. ASAR içeriğ
 ## Sınırlar
 
 Tam FSRS, ses tanıma, otomatik çeviri ve genişletilmiş sertifikalı müfredat eklenmedi. Yedi öğrenme dili ve mevcut başlangıç verisi korunur. Arayüz Türkçedir. 1.0’da tutulmayan günlük ve hata geçmişi geriye dönük üretilmez. macOS/Linux ve gerçek çok monitörlü tıklama geçirme senaryoları kapsamlı denenmedi; yerleşim sınırları model düzeyinde test edildi. Erişilebilirlik için klavye, metin ve odak durumları gözden geçirildi; tam ekran okuyucu çalışması yapılmadı. Eğitim etkinliği kullanıcı çalışmasıyla ölçülmedi.
+
+## Kurulu 1.1 sonucu
+
+NSIS kurulumu çıkış kodu 0 ile tamamlandı. `MOCHI_EXE=C:\Users\snans\AppData\Local\Programs\Mochi\Mochi.exe` üzerinden `test:desktop` ve `test:studio` grupları tekrar çalıştırıldı; ikisi de geçti. Kurulum öncesi mevcut profil bu sohbetin `work/Mochi-1.0-profile-before-upgrade` klasörüne yedeklendi. Son paketlenmiş çalışma zamanı dosyaları kaynaklarla karşılaştırıldı ve eşleşti. PDF raporu, kaynak gözlem kaydı, kurulum, taşınabilir sürüm, kaynak arşivi ve SHA-256 özetleri teslim edildi.
