@@ -14,6 +14,7 @@
   <script defer src="tutor.js"></script>
   <script defer src="rhythm.js"></script>
   <script defer src="audio.js"></script>
+  <script defer src="speech.js"></script>
   <script defer src="app.js"></script>
   <script defer src="tutor-ui.js"></script>
 </head>
@@ -79,7 +80,7 @@
     <div class="chalk-tray" aria-hidden="true"><span class="chalk-stick"></span><span class="chalk-stick peach"></span><span class="chalk-eraser"></span></div>
    </div>
    <div class="rhythm-bar"><span id="rhythmStatus" role="status">Kendi ritminde öğren</span><button type="button" id="pauseAuto" hidden>Duraklat</button></div>
-   <div class="message-line"><span class="sparkle">✺</span><span id="teacherTip">Harika! Her gün küçük bir adım.</span></div>
+   <div class="message-line"><span class="sparkle">✺</span><span id="teacherTip">Harika! Her gün küçük bir adım.</span></div><div id="speechFeedback" class="speech-feedback" role="status" aria-live="polite" hidden></div>
    <div class="actions-card">
       <button type="button" class="round-action" id="repeatBtn" title="Tekrar çalış (1)" aria-label="Bu kartı tekrar çalış">↶</button>
       <button type="button" class="learn-action" id="learnBtn"><span>✓</span> Öğrendim</button>
@@ -124,6 +125,9 @@
        <div class="quiet-hours"><label>Başlangıç <select id="quietStart" aria-label="Sessiz saat başlangıcı"></select></label><label>Bitiş <select id="quietEnd" aria-label="Sessiz saat bitişi"></select></label></div>
       </div>
       <div class="setting-toggles">
+       <label class="voice-setting">TELAFFUZ SESİ<select id="voiceSelect" aria-label="Hedef dilin sesini seç"></select><small id="voiceStatus">Sesler yükleniyor…</small></label>
+       <label class="toggle-row"><span><b>Windows ile başlat</b><small>Yalnızca kullanıcı oturumunda · yönetici izni olmadan</small></span><input type="checkbox" id="startupToggle" disabled /></label>
+       <div class="startup-note" id="startupStatus" role="status">Başlangıç durumu kontrol ediliyor…</div>
        <label class="toggle-row"><span><b>Sesli telaffuz</b><small>Yeni kelimelerde seslendir</small></span><input type="checkbox" id="soundToggle" /></label>
        <label class="toggle-row"><span><b>Türkçe karşılığı göster</b><small>İstersen kendin hatırlamayı dene</small></span><input type="checkbox" id="translationToggle" checked /></label>
        <label class="toggle-row"><span><b>Her zaman üstte</b><small>Diğer pencerelerin önünde tut</small></span><input type="checkbox" id="alwaysTopToggle" /></label>
