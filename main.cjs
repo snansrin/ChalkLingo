@@ -8,7 +8,9 @@ const { requestLocalTutor } = require('./ui/ollama-bridge.cjs');
 protocol.registerSchemesAsPrivileged([{scheme:'chalk',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
 let mainWindow;
 let tray;
-const WIDTH = 520, HEIGHT = 640;
+const WIDTH = 360, HEIGHT = 340;
+let compactPosition=null;
+let panelExpanded=false;
 let lastTutorRequest = 0;
 let tutorBusy=false;
 let saveTimer=null;
@@ -19,17 +21,28 @@ function preferencesPath(){return path.join(app.getPath('userData'),'window.json
 function readWindowState(){try{return JSON.parse(fs.readFileSync(preferencesPath(),'utf8'));}catch{return {};}}
 function saveWindowState(){
   if(!mainWindow || mainWindow.isDestroyed() || mainWindow.isMinimized()) return;
-  const [x,y]=mainWindow.getPosition();
+  const [x,y]=panelExpanded&&compactPosition?compactPosition:mainWindow.getPosition();
   try{fs.mkdirSync(path.dirname(preferencesPath()),{recursive:true});fs.writeFileSync(preferencesPath(),JSON.stringify({x,y}),{mode:0o600});}catch{/* Nonfatal */}
 }
 function safeSender(event){return event.sender === mainWindow?.webContents && event.sender.getURL()==='chalk://app/index.html' && event.senderFrame === event.sender.mainFrame;}
+function setPanel(expanded){
+  if(panelExpanded===expanded)return;
+  if(expanded)compactPosition=mainWindow.getPosition();
+  const [x,y]=!expanded&&compactPosition?compactPosition:mainWindow.getPosition();
+  const area=screen.getDisplayMatching(mainWindow.getBounds()).workArea;
+  const width=Math.min(expanded?520:WIDTH,area.width),height=Math.min(expanded?640:HEIGHT,area.height);
+  panelExpanded=expanded;
+  mainWindow.setBounds({x:Math.max(area.x,Math.min(x,area.x+area.width-width)),y:Math.max(area.y,Math.min(y,area.y+area.height-height)),width,height});
+  mainWindow.setSkipTaskbar(!expanded);
+}
 function createWindow(){
+  panelExpanded=false;compactPosition=null;
   const state=readWindowState();
   const bounds=screen.getAllDisplays().some(d=>Number.isInteger(state.x)&&Number.isInteger(state.y)&&state.x>=d.workArea.x-150&&state.y>=d.workArea.y-150&&state.x<d.workArea.x+d.workArea.width-120&&state.y<d.workArea.y+d.workArea.height-100);
   mainWindow=new BrowserWindow({
-    width: WIDTH,height:HEIGHT, minWidth:WIDTH,maxWidth:WIDTH,minHeight:HEIGHT,maxHeight:HEIGHT,
+    width:WIDTH,height:HEIGHT,minWidth:300,maxWidth:520,minHeight:280,maxHeight:640,
     ...(bounds?{x:state.x,y:state.y}:{center:true}),
-    frame:false,transparent:true,resizable:false,skipTaskbar:false,alwaysOnTop:false,
+    frame:false,transparent:true,resizable:false,skipTaskbar:true,alwaysOnTop:false,
     title:'ChalkLingo',show:false,backgroundColor:'#00000000',hasShadow:true,
     webPreferences:{
       preload:path.join(__dirname,'preload.cjs'),
@@ -68,7 +81,8 @@ app.whenReady().then(()=>{
   ipcMain.handle('window:control',(event,action,value)=>{
     if(!safeSender(event))throw new Error('Unauthorized IPC sender');
     switch(action){
-      case 'minimize':mainWindow.minimize();return true;
+      case 'minimize':mainWindow.hide();return true;
+      case 'set-panel':if(typeof value!=='boolean')throw new TypeError('boolean required');setPanel(value);return true;
       case 'close':mainWindow.close();return true;
       case 'set-top':if(typeof value!=='boolean')throw new TypeError('boolean required');mainWindow.setAlwaysOnTop(value);return true;
       case 'get-top':return mainWindow.isAlwaysOnTop();

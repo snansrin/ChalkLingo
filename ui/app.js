@@ -27,6 +27,10 @@ function quiet(){return window.ChalkRhythm.quiet(settings);}
 function cue(kind){if(!quiet())window.ChalkAudio.play(kind,settings.volume);}
 function mood(value){document.body.dataset.mood=value;}
 function cancelTransition(){clearTimeout(eraseTimer);transitioning=false;pendingCue=false;elements.boardShell.classList.remove('is-erasing');}
+function setPanel(expanded){
+ document.body.classList.toggle('expanded',expanded);
+ window.chalkDesktop?.setPanel(expanded).catch(()=>{});
+}
 let speakTimer=null;
 let modalWasOpenedFrom=null;
 const modeNames={vocab:'KELİME  /  VOCAB',sentence:'CÜMLE  /  SENTENCE',grammar:'GRAMER  /  GRAMMAR'};
@@ -180,6 +184,7 @@ function setCurrentWithoutCounting(){
 }
 function openSettings(){
  if(!$('practiceOverlay').hidden)return;
+ setPanel(true);
  cancelTransition();clearTimeout(speakTimer);window.speechSynthesis?.cancel();document.body.classList.add('settings-open');
  scheduler.pause();
  modalWasOpenedFrom=document.activeElement;
@@ -190,6 +195,7 @@ function openSettings(){
 function closeSettings(){
  applySettings();
  elements.modal.hidden=true;document.body.classList.remove('settings-open');
+ setPanel(false);
  if(modalWasOpenedFrom instanceof HTMLElement)modalWasOpenedFrom.focus();
  restartAuto();
 }
@@ -219,6 +225,7 @@ function resetData(){
  records={};persist();updateProgress();next(true);syncForm();
 }
 function attach(){
+ setPanel(false);
  fillOptions();
  for(let h=0;h<24;h++)for(const id of ['quietStart','quietEnd']){const o=document.createElement('option');o.value=String(h);o.textContent=String(h).padStart(2,'0')+':00';$(id).append(o);}
  syncForm();
@@ -234,9 +241,9 @@ function attach(){
  $('speakBtn').addEventListener('click',speak);
  $('settingsBtn').addEventListener('click',openSettings);
  document.addEventListener('chalk:review',()=>{try{records=engine.normalizeRecords(JSON.parse(localStorage.getItem(STORAGE)||'{}').records);}catch{}updateProgress();});
- document.addEventListener('chalk:practiceOpened',()=>{cancelTransition();scheduler.pause();clearTimeout(speakTimer);window.speechSynthesis?.cancel();mood('thinking');});
+ document.addEventListener('chalk:practiceOpened',()=>{setPanel(true);cancelTransition();scheduler.pause();clearTimeout(speakTimer);window.speechSynthesis?.cancel();mood('thinking');});
  document.addEventListener('chalk:feedback',e=>{mood(e.detail);if(settings.lessonSound)cue(e.detail);});
- document.addEventListener('chalk:practiceClosed',()=>{next(true);restartAuto();});
+ document.addEventListener('chalk:practiceClosed',()=>{setPanel(false);next(true);restartAuto();});
  $('closeSettings').addEventListener('click',closeSettings);
  $('doneSettings').addEventListener('click',closeSettings);
  $('exportBtn').addEventListener('click',exportData);

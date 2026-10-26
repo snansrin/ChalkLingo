@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld('chalkDesktop',Object.freeze({
   close:()=>ipcRenderer.invoke('window:control','close'),
   setAlwaysOnTop:(value)=>ipcRenderer.invoke('window:control','set-top',value),
   getAlwaysOnTop:()=>ipcRenderer.invoke('window:control','get-top'),
+  setPanel:(expanded)=>ipcRenderer.invoke('window:control','set-panel',expanded),
   onVisibility:(callback)=>{
     if(typeof callback!=='function')return ()=>{};
     const listener=(_event,hidden)=>{if(typeof hidden==='boolean')callback(hidden);};

@@ -47,3 +47,38 @@ body.settings-open .teacher,body.practicing .teacher{animation-play-state:paused
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation:none!important;transition:none!important}
 [hidden]{display:none!important}
+
+/* Sticky-note footprint by default; only settings/practice expand the window. */
+.widget{width:100vw;height:100vh}
+body:not(.expanded) .widget{border-radius:17px}
+body:not(.expanded) .titlebar{height:38px;padding:0 12px}
+body:not(.expanded) .brand-name{font-size:15px}
+body:not(.expanded) .brand-mark{font-size:21px}
+body:not(.expanded) .brand-tag,body:not(.expanded) .upper-label,
+body:not(.expanded) .message-line,body:not(.expanded) .bottom-strip,
+body:not(.expanded) .progress-track,body:not(.expanded) .footer-hint{display:none}
+body:not(.expanded) .classroom{padding:10px 12px 12px}
+body:not(.expanded) .scene{height:208px;margin:0}
+body:not(.expanded) .board-shell{top:0;left:0;right:0;height:196px;padding:6px;border-radius:7px;box-shadow:0 4px 0 #4d3527,0 7px 12px #0004}
+body:not(.expanded) .board-head{left:77px;right:9px;top:9px}
+body:not(.expanded) .card-type{font-size:7px;letter-spacing:.6px}
+body:not(.expanded) .level-pill{font-size:8px;padding:3px 6px}
+body:not(.expanded) .lesson-surface{left:77px;right:9px;top:33px;bottom:19px}
+body:not(.expanded) .chalk-word{font-size:24px;max-height:57px;line-height:1.15}
+body:not(.expanded) .chalk-word.long-word{font-size:16px}
+body:not(.expanded) .phonetic{font-size:10px;margin-top:3px;min-height:12px}
+body:not(.expanded) .chalk-divider{margin-top:5px;width:27px}
+body:not(.expanded) .chalk-translation{font-size:13px;margin-top:5px;max-height:32px}
+body:not(.expanded) .chalk-example{font-size:10px;margin-top:5px;max-height:30px}
+body:not(.expanded) .board-footer{left:77px;right:9px;bottom:6px;font-size:6px;letter-spacing:0}
+body:not(.expanded) .teacher{left:-10px;bottom:7px;width:93px;height:171px}
+body:not(.expanded) .chalk-tray{left:42px;right:-2px;bottom:8px;height:7px}
+body:not(.expanded) .chalk-eraser{height:9px;top:-8px;width:24px}
+body:not(.expanded) .rhythm-bar{margin:0;height:23px;font-size:9px;gap:6px}
+body:not(.expanded) .rhythm-bar button{font-size:9px;padding:3px 6px;white-space:nowrap}
+body:not(.expanded) .actions-card{height:41px;margin-top:7px;padding:4px;gap:5px!important;border-radius:10px}
+body:not(.expanded) .actions-card button{height:30px;border-radius:6px}
+body:not(.expanded) .actions-card .round-action{width:27px;font-size:18px}
+body:not(.expanded) .actions-card .learn-action{font-size:10px;padding:0 7px;gap:4px}
+body:not(.expanded) .actions-card #practiceBtn{font-size:10px;padding:0 9px}
+body:not(.expanded) .actions-card .next-action{font-size:10px;padding:0 4px}

@@ -1,12 +1,12 @@
-# ChalkLingo · Learning Studio 0.3.0
+# ChalkLingo · Learning Studio 0.3.1
 
 Masaüstünde küçük bir sınıf, sana uygun bir öğrenme ritmi.
 
 ![Gerçek Windows uygulaması](docs/screenshots/classroom.png)
 
-## 0.3.0 yenilikleri
+## 0.3.1 yenilikleri
 
-- Yenilenen 520 × 640 sınıf, daha okunaklı tahta; nefes, göz kırpma, baş eğme, yazma ve telaffuza eşlik eden ağız hareketleri. Karakter hafif SVG çizimidir; fotogerçekçi 3D avatar değildir.
+- Varsayılan **360 × 340 küçük masaüstü widget’ı**; görev çubuğunda ayrı pencere olarak yer kaplamaz. Ayarlar veya Çalış açılınca geçici 520 × 640 panel, kapanınca aynı konumda küçük widget. Okunaklı tahta; nefes, göz kırpma, baş eğme, yazma ve telaffuza eşlik eden ağız hareketleri. Karakter hafif SVG çizimidir; fotogerçekçi 3D avatar değildir.
 - Otomatik geçiş: kapalı, 30 saniye, 1/2/5/10/15/30 dakika, 1/2 saat. Duraklat/devam et kalan süreyi korur.
 - Kelime değişim sesi, ders efektleri ve otomatik telaffuz bağımsız tercihlerdir; başlangıçta kapalıdır. Üç ton, ses seviyesi, önizleme ve geceyi aşabilen sessiz saatler bulunur.
 - 5/10/15 alıştırmalık oturum hedefleri, ilerleme çizgisi ve bitiş özeti. Mevcut 212 kart ve aralıklı tekrar sistemi korunur; bu bir tam CEFR müfredatı değildir.
@@ -22,11 +22,13 @@ Masaüstünde küçük bir sınıf, sana uygun bir öğrenme ritmi.
 
 Ekran görüntüleri gerçek Windows/Electron penceresinden alınmıştır.
 
+Önceki 520 × 640 ana görünümün yaklaşık **%63 daha az alanını** kaplar. Windows’ta çalışmak için küçük bir masaüstü uygulaması olarak kurulur/çalıştırılır; görünümü Yapışkan Notlar benzeri çerçevesiz widget’tır. Windows Widget panosuna eklenen bir kart değildir. Her zaman üstte seçeneği kapalıysa diğer pencereler arkasında kalır.
+
 ### Tercihler nasıl çalışır?
 
 ⚙ veya sağ tık → dili, ritmi, sesleri ve hedefi seç → **Tahtaya dön** ile kaydet. Uzun ayar paneli kaydırılabilir. Sessiz saatlerde otomatik sesler susar, kartlar ilerleyebilir. Başlangıç ve bitiş aynıysa gün boyu sessizdir. **Sesi dene** ve elle telaffuz düğmesi bilinçli eylemler olduğundan sessiz saatlerde de çalışır.
 
-Ses uygulama içindeki **otomatik kart değişiminde** çalar; Windows bildirim merkezi mesajı gönderilmez. Küçültülmüş uygulama arkadan kelime veya ses göndermez. Telaffuz sistem seslerine bağlıdır; bazı sesler ağ kullanabilir. Oturum hedefi desteden büyükse kartlar tekrar edilir. Windows'ta kapat düğmesi çıkar; küçültme görev çubuğuna indirir. Otomatik başlangıç veya sistem ayarı değişikliği yapılmaz.
+Ses uygulama içindeki **otomatik kart değişiminde** çalar; Windows bildirim merkezi mesajı gönderilmez. Küçültülmüş uygulama arkadan kelime veya ses göndermez. Telaffuz sistem seslerine bağlıdır; bazı sesler ağ kullanabilir. Oturum hedefi desteden büyükse kartlar tekrar edilir. Windows'ta kapat düğmesi çıkar; eksi düğmesi sistem tepsisine gizler; tepsi simgesine çift tıklayarak geri açılır. Otomatik başlangıç veya sistem ayarı değişikliği yapılmaz.
 
 ### Doğrulama
 
@@ -41,7 +43,7 @@ Yeni modüller: ui/rhythm.js (zamanlama), ui/audio.js (yerel ses), ui/studio.css
 ---
 
 
-**ChalkLingo 0.3.0** is an illustrated, offline-first desktop widget that helps you *retrieve* language knowledge instead of only rereading translations. Click the chalkboard for another lesson; right-click to customize your classroom; choose **✎ Çalış** for active exercises. An optional on-device language model (Ollama) can answer lesson questions without a cloud API.
+**ChalkLingo 0.3.1** is an illustrated, offline-first desktop widget that helps you *retrieve* language knowledge instead of only rereading translations. Click the chalkboard for another lesson; right-click to customize your classroom; choose **✎ Çalış** for active exercises. An optional on-device language model (Ollama) can answer lesson questions without a cloud API.
 
 ## What's in the classroom
 
