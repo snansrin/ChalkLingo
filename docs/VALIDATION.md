@@ -60,3 +60,8 @@ Paket doğrulaması: release/win-unpacked/ChalkLingo.exe aynı masaüstü testin
 - Baykuş koç, öğrenilenleri hatırlamayı temsil eden Mimo adlı sevimli fil karakterine dönüştürüldü. Göz kırpma, konuşma, baş hareketi ve tebeşir etkileşimleri mevcut hafif SVG/CSS animasyonlarını kullanmaya devam ediyor.
 - Gerçek Electron ekran görüntüleri yenilendi; widget sınırları 320×280, açılır paneller 520×640 olarak doğrulanıyor. Windows DPI ölçeği ekran görüntüsündeki fiziksel piksel ölçüsünü büyütebilir.
 - Güvenlik politikası ve ek bağımlılıklar değişmedi. Tek zamanlayıcı ve görünürlükte animasyon durdurma davranışı korundu. Yeni CPU/RAM benchmark'ı yapılmadı.
+
+## 0.3.7 · Mimo karakter çizimi
+
+- Mimo'nun SVG çizimi daha yuvarlak yavru fil oranlarıyla yenilendi: geniş pembe iç kulaklar, yumuşak mavi-yeşil tonlar, daha büyük/parlak gözler, yanaklar, kıvrık hortum ve küçük altın yıldız rozeti.
+- Gerçek 320×280 kompakt pencere ve 520×640 açılır paneller için ekran görüntüleri yenilendi. Çizim yerel SVG ve hafif CSS animasyonlarıdır; uzak varlık veya ek bağımlılık yoktur.

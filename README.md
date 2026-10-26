@@ -1,6 +1,6 @@
 # CL · ChalkLingo
 
-**v0.3.6 — Mimo adlı hafıza filiyle, daha küçük ve sesli masaüstü kelime widget’ı.**
+**v0.3.7 — Mimo adlı sevimli hafıza filiyle, küçük ve sesli masaüstü kelime widget’ı.**
 
 <img src="assets/icon.png" width="64" alt="CL uygulama simgesi" />
 
@@ -22,7 +22,7 @@ Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 6
 
 ## Windows’a kurulum
 
-1. **ChalkLingo Setup 0.3.6.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
+1. **ChalkLingo Setup 0.3.7.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
 2. Masaüstünde ve Başlat menüsünde **CL** kısayolu oluşur. CL’yi aç.
 3. İlk açılışta kullanıcı oturumuyla başlama etkinleştirilmeye çalışılır. Ayarlar → **Windows ile başlat** durumunu kontrol edebilir veya kapatabilirsin.
 
