@@ -10,8 +10,9 @@ let mainWindow;
 let tray;
 const SMALL={width:360,height:340},LARGE={width:520,height:640};
 let quitting=false;
+let layoutExpanded=false,compactPosition=null;
 function startupExe(){return process.env.PORTABLE_EXECUTABLE_FILE||process.execPath;}
-function startupSupported(){return process.platform==='win32'&&app.isPackaged;}
+function startupSupported(){return process.platform==='win32'&&app.isPackaged&&!process.argv.includes('--chalk-test');}
 function startupFile(){return path.join(app.getPath('userData'),'startup.json');}
 function startupOptions(enabled){return {openAtLogin:enabled,path:startupExe(),args:[],name:'ChalkLingo'};}
 function getStartup(){
@@ -35,12 +36,20 @@ function showWidget(){
  if(mainWindow.isMinimized())mainWindow.restore();
  mainWindow.show();mainWindow.focus();
 }
+function sizeContent(width,height){mainWindow.setContentSize(width,height,false);}
 function setLayout(layout){
+ const expanded=layout==='expanded';
+ if(expanded===layoutExpanded)return;
+ if(expanded)compactPosition=mainWindow.getPosition();
  const target=layout==='expanded'?LARGE:SMALL;
  const b=mainWindow.getBounds(),work=screen.getDisplayMatching(b).workArea;
- const x=Math.max(work.x,Math.min(b.x,work.x+work.width-target.width));
- const y=Math.max(work.y,Math.min(b.y,work.y+work.height-target.height));
- mainWindow.setBounds({x,y,width:target.width,height:target.height},false);
+ const [anchorX,anchorY]=!expanded&&compactPosition?compactPosition:[b.x,b.y];
+ const x=Math.max(work.x,Math.min(anchorX,work.x+work.width-target.width));
+ const y=Math.max(work.y,Math.min(anchorY,work.y+work.height-target.height));
+ layoutExpanded=expanded;
+ sizeContent(target.width,target.height);
+ const actual=mainWindow.getBounds();
+ mainWindow.setPosition(Math.max(work.x,Math.min(x,work.x+work.width-actual.width)),Math.max(work.y,Math.min(y,work.y+work.height-actual.height)),false);
 }
 let lastTutorRequest = 0;
 let tutorBusy=false;
@@ -49,10 +58,10 @@ if(!app.requestSingleInstanceLock()){app.quit();}
 app.on('second-instance',()=>{if(mainWindow&&!mainWindow.isDestroyed()){if(mainWindow.isMinimized())mainWindow.restore();mainWindow.show();mainWindow.focus();}});
 
 function preferencesPath(){return path.join(app.getPath('userData'),'window.json');}
-function readWindowState(){try{return JSON.parse(fs.readFileSync(preferencesPath(),'utf8'));}catch{return {};}}
+function readWindowState(){try{return JSON.parse(fs.readFileSync(preferencesPath(),'utf8'))||{};}catch{return {};}}
 function saveWindowState(){
   if(!mainWindow || mainWindow.isDestroyed() || mainWindow.isMinimized()) return;
-  const [x,y]=mainWindow.getPosition();
+  const [x,y]=layoutExpanded&&compactPosition?compactPosition:mainWindow.getPosition();
   try{fs.mkdirSync(path.dirname(preferencesPath()),{recursive:true});fs.writeFileSync(preferencesPath(),JSON.stringify({x,y}),{mode:0o600});}catch{/* Nonfatal */}
 }
 function safeSender(event){return event.sender === mainWindow?.webContents && event.sender.getURL()==='chalk://app/index.html' && event.senderFrame === event.sender.mainFrame;}
@@ -60,7 +69,7 @@ function createWindow(){
   const state=readWindowState();
   const bounds=screen.getAllDisplays().some(d=>Number.isInteger(state.x)&&Number.isInteger(state.y)&&state.x>=d.workArea.x-150&&state.y>=d.workArea.y-150&&state.x<d.workArea.x+d.workArea.width-120&&state.y<d.workArea.y+d.workArea.height-100);
   mainWindow=new BrowserWindow({
-    width:SMALL.width,height:SMALL.height,minWidth:340,maxWidth:520,minHeight:320,maxHeight:640,
+    width:SMALL.width,height:SMALL.height,useContentSize:true,minWidth:300,minHeight:280,
     ...(bounds?{x:state.x,y:state.y}:{center:true}),
     frame:false,transparent:true,resizable:false,skipTaskbar:true,alwaysOnTop:false,
     title:'ChalkLingo',show:false,backgroundColor:'#00000000',hasShadow:true,
@@ -71,7 +80,7 @@ function createWindow(){
     }
   });
   mainWindow.loadURL('chalk://app/index.html');
-  mainWindow.once('ready-to-show',()=>mainWindow?.show());
+  mainWindow.once('ready-to-show',()=>{sizeContent(SMALL.width,SMALL.height);mainWindow?.show();});
   for(const event of ['minimize','hide','restore','show'])mainWindow.on(event,()=>{
     mainWindow.webContents.send('window:visibility',mainWindow.isMinimized()||!mainWindow.isVisible());
   });

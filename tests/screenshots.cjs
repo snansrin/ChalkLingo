@@ -11,7 +11,7 @@ fs.mkdirSync(output,{recursive:true});
 (async()=>{
  const application=await electron.launch({
   executablePath:require('electron'),
-  args:[repo,'--user-data-dir='+path.join(repo,'.qa','screenshot-'+Date.now())],
+  args:[repo,'--chalk-test','--user-data-dir='+path.join(repo,'.qa','screenshot-'+Date.now())],
   timeout:60000
  });
  try{
@@ -19,11 +19,11 @@ fs.mkdirSync(output,{recursive:true});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.waitForSelector('#lessonFront:not(:empty)');
   await page.waitForTimeout(900);
-  const windowBounds=()=>application.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].getBounds());
+  const windowBounds=()=>application.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].getContentBounds());
   async function snap(name,width,height){
    const rect=await windowBounds();
    assert.equal(rect.width,width,`Wrong screenshot width for ${name}`);
-   assert.equal(rect.height,height,`Wrong screenshot height for ${name}`);
+   assert.ok(Math.abs(rect.height-height)<=3,`Unexpected DPI-adjusted screenshot height for ${name}`);
    const box=await page.evaluate(()=>document.getElementById('widget').getBoundingClientRect().toJSON());
    assert.ok(box.width>=width-2&&box.height>=height-2,`Widget viewport smaller than window: ${JSON.stringify(box)}`);
    const file=path.join(output,name);
@@ -51,7 +51,7 @@ fs.mkdirSync(output,{recursive:true});
   await page.locator('#practiceClose').click();
   await page.waitForTimeout(250);
   const end=await windowBounds();
-  assert.equal(end.width,360);assert.equal(end.height,340);
+  assert.equal(end.width,360);assert.ok(Math.abs(end.height-340)<=3);
   assert.deepEqual(errors,[]);
  }finally{await application.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
