@@ -14,7 +14,8 @@
     "dist:win": "electron-builder --win nsis portable --x64 --publish never",
     "dist:mac": "electron-builder --mac dmg --publish never",
     "dist:linux": "electron-builder --linux AppImage --publish never",
-    "test:desktop": "node tests/desktop.cjs"
+    "test:desktop": "node tests/desktop.cjs",
+    "test:widget": "node tests/widget-desktop.cjs"
   },
   "devDependencies": {
     "electron": "45.0.0",
