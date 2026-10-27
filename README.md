@@ -1,7 +1,7 @@
-<p align="center"><img src="assets/icon.svg" width="96" alt="Pofinyo"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/assets/icon.svg" width="96" alt="Pofinyo"></p>
 <h1 align="center">Pofinyo</h1>
 <p align="center"><strong>Masaüstünde yaşayan küçük kedin. Dil öğrenirken sana eşlik eder.</strong></p>
-<p align="center"><img src="docs/screenshots/pofinyo-desktop-cat.gif" width="300" alt="Pofinyo yürür, koşar, oturur ve kıvrılıp uyur"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-desktop-cat.gif" width="300" alt="Pofinyo yürür, koşar, oturur ve kıvrılıp uyur"></p>
 
 ## Masaüstünün kedisi
 
@@ -9,7 +9,7 @@ Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar 
 
 **Yalnız Windows masaüstü katmanında görünür: klasör ve simgelerin önünde, açık uygulamaların arkasında.** En üstte pencere modu kaldırılmıştır. Masaüstü bağlantısı hazır değilse kedi gizli kalır; uygulamaların üstüne çıkan bir pencereye dönüşmez.
 
-<table><tr><td align="center"><img src="docs/screenshots/pofinyo-cat-walk.png" width="240" alt="Dört ayakla yürüyüş"><br>Yürüyüş ve koşu</td><td align="center"><img src="docs/screenshots/pofinyo-cat-sleep.png" width="240" alt="Köşede kıvrılıp uyuyan Pofinyo"><br>Kıvrılıp uyuma</td></tr></table>
+<table><tr><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-cat-walk.png" width="240" alt="Dört ayakla yürüyüş"><br>Yürüyüş ve koşu</td><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-cat-sleep.png" width="240" alt="Köşede kıvrılıp uyuyan Pofinyo"><br>Kıvrılıp uyuma</td></tr></table>
 
 - Yürüyüşte çapraz bacaklar, koşuda ön ve arka ayak çiftleri farklı ritimlerde hareket eder.
 - Oturma, başını çevirip bakma, kuyruk hareketi, göz kırpma, uyku ve uyanış pozları vardır.
@@ -19,7 +19,7 @@ Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar 
 
 ## Kullanım ve kurulum
 
-Windows x64 için **Pofinyo-Setup-2.0.1.exe** veya **Pofinyo-Portable-2.0.1.exe**. Paketler [Pofinyo geliştirme dalının başarılı GitHub Actions çalışmasındaki](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısındadır.
+Windows x64 için **Pofinyo-Setup-2.0.1.exe** veya **Pofinyo-Portable-2.0.1.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
 
 1. Uygulamayı aç. Kedi masaüstünde yaşamaya başlar.
 2. **Win + D** ile masaüstüne geçebilirsin. Başka uygulama açtığında kedi onun arkasında kalır.
@@ -47,7 +47,7 @@ Başlangıç İngilizce sesleri pakettedir; diğer içeriklerde cihazın uygun d
 
 Hesap, abonelik veya API anahtarı gerekmez. Eğitim kayıtları cihazındadır ve JSON olarak yedeklenebilir. Sistem genelinde klavye, fare, ekran veya mikrofon kaydı yapılmaz. Kedi ve öğrenme ekranının dış ağ erişimi kapalıdır.
 
-[Pedagojik araştırma ve sınırlar](docs/EDUCATION-RESEARCH-2026-10-27.md) · [Masaüstü katmanı ve kedi doğrulaması](docs/DESKTOP-CAT-2.0.md). Genel FSRS parametreleri kişisel geçmişe göre eğitilmez; hedef hatırlama oranı bir model ayarıdır, başarı garantisi değildir. Bağımsız öğretmen incelemesi ve karşılaştırmalı öğrenme etkisi çalışması henüz yapılmadı.
+[Pedagojik araştırma ve sınırlar](https://github.com/snansrin/Pofinyo/blob/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/EDUCATION-RESEARCH-2026-10-27.md) · [Masaüstü katmanı ve kedi doğrulaması](https://github.com/snansrin/Pofinyo/blob/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/DESKTOP-CAT-2.0.md). Genel FSRS parametreleri kişisel geçmişe göre eğitilmez; hedef hatırlama oranı bir model ayarıdır, başarı garantisi değildir. Bağımsız öğretmen incelemesi ve karşılaştırmalı öğrenme etkisi çalışması henüz yapılmadı.
 
 ## Geliştirme
 
@@ -72,6 +72,6 @@ Model testleri hareket sınırlarını, davranış geçişlerini ve eğitim moto
 
 Masaüstü kedisi Windows Explorer gerektirir. macOS/Linux için masaüstü kedisi desteği yoktur. Diğer Windows kabukları ve tüm çoklu monitör/DPI kombinasyonları kapsamlı denenmedi. Electron'un bellek maliyeti vardır.
 
-Pofinyo karakteri ve animasyonları özgün SVG/CSS çizimidir. MIT lisansı. [FSRS lisansı](ui/vendor/ts-fsrs.LICENSE) ve bağımlılıkların lisansları korunur.
+Pofinyo karakteri ve animasyonları özgün SVG/CSS çizimidir. MIT lisansı. [FSRS lisansı](https://github.com/snansrin/Pofinyo/blob/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/ui/vendor/ts-fsrs.LICENSE) ve bağımlılıkların lisansları korunur.
 
 Gerçek Explorer ebeveynliği testi etkileşimli Windows masaüstünde çalıştırılır. CI sunucusunda kedi katmanı gizli-kalma/DOM yoluyla kontrol edilir; `POFINYO_REAL_DESKTOP=1` yalnız gerçek masaüstü bulunan test oturumunda kullanılmalıdır. Farklı DPI awareness modları için bağlantı kurulmaz; normal overlay kullanılmaz.
