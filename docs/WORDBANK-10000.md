@@ -1,4 +1,6 @@
-# Pofinyo 2.3 · 10.000 kelimelik kompakt havuz
+# Pofinyo 2.3 · İlk İngilizce paketinin arşiv raporu
+
+**Güncel yedi dil / 70.000 başlık sürümü için [2.4 paket raporu](LANGUAGE-PACKS-2.4.md).** Aşağıdaki boyut ve sınırlar 2.3 sürümüne aittir.
 
 10.000 farklı, tek sözcükten oluşan İngilizce başlık ve Türkçe karşılıkları içerir. Mevcut yedi dilin 277 ders kartı ve İngilizce 48 hedeflik temel rotası korunur. Büyük paket ilk aşamada İngilizce–Türkçedir; diğer altı dilin 10.000 kelimeye çıktığı iddia edilmez.
 

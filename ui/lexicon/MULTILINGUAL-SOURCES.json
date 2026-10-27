@@ -1,0 +1,111 @@
+{
+  "sources": [
+    {
+      "file": "deu-tur.tei",
+      "url": "https://download.freedict.org/dictionaries/deu-tur/0.2.2/freedict-deu-tur-0.2.2.src.tar.xz",
+      "license": "GPL-2.0-or-later",
+      "sha256": "5d01a343c0fe0ace0dd2e36e41e4389734e5645b25612d6b34335fed10692ad9"
+    },
+    {
+      "file": "fra-tur.tei",
+      "url": "https://download.freedict.org/dictionaries/fra-tur/2025.11.23/freedict-fra-tur-2025.11.23.src.tar.xz",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "f0f7d958f26e3a13899945ff8586211503638bc20cfa113e33f076532064f9b1"
+    },
+    {
+      "file": "ita-tur.tei",
+      "url": "https://download.freedict.org/dictionaries/ita-tur/2025.11.23/freedict-ita-tur-2025.11.23.src.tar.xz",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "9f8db4f703bd1906263f58973ca8336818930f13885fffaa1575716ac6365bd2"
+    },
+    {
+      "file": "spa-tur.tei",
+      "url": "https://download.freedict.org/dictionaries/spa-tur/2024.10.10/freedict-spa-tur-2024.10.10.src.tar.xz",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "8712ca9fdf142037fa07f27fc5cc6dbbaa354c35e5dca0ef01743e30046b8bb2"
+    },
+    {
+      "file": "rus-tur-wikdict.tei",
+      "url": "https://download.wikdict.com/dictionaries/tei/recommended/rus-tur.tei",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "70b3f2abafeb92c4165ed2ee9ef7f94ecb9a77d7b7071d87e39d187162d1d932"
+    },
+    {
+      "file": "jpn-tur-wikdict.tei",
+      "url": "https://download.wikdict.com/dictionaries/tei/recommended/jpn-tur.tei",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "3250e4e9101c3cb55c2d329d7f89cb5890ac2cf3eadd188c79530d641f4fa734"
+    },
+    {
+      "file": "spa-tur-wikdict.tei",
+      "url": "https://download.wikdict.com/dictionaries/tei/recommended/spa-tur.tei",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "34a6b1243f15d5fd6a3ef3534fe71928fa1b2c7fb5f18da3cefe2b82115e1a2a"
+    },
+    {
+      "file": "tur-rus-wikdict.tei",
+      "url": "https://download.wikdict.com/dictionaries/tei/recommended/tur-rus.tei",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "a0019011d9c75a32e429ed1aa7fa29ae51b377268678af070cad2ebe9a7dd005"
+    },
+    {
+      "file": "tur-jpn.tei",
+      "url": "https://download.freedict.org/dictionaries/tur-jpn/2025.11.23/freedict-tur-jpn-2025.11.23.src.tar.xz",
+      "license": "CC-BY-SA-3.0",
+      "sha256": "12ec1079fd395ad514b233dfbd59ac30d9126a03c03d980dd7e566e68545a093"
+    },
+    {
+      "file": "tr-wiktextract.jsonl.gz",
+      "url": "https://kaikki.org/trwiktionary/raw-wiktextract-data.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "cfb0ff0c5b50a2913a3d07c5ad3a90aa70000fa8217821ec749598c191b2223a"
+    },
+    {
+      "file": "de_50k.txt",
+      "url": "https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/de",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "d9e50546fd7e8b6fe6542a2b33c51d1331092b2a3916ec09f80d97856068705b"
+    },
+    {
+      "file": "fr_50k.txt",
+      "url": "https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/fr",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "f81f7c570b6433764da99aa30f4dfb08d81c5926301377b709af23a13b1f9596"
+    },
+    {
+      "file": "es_50k.txt",
+      "url": "https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/es",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "dcff3ad4316192f4dc4ff7d26e637c6ff314ef1ca0f3f720c5649018a71056c0"
+    },
+    {
+      "file": "it_50k.txt",
+      "url": "https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/it",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "bb96cdcb56d28342c1e909db6b2525448b7767136b7e86a2ccc649a1be66fc19"
+    },
+    {
+      "file": "ru_50k.txt",
+      "url": "https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/ru",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "6095f507cc167488ec66ada5a85ac50433503a08ad24a07c6eabdf54352c4e7f"
+    },
+    {
+      "file": "ja_full.txt",
+      "url": "https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/ja",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "581dd106a134ff9f2706e23cde9fe95cd24d96ead6357cd3bd3bba9e166a764e"
+    }
+  ],
+  "adaptationLicenses": {
+    "de": "GPL-3.0-only",
+    "fr": "CC-BY-SA-4.0",
+    "es": "CC-BY-SA-4.0",
+    "it": "CC-BY-SA-4.0",
+    "ru": "CC-BY-SA-4.0",
+    "ja": "CC-BY-SA-4.0"
+  },
+  "modifications": "Merge explicit bilingual translations and Turkish definitions; reverse explicit Turkish translation edges, without pivot translation. Exclude marked inflections, affixes and names where tagged. Normalize NFC and whitespace, deduplicate exact headwords, retain up to 3 short glosses, rank source-supported entries by subtitle frequency (unranked entries follow alphabetically), select 10000. Compound expressions and spelling variants may occur; no fabricated forms, CEFR labels or examples. Not independently teacher-reviewed. Deduplicate capitalization and Russian stress variants; apply explicit editorial corrections for common function words (see importer fix map).",
+  "extraction": "Turkish Wiktionary dump 2026-10-02; Kaikki extract downloaded 2026-10-27.",
+  "rebuild": "*-source.tsv.gz is the editable preferred source; build-pack.py rebuilds runtime packs offline."
+}

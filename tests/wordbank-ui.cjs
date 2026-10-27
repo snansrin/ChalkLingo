@@ -9,6 +9,20 @@ const {_electron}=require('playwright'),assert=require('node:assert/strict'),pat
  await p.locator('#wordbank-open').click();await p.waitForSelector('#bank-search',{timeout:10000});await p.locator('#bank-use').click();assert.equal(await p.evaluate(()=>state.settings.wordbank),true);assert.ok((await p.locator('#level-badge').textContent()).includes('Kelime havuzu'));assert.ok(await p.evaluate(()=>current.id.startsWith('bank:en:')));await p.reload();await p.waitForFunction(()=>wordbank?.count===10000&&current?.id.startsWith('bank:en:'));
  await p.locator('#wordbank-open').click();await p.waitForSelector('#bank-search',{timeout:10000});await p.locator('#bank-learn').click();for(let i=0;i<5;i++){assert.equal(await p.locator('#typed-answer').count(),0,'teach before asking for recall');await p.locator('#bank-teach-next').click();}await p.waitForSelector('#typed-answer');assert.equal(await p.evaluate(()=>activity.queue.length),5);await p.locator('#panel-close').click();
  await p.locator('#wordbank-open').click();await p.waitForSelector('#bank-search',{timeout:10000});await p.locator('#bank-license').click();assert.ok((await p.locator('#panel-content').textContent()).includes('GPL-3.0-only'));await p.locator('#bank-back').click();await p.locator('#bank-course').click();assert.equal(await p.evaluate(()=>state.settings.wordbank),false);
- await p.locator('#settings').click();await p.waitForSelector('#language');await p.locator('#language').selectOption('fr');await p.locator('#panel-close').click();assert.equal(await p.evaluate(()=>current.language),'fr');assert.deepEqual(errors,[]);
+ await p.locator('#settings').click();await p.waitForSelector('#language');await p.locator('#language').selectOption('fr');await p.locator('#panel-close').click();assert.equal(await p.evaluate(()=>current.language),'fr');
+ await p.locator('#wordbank-open').click();await p.waitForFunction(()=>wordbank?.language==='fr');
+ const samples={de:'Wasser',fr:'eau',es:'agua',it:'acqua',ru:'вода',ja:'水',en:'water'};
+ for(const [language,word]of Object.entries(samples)){
+  await p.locator('#bank-language').selectOption(language);await p.waitForFunction(l=>wordbank?.language===l,language);await p.waitForSelector('#bank-search');
+  assert.equal(await p.evaluate(()=>wordbank.count),10000);assert.equal(await p.locator('.bank-entry').count(),40);
+  await p.locator('#bank-search').fill(word);await p.waitForFunction(w=>bankQuery===w,word);await p.locator('[data-bank-word="'+word+'"]').click();assert.ok((await p.locator('.bank-meaning').textContent()).includes('su'));
+  await p.locator('#bank-star').click();await p.locator('#bank-test').click();await p.locator('#typed-answer').fill(word);await p.locator('#check').click();assert.ok(await p.evaluate(id=>state.records[id],'bank:'+language+':'+word));await p.locator('#feedback .primary').click();await p.locator('#finish').click();
+  await p.locator('#wordbank-open').click();await p.waitForSelector('#bank-search');
+ }
+ // A late response from an abandoned language must never overwrite the selected pack.
+ await p.evaluate(async()=>{await Promise.allSettled([loadWordbank('fr'),loadWordbank('ja'),loadWordbank('ru')]);drawWordbank();});assert.equal(await p.evaluate(()=>wordbank.language),'ru');
+ await p.locator('#bank-use').click();assert.equal(await p.evaluate(()=>current.language),'ru');await p.reload();await p.waitForFunction(()=>wordbank?.language==='ru'&&current?.language==='ru');
+ for(const language of Object.keys(samples))assert.ok(await p.evaluate(l=>Object.keys(state.records).some(id=>id.startsWith('bank:'+l+':')),language));
+ await p.locator('#wordbank-open').click();await p.waitForSelector('#bank-language');await p.locator('#bank-language').selectOption('ja');await p.waitForFunction(()=>wordbank?.language==='ja');await p.screenshot({path:path.join(root,'.qa','wordbank-seven.png')});assert.deepEqual(errors,[]);
  console.log('PASS: 10,000-word lazy offline pack, bounded search pages, Turkish meanings, teach-before-recall, real FSRS, compressed persistence/reload, bank/course switch, other languages and licenses.');
 }finally{if(app)await app.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
