@@ -1,6 +1,6 @@
 {
   "name": "mochi-language",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A living desktop language companion: tiny games, a growing memory garden, and spaced retrieval.",
   "author": "Mochi Contributors",
   "license": "MIT",
@@ -8,16 +8,17 @@
   "type": "commonjs",
   "scripts": {
     "start": "electron .",
-    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/mochi.js && node --check ui/memory.js && node --check ui/lessons.js && node --check ui/journey.js && node --check ui/studio.js && node --check ui/window-layout.cjs",
+    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/mochi.js && node --check ui/memory.js && node --check ui/lessons.js && node --check ui/journey.js && node --check ui/studio.js && node --check ui/window-layout.cjs && node --check ui/pedagogy.js && node --check ui/curriculum.js && node --check ui/education.js",
     "test": "node --test tests/*.test.cjs",
     "check": "npm run lint && npm test",
     "test:desktop": "node tests/desktop.cjs",
     "test:widget": "node tests/desktop.cjs",
-    "test:screenshots": "node tests/desktop.cjs && node tests/studio.cjs",
+    "test:screenshots": "node tests/desktop.cjs && node tests/studio.cjs && node tests/education.cjs",
     "dist:win": "electron-builder --win nsis portable --x64 --publish never",
     "dist:mac": "electron-builder --mac dmg --publish never",
     "dist:linux": "electron-builder --linux AppImage --publish never",
-    "test:studio": "node tests/studio.cjs"
+    "test:studio": "node tests/studio.cjs",
+    "test:education": "node tests/education.cjs"
   },
   "devDependencies": {
     "electron": "45.0.0",
@@ -72,5 +73,8 @@
     "portable": {
       "artifactName": "Mochi-Portable-${version}.${ext}"
     }
+  },
+  "dependencies": {
+    "ts-fsrs": "5.4.2"
   }
 }
