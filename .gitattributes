@@ -1,0 +1,2 @@
+# Preserve the exact upstream bytes checked by the scheduler digest test.
+ui/vendor/fsrs.js -text
