@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..');
 (async()=>{
  const app=await electron.launch({executablePath:process.env.MOCHI_EXE||require('electron'),args:[root,'--mochi-test','--user-data-dir='+path.join(root,'.qa','education-'+Date.now())]});
  try{
-  const page=await app.firstWindow(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#daily-progress');
+  const page=await require('./window.cjs').learning(app),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#daily-progress');
   await page.locator('#daily').click();await page.screenshot({animations:'disabled',path:path.join(root,'docs/screenshots/mochi-education.png')});
   await page.locator('#course-map').click();assert.equal(await page.locator('[data-unit]:disabled').count(),7);await page.screenshot({animations:'disabled',path:path.join(root,'docs/screenshots/mochi-curriculum.png')});
   await page.locator('[data-unit=meet]').click();await page.locator('details').first().locator('summary').click();assert.ok((await page.locator('details').first().textContent()).includes('Hello'));assert.equal(await page.evaluate(()=>Object.keys(state.education.introduced).length),0,'browsing is not assessment');await page.locator('#unit-back').click();await page.locator('#map-back').click();await page.locator('#course-start').click();

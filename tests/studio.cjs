@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..');
 (async()=>{
  const app=await electron.launch({executablePath:process.env.MOCHI_EXE||require('electron'),args:[root,'--mochi-test','--user-data-dir='+path.join(root,'.qa','studio-'+Date.now())]});
  try{
-  const page=await app.firstWindow(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#daily-progress');
+  const page=await require('./window.cjs').learning(app),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.waitForSelector('#daily-progress');
   assert.equal(await page.evaluate(()=>document.querySelector('#learning').scrollHeight<=document.querySelector('#learning').clientHeight+2),true,'main actions should fit without scrolling at standard size');
   await page.evaluate(()=>{state.journey.goal=3;openClassicDaily();});assert.equal(await page.evaluate(()=>state.journey.goal),3);await page.screenshot({animations:'disabled',path:path.join(root,'docs/screenshots/mochi-route.png')});await page.locator('#route-start').click();
   for(let i=0;i<3;i++){
@@ -21,7 +21,7 @@ const root=path.resolve(__dirname,'..');
   await page.locator('#practice').click();await page.locator('[data-mode=build]').click();const first=await page.evaluate(()=>activity.tokens.find(t=>t.id===0).text);await page.locator('#token-pool').getByRole('button',{name:first,exact:true}).first().dragTo(page.locator('#token-answer'));assert.equal(await page.locator('#token-answer .token').count(),1);await page.locator('#token-answer .token').click();assert.equal(await page.locator('#token-answer .token').count(),0);await page.locator('#panel-close').click();
   const backup=path.join(root,'.qa','studio-backup-'+Date.now()+'.json');await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},backup);await page.evaluate(()=>window.mochiDesktop.exportData(JSON.stringify(state)));const saved=JSON.parse(fs.readFileSync(backup,'utf8'));assert.equal(saved.journal[0].front,'daydream');assert.equal(saved.journey.accessory,'leaf');
   await page.locator('#settings').click();await page.locator('#import').setInputFiles(backup);await page.waitForFunction(()=>document.getElementById('save-note').textContent==='Yedek geri yüklendi.');assert.equal(await page.evaluate(()=>state.journal[0].front),'daydream');await page.locator('#panel-close').click();
-  await page.locator('#mini').click();assert.equal(await page.evaluate(()=>window.mochiDesktop.passThrough(true)),true);assert.equal(await page.evaluate(()=>window.mochiDesktop.passThrough(false)),false);await page.locator('#expand').click();assert.deepEqual(errors,[]);
+  await page.locator('#mini').click();assert.equal(await page.evaluate(()=>window.mochiDesktop.passThrough(true)),true);assert.equal(await page.evaluate(()=>window.mochiDesktop.passThrough(false)),false);await page.evaluate(()=>native.layout('widget'));assert.deepEqual(errors,[]);
   console.log('PASS: daily recognition/writing route, numeric shortcuts, unique daily progress, persistent unlocked accessories, own words, search/favorites, archive/restore, mistake repair without schedule/XP changes, real HTML drag/drop, extended backup/restore, pass-through IPC.');
  }finally{await app.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
