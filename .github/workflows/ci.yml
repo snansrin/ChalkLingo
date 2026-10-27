@@ -8,7 +8,7 @@ on:
     types: [published]
 jobs:
   quality:
-    name: JavaScript & lessons validation
+    name: quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +17,9 @@ jobs:
           node-version: '24'
       - run: npm run check
   windows:
-    name: Windows installer & portable
+    name: windows
     runs-on: windows-latest
     needs: quality
-    if: github.event_name != 'pull_request'
     permissions:
       contents: read
     steps:
