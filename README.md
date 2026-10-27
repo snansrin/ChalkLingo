@@ -1,81 +1,105 @@
-# CL · ChalkLingo
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/assets/icon.svg" width="112" alt="Yaprak taçlı Pofinyo karakteri"></p>
+<h1 align="center">Pofinyo</h1>
+<p align="center"><strong>Küçük bir arkadaş. Her gün yeni bir dil keşfi.</strong></p>
+<p align="center">Masaüstünde yaşayan, öğreten ve hatırlamana yardımcı olan dil arkadaşı.</p>
+<p align="center"><a href="#başla">Başla</a> · <a href="#nasıl-öğretiyor">Öğrenme sistemi</a> · <a href="#ekranlar">Ekranlar</a> · <a href="#geliştirme">Geliştirme</a></p>
 
-**v0.3.8 — Necati çizgi film görünümündeki fil karakteriyle, küçük ve sesli masaüstü kelime widget’ı.**
+Pofinyo’ya dokun, bir kalıpla tanış, aklından yaz ve başka bir cümlede kullan. Küçük adan ve yaprak taçlı arkadaşın sana eşlik ederken tekrarların becerine ve geçmiş denemelerine göre planlansın.
 
-<img src="assets/icon.png" width="64" alt="CL uygulama simgesi" />
+**Windows masaüstü uygulaması · Türkçe arayüz · Hesapsız · Yerel kayıt · MIT**
 
-CL, Yapışkan Notlar gibi küçük ve çerçevesiz bir Windows masaüstü widget’ıdır. Yeni normal görünüm **320 × 280** mantıksal pikseldir; görev çubuğunda düğmesi yoktur. Yönetim için sistem tepsisinde CL simgesi bulunur. Windows Widget panosunun parçası değildir; arka planda bir masaüstü uygulaması çalışır.
+## Nasıl öğretiyor?
 
-Necati'nin lila gövdesi, geniş sarkık kulakları, koyu mor bıyığı, iri gözleri, **kalından inceye uzanan parçalı hortumu**, yeşil üstü ve mavi pantolonu yerel SVG ile yeniden çizildi. Bu çizim resmî bir karakter görseli değildir. Üst bardaki **MASAÜSTÜ DİL WIDGET'I** metni üzerine gelince veya klavye odağıyla açılır; kompakt yazılar okunabilirlik için büyütüldü.
+**Tanış → anlamı hatırla → yardımsız yaz → başka bağlamda kullan → zamanı gelince yeniden hatırla.**
 
-## Güncel görünüm
+- **Sıralı İngilizce temeli:** 8 iletişim durağı, 48 özgün kalıp, açıklamalı örnekler ve farklı bağlam soruları. Tanışmadan kafede sipariş vermeye, yön tarifinden birlikte plan yapmaya uzanan bir rota.
+- **Beceriye göre hafıza:** FSRS-6; anlamı tanıma, yazma, bağlam, dinleme ve parçalı cümle kurmayı ayrı izler. Bir kelimeyi seçenekten tanımak, onu yazabildiğin anlamına gelmez.
+- **Önce tekrar, sonra yeni keşif:** normal turda en fazla üç yeni hedef; tekrarlar biriktiğinde yeni içerik azalır. Her durağın ne kazandırdığı ve neden sırada olduğu görünür.
+- **Açıklayan geri bildirim:** yanlışta örnek ve kısa açıklama, ardından puansız düzeltme. İpuçları, erken alıştırma ve aynı turdaki düzeltme tekrar takvimini veya XP’yi ilerletmez.
+- **İlk başarı ile gecikmeli kanıt ayrı:** üretim ve bağlamda iki ayrı günde, en az 24 saat arayla doğru cevap gereklidir. Aynı gün peş peşe cevaplamak bu sayacı artırmaz.
 
-<a href="docs/screenshots/widget-compact.png"><img src="docs/screenshots/widget-compact.png" width="320" alt="CL kompakt masaüstü widget'ı" /></a>
+Bu ilk ayrıntılı rota **İngilizce temelidir**; tam A1-C2 kursu veya CEFR sertifikası değildir. Diğer altı dilde başlangıç kartları ve serbest oyunlar bulunur.
 
-Yeni kelime günü 12 sözcükle açılır; set tamamlandığında Sonraki düğmesi sıradaki güne dönüşür:
+## Ekranlar
 
-<a href="docs/screenshots/widget-next-day.png"><img src="docs/screenshots/widget-next-day.png" width="320" alt="Tamamlanan kelime gününden sonra yeni kelime setini açma düğmesi" /></a>
+<table><tr>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-widget.png" width="245" alt="Pofinyo masaüstü dil arkadaşı"><br><strong>Yaşayan arkadaşın</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-education.png" width="245" alt="Pofinyo İngilizce öğrenme rotası"><br><strong>Ne çalışacağın belli</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-teaching.png" width="245" alt="Pofinyo açıklamalı öğretim kartı"><br><strong>Önce öğren, sonra dene</strong></td>
+</tr></table>
 
-Yalnızca ayarlar veya **Çalış** açıldığında panel yaklaşık **520 × 640** olur; kapatınca küçük hâline ve önceki konumuna döner. Windows ekran ölçeklendirmesi ve kenarlık yuvarlaması birkaç piksellik fark yaratabilir. Görüntüler gerçek Windows Electron penceresinden alınır. SVG değiştiğinde [GitHub Actions ekran görüntüsü iş akışı](https://github.com/snansrin/ChalkLingo/actions/workflows/screenshots.yml) beş görüntüyü yeniden üretir; en son başarılı çalışma doğrulanmalıdır.
 
-| Ders ve ritim ayarları | Telaffuz ve başlangıç | Aktif hatırlama |
-| --- | --- | --- |
-| <img src="docs/screenshots/widget-settings.png" width="220" alt="Ders ayarları" /> | <img src="docs/screenshots/widget-voice.png" width="220" alt="Telaffuz ve Windows başlangıcı" /> | <img src="docs/screenshots/widget-practice.png" width="220" alt="Ders oturumu" /> |
+<table><tr>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-games.png" width="245" alt="Pofinyo dört interaktif dil oyunu"><br><strong>Oynayarak hatırla</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-journal.png" width="245" alt="Pofinyo kişisel kelime defteri"><br><strong>Kelimelerin sana ait</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-wardrobe.png" width="245" alt="Pofinyo yaprak ve çiçek aksesuarları"><br><strong>Birlikte büyüyün</strong></td>
+</tr></table>
 
-## Windows’a kurulum
+## Sadece kartlardan ibaret değil
 
-1. **ChalkLingo Setup 0.3.8.exe** yükleyicisini çalıştır. Kurulum mevcut kullanıcı hesabına yapılır; yönetici yükseltmesi istenmez.
-2. Masaüstünde ve Başlat menüsünde **CL** kısayolu oluşur. CL’yi aç.
-3. İlk açılışta kullanıcı oturumuyla başlama etkinleştirilmeye çalışılır. Ayarlar → **Windows ile başlat** durumunu kontrol edebilir veya kapatabilirsin.
+- **Canlı karakter:** göz kırpar, nefes alır, kuyruk sallar, pencere içindeki fareyi takip eder ve sevilince tepki verir. Azaltılmış hareket desteği vardır.
+- **Dört serbest oyun:** anlam eşleştirme, dinleme, hafızadan yazma ve cümle kurma. Süre baskısı yok; cümle parçaları sürüklenebilir veya tıklanabilir.
+- **Kelime defteri:** arama, favoriler, kendi kelime/örneklerini ekleme, arşivleme ve geri alma. Hata atölyesinde zorlandığın kartlarla çalışabilirsin.
+- **Bahçe ve aksesuarlar:** başarılı hatırlamalarla filizler ve yaprak, çiçek, gezgin, yıldız aksesuarları açılır. Bir kez kazanılan aksesuar geri alınmaz. Bunlar motivasyon öğeleridir, yeterlik notu değildir.
+- **Masaüstüne uyum:** sürüklenebilir pencere, küçük arkadaş modu, üstte tutma, sistem tepsisine gizleme ve isteğe bağlı başlangıç. Küçük modda tıklamaları masaüstüne geçirebilir, tepsiden yeniden etkileşime dönebilirsin.
+- **Kendi ritmin:** üç renk dünyası, elle keşif veya ayarlanabilir keşif aralığı, isteğe bağlı yumuşak oyun sesleri.
 
-Varsayılan kurulum dizini kullanıcıya ait Programs klasörüdür. Paket imzasızdır; Windows uyarısı görülebilir. Defender, SmartScreen veya güvenlik duvarını kapatma. Kaldırmak için Windows → Yüklü uygulamalar → **ChalkLingo (CL)** yolunu kullan.
+## Başla
 
-Taşınabilir EXE de üretilebilir; sabit kurulum ve açılışta başlama için yükleyici önerilir. Taşınabilir dosyanın yeri değişirse başlangıç yolu da yeniden ayarlanmalıdır. Paketler [GitHub Actions](https://github.com/snansrin/ChalkLingo/actions/workflows/ci.yml) başarılı Windows çalışmasının artifact bölümünde bulunur.
+Windows x64 için **Pofinyo-Setup-1.2.1.exe** kurulum paketini veya **Pofinyo-Portable-1.2.1.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Mochi/actions/runs/40445157940) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
 
-## Günlük kullanım
+1. Uygulamayı aç; **Ayarlar** bölümünden dilini seç.
+2. Sıralı temel kurs için **İngilizce → Bugünkü rotam** yolunu izle.
+3. Yeni kalıplarla tanış, alıştırmaları tamamla ve sonraki tekrar zamanlarında geri dön.
 
-- Başlıktan sürükleyerek konumlandır; konum cihazda saklanır. **Her zaman üstte** isteğe bağlıdır, varsayılan kapalıdır.
-- Tahtaya tıkla veya **Sonraki / Space** ile yeni karta geç. A1 karışık destesindeki 12 kart tamamlandığında **Yeni kelime günü** görünür; yeni İngilizce kelimeler otomatik açılır.
-- Her kelime günü 12 sözcükle başlar. Günlük set sınırı içerik sınırı değildir: **Sonraki** tamamlanan setten sonra sıradaki yeni kelimeleri getirir. Kelimeler seviyeler boyunca ilerler; yeni sözcükler bittiğinde aralıklı tekrar sürer. Günü beklemek gerekmez, sonraki sete hemen geçebilirsin.
-- **Öğrendim / 2** kartı işaretler; **↶ / 1** tekrar sırasına alır.
-- **Çalış** ile 5, 10 veya 15 alıştırmalık oturum hedefi seç. Bu sayı alıştırma hedefidir; bitince yeni oturum başlatıp çalışmayı sürdürebilirsin. Yanlış cevapta ipucu, ardından çözüm ve aralıklı tekrar planı gösterilir.
-- **♫ / R** telaffuz; **⚙ / sağ tık / S** ayarlar; **Escape** panelden dönüş.
-- **− ve ×** uygulamayı kapatmak yerine tepsiye gizler. CL tepsi simgesine çift tıklayarak aç; gerçekten çıkmak için tepsi menüsündeki **Uygulamadan çık** seçeneğini kullan.
+Pencereyi üst çubuğundan taşı. `−` sistem tepsisine gizler; tepsi menüsündeki **Çıkış** uygulamayı tamamen kapatır. Otomatik başlangıç varsayılan olarak kapalıdır. İlerlemeni ayarlardan JSON olarak yedekleyebilir ve geri yükleyebilirsin.
 
-## Ritim, bildirim ve telaffuz
+## Dil ve ses kapsamı
 
-Otomatik geçiş kapalı olabilir veya **30 saniye, 1/2/5/10/15/30 dakika, 1/2 saat** seçilebilir. Bildirim sesi, ders sesleri ve otomatik telaffuz birbirinden bağımsız ve başlangıçta kapalıdır. Üç bildirim tonu, ses seviyesi ve sessiz saatler vardır. Sessiz saat başlangıcı/bitişi aynıysa gün boyu sessizdir. Elle ses denemesi kullanıcı isteğiyle çalışır.
+Türkçe açıklamalı **İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca**. Eski 229 içerik ile 48 yeni temel hedef birlikte **277 satır** oluşturur: 234 kelime/cümle hedefi ve korunmuş 43 dil bilgisi satırı. İleri seviye kart havuzları küçüktür; seviye etiketleri yaklaşık zorluk göstergeleridir.
 
-Gizliyken, ayarlar veya ders açıkken otomatik kart akışı duraklar. Geri dönünce kaçırılan bildirimler üst üste çalmaz. Bildirimler uygulama içi sestir; Windows bildirim merkezine mesaj gönderilmez.
+Mevcut İngilizce başlangıç kartlarının sesleri pakettedir. Yeni kurs örnekleri ve diğer diller cihazın uygun konuşma sesini kullanır; ses yüklü değilse dinleme çalışmayabilir. Yazılı rota kullanılabilir. Mikrofonla konuşma veya telaffuz puanlama yapılmaz.
 
-**İngilizce:** 49 mevcut İngilizce dersin özgün metni, Windows’un **Microsoft Zira Desktop (en-US)** sesiyle hazırlanmış çevrimdışı WAV kayıtlarıyla gelir. Yeni başlangıç kelimeleri de bu kayıtlarla telaffuz edilir. Otomatik ses seçiminde kayıtlar kullanılır; internet veya İngilizce ses paketi kurulumu gerekmez. Bu sentetik İngilizce sestir, insan stüdyo kaydı değildir. Kurulu başka bir İngilizce sesi ayrıca seçebilirsin.
+Yazma kontrolü öğretilen biçimler ve kursta listelenen kısaltmalarla sınırlıdır. Bütün alternatif doğru cümleleri anlayan bir dil modeli değildir. Büyük/küçük harf ve temel noktalama esnektir; aksan farkları korunur. Her hedefin tek sabit bağlam sorusu vardır.
 
-Diğer dillerde hedef dile ait yerel sistem sesi gerekir. Uygun ses yoksa uyarı verilir; İngilizce veya başka dil Türkçe Tolga sesiyle okutulmaz. [Windows ses ekleme yönergesi](https://support.microsoft.com/en-us/accessibility/windows/narrator/appendix-a-supported-languages-and-voices).
+## Araştırma ve açık sınırlar
 
-## Eğitim kapsamı
+10 kurum/ürünün açık yöntemleri, görev odaklı öğretim ve hatırlama araştırmaları incelendi. Ticari dersler ve kapalı algoritmalar kopyalanmadı. **FSRS-6**, MIT lisanslı [ts-fsrs 5.4.2](https://github.com/open-spaced-repetition/ts-fsrs/tree/v5.4.2) üzerinden çalışır. Hedef %90 hatırlama bir model ayarıdır; ölçülmüş başarı veya garanti değildir. Genel model parametreleri henüz kişisel verine göre eğitilmez.
 
-7 dilde 229 başlangıç kartı: İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca. Kelime, cümle ve gramer türleri; Türkçe açıklamalar; yaklaşık A1–C2 etiketleri. Yeni kelime günleri, seçilen dilden ve seviyeden başlayıp daha ileri seviyelere doğru öğrenilmemiş sözcükleri 12'şer kartlık setlerle sunar. İngilizce A1'e 17 yeni temel kelime eklendi; var olan ders kimlikleri ve ilerleme kayıtları korunmuştur. Tüm yeni kelimeler öğrenilince aralıklı kelime tekrarı devam eder. Tam CEFR müfredatı veya resmî yeterlilik ölçümü değildir. Cevap eşleştirme deterministiktir; bazı doğru alternatifleri tanımayabilir. İlerleme yereldir ve JSON olarak yedeklenebilir.
+- [Eğitim araştırması, müfredat ve değerlendirme planı](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/EDUCATION-RESEARCH-2026-10-27.md)
+- [Yazılım ve kurulu paket doğrulaması](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/VALIDATION-1.2.md)
+- [Etkileşim ve açık kaynak ürün araştırması](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/RESEARCH-2026-10-27.md)
 
-İsteğe bağlı Ollama öğretmeni yalnızca etkinleştirip soru gönderdiğinde sabit 127.0.0.1:11434 adresine bağlanır. Model ayrıca kurulur ve ek RAM/CPU/GPU kullanabilir. Tek istek, zaman aşımı ve yanıt boyutu sınırı uygulanır. Model yanıtı doğruluk garantisi taşımaz.
+Bağımsız öğretmen incelemesi ve gerçek öğrenenlerle karşılaştırmalı eğitim etkisi çalışması henüz yapılmadı. Ürün içi ilerleme; konuşma yeterliğini, bütün dil bilgisini veya gerçek yaşamda serbest iletişimi ölçmez.
 
-## Güvenlik ve kaynak kullanımı
+## Gizlilik ve verilerin
 
-Hesap, reklam veya telemetri yoktur. Sandbox, context isolation, kapalı Node erişimi ve kısıtlı CSP kullanılır; IPC göndereni doğrulanır. Uzak gezinme ve yeni pencereler engellenir. Başlangıç kaydı yalnızca mevcut kullanıcıya aittir; servis kurulmaz, güvenlik ayarları değiştirilmez. Test profilleri Windows başlangıç kaydı oluşturmaz.
+Hesap, abonelik veya API anahtarı gerekmez. İlerleme ve ayarlar cihazında tutulur. Uygulama içinde dış ağ istekleri engellenir; sistem genelinde klavye, fare, ekran veya mikrofon kaydı yapılmaz.
 
-Tek zamanlayıcı kullanılır; gizli animasyonlar durur, sesler temizlenir, boşta ses motoru askıya alınır. **Sıfır kaynak tüketimi veya her cihazda donmama garantisi yoktur:** Electron birden fazla süreç ve RAM kullanır. Daha sakin kullanım için animasyonları azalt, uzun geçiş süresi seç ve yerel yapay zekâyı kapalı tut. Önceki sürümlere ait ölçümler [doğrulama raporunda](docs/VALIDATION.md); güncel ölçüm diye sunulmaz.
+Önceki Mochi sürümlerinden güncellerken kayıt kimlikleri, ayarlar, defter ve aksesuarlar korunur. Depolama kimliği uyumluluk için sabittir; eski başarılardan hayalî FSRS geçmişi üretilmez. Kullanıcı tarafından eklenen kelimelerin doğruluğu otomatik denetlenmez.
 
-## Kaynaktan çalıştırma ve test
+## Geliştirme
 
-Node.js 24+ ve Git gerektirir.
+Güncel Pofinyo kaynakları [Pofinyo geliştirme dalındadır](https://github.com/snansrin/Mochi/tree/feat/mochi-living-language). Node.js 24 ve Git ile:
 
-```powershell
-git clone https://github.com/snansrin/ChalkLingo.git
-cd ChalkLingo
+```sh
+git clone --branch feat/mochi-living-language https://github.com/snansrin/Mochi.git Pofinyo
+cd Pofinyo
 npm ci
-npm run check
 npm start
+npm run check
+npm run test:desktop
+npm run test:studio
+npm run test:education
+npm run dist:win
 ```
 
-**npm run test:widget** küçük/geniş pencere ve tepsiyi, **npm run test:desktop** ders/ritim akışını kontrol eder. **npm run test:screenshots** gerçek görüntüleri yeniler. **npm run dist:win** yükleyici ve portable dosyalarını release/ klasörüne üretir. UI testleri görünür pencere açar; çalışırken pencereyle etkileşme. Ayrı .qa profili kullanılır. Birim/güvenlik testleri ses dili eşleştirmesini de kapsar.
+`npm run check` sözdizimi kontrollerini ve 32 model/veri/yerleşim testini çalıştırır. Üç masaüstü senaryo grubu gerçek Electron oturumlarında mevcut oyunları, defteri, eğitim rotasını, kayıtları ve pencere davranışını doğrular. Her test ayrı profil kullanır. Grafik oturumu gerekir.
 
-MIT lisansı. DendroGeo’dan bağımsızdır.
+Windows kurulum ve taşınabilir paketleri doğrulanır. macOS/Linux yapılandırmaları vardır; bu platformlar bu sürümde test edilmedi. Electron sandbox, context isolation ve kapalı Node integration kullanılır. Gizlenen pencerede animasyonlar durur; uygulama Electron’un kaynak maliyetini taşır.
+
+## Kimlik ve lisans
+
+Pofinyo, pofuduk ve minyon çağrışımlarından türetilmiş proje adıdır. Yaprak taçlı krem rengi karakter ve ikon özgün SVG çizimleridir. [BongoCat](https://github.com/ayangweb/BongoCat) küçük bir masaüstü karakterinin etkileşim gücüne ilham verdi; kodu veya karakter modeli kullanılmadı.
+
+MIT lisansı. FSRS kütüphanesinin lisansı [ayrıca korunur](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/ui/vendor/ts-fsrs.LICENSE). Önceki ChalkLingo ve Mochi sürümleri Git geçmişindedir.
