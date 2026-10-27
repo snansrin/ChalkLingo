@@ -10,16 +10,16 @@ function nextThought(now=Date.now(),force=false){
  $('bubble').textContent=thought.length>112?thought.slice(0,109)+'…':thought;$('bubble').title=thought;
 }
 function applyCompanion(value){
- if(!value||typeof value.enabled!=='boolean')return;
- const started=!companion.enabled&&value.enabled;companion=value;
+ if(!value||typeof value.enabled!=='boolean')return;if(Number.isInteger(value.revision)&&value.revision<(companion.revision??-1))return;
+ const started=!companion.enabled&&value.enabled,previousPause=companion.pauseReason;companion=value;
  if(value.layout){mini=value.layout==='pet';document.body.classList.toggle('mini',mini);$('expand').hidden=!mini;}
  document.body.classList.toggle('roaming',value.enabled);document.body.classList.toggle('walking',value.phase==='walking');document.body.dataset.direction=value.direction===-1?'left':'right';
  $('roam-toggle').textContent=value.enabled?'Burada dinlen ⏸':'Gezintiye çık ♡';$('roam-toggle').setAttribute('aria-pressed',String(value.enabled));
  if(typeof value.pinned==='boolean'){pinned=value.pinned;$('pin').setAttribute('aria-pressed',String(pinned));}
  $('bubble').setAttribute('aria-live',value.enabled?'off':'polite');
- if(started)nextThought(Date.now(),true);else nextThought();
+ if(value.enabled&&value.pauseReason==='hover'){$('bubble').textContent='Buradayım. Fareyi çekince gezmeye devam ederim. ♡';}else if(value.enabled&&value.pauseReason==='motion'){$('bubble').textContent='Hareket azaltma açık; burada sana eşlik ediyorum. ♡';}else if(started||previousPause==='hover'||previousPause==='motion')nextThought(Date.now(),true);else nextThought();
  if(!value.enabled){$('bubble').removeAttribute('title');document.body.classList.remove('walking');}
- if($('roaming-setting'))$('roaming-setting').checked=value.enabled;
+ if($('roaming-setting'))$('roaming-setting').checked=value.wanted??value.enabled;$('mini').title=value.wanted?'Gezintiye dön':'Küçük arkadaş modu';
 }
 async function setCompanionRoaming(value){if(!native?.setRoaming)return;await syncCompanionMotion();applyCompanion(await native.setRoaming(value));}
 function syncCompanionMotion(){return native?.companionMotion?.(state.settings.motion&&!matchMedia('(prefers-reduced-motion: reduce)').matches);}
@@ -29,7 +29,7 @@ document.documentElement.addEventListener('pointerenter',()=>{native?.companionH
 document.documentElement.addEventListener('pointerleave',()=>{native?.companionHover?.(false)?.catch(()=>{});},{passive:true});
 const companionAmbient=window.mochiAmbient;window.mochiAmbient=now=>{if(!companion.enabled)companionAmbient?.(now);else{document.body.classList.remove('sleeping');nextThought(now);}};
 const companionApplySettings=applySettings;applySettings=function(){companionApplySettings();syncCompanionMotion()?.catch(()=>{});};
-const companionSettings=openSettings;openSettings=async function(){await companionSettings();if(!$('language'))return;const section=document.createElement('div');section.innerHTML=`<label class="setting"><span>Masaüstü gezintisi<small>Küçük arkadaş modunda gezer, durur ve düşünür. Üzerine gelince bekler.</small></span><input id="roaming-setting" type="checkbox" ${companion.enabled?'checked':''}></label><p class="intro">Baloncuklar kısa düşünceler ve tanıştığın kelimelerden çağrışımlar gösterir. Öğrenme puanı kazandırmaz. Azaltılmış hareket açıkken yerinde düşünür. Gezintiyi küçük arkadaş düğmesinden veya sistem tepsisinden durdurabilirsin.</p>`;$('panel-content').prepend(section);$('roaming-setting').onchange=guarded(async()=>{const enabled=$('roaming-setting').checked;closePanel();await setCompanionRoaming(enabled);});};
+const companionSettings=openSettings;openSettings=async function(){await companionSettings();if(!$('language'))return;const section=document.createElement('div');section.innerHTML=`<label class="setting"><span>Masaüstü gezintisi<small>Küçük arkadaş modunda gezer, durur ve düşünür. Üzerine gelince bekler.</small></span><input id="roaming-setting" type="checkbox" ${(companion.wanted??companion.enabled)?'checked':''}></label><p class="intro">Baloncuklar kısa düşünceler ve tanıştığın kelimelerden çağrışımlar gösterir. Öğrenme puanı kazandırmaz. Azaltılmış hareket açıkken yerinde düşünür. Ders sırasında gezinti bekler; küçük arkadaş moduna dönünce devam eder. Burada dinlen düğmesi gezintiyi tamamen kapatır.</p>`;$('panel-content').prepend(section);$('roaming-setting').onchange=guarded(async()=>{const enabled=$('roaming-setting').checked;closePanel();await setCompanionRoaming(enabled);});};
 $('settings').onclick=openSettings;
 matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',()=>syncCompanionMotion()?.catch(()=>{}));
 syncCompanionMotion()?.catch(()=>{});native?.getRoaming?.().then(applyCompanion).catch(()=>{});

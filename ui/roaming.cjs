@@ -15,21 +15,21 @@ class Roamer{
  constructor({bounds,area,move,phase,random=Math.random,now=Date.now,later=setTimeout,cancel=clearTimeout}){
   Object.assign(this,{bounds,area,move,notify:phase,random,now,later,cancel});this.enabled=false;this.motion=true;this.visible=true;this.hover=false;this.suspended=false;this.phase='off';this.direction=1;this.timer=null;this.holdUntil=0;
  }
- state(){return{enabled:this.enabled,phase:this.phase,direction:this.direction};}
+ state(){return{enabled:this.enabled,phase:this.phase,direction:this.direction,pauseReason:!this.enabled?null:!this.motion?'motion':!this.visible?'hidden':this.suspended?'system':this.hover?'hover':this.now()<this.holdUntil?'drag':null};}
  emit(phase){this.phase=phase;this.notify(this.state());}
  clear(){if(this.timer!==null)this.cancel(this.timer);this.timer=null;}
  blocked(){return !this.enabled||!this.motion||!this.visible||this.hover||this.suspended||this.now()<this.holdUntil;}
  schedule(delay,fn){this.clear();this.timer=this.later(()=>{this.timer=null;fn();},delay);}
- setEnabled(value){this.enabled=!!value;this.refresh();}
- setMotion(value){this.motion=!!value;this.refresh();}
- setVisible(value){this.visible=!!value;this.refresh();}
- setHover(value){this.hover=!!value;this.refresh();}
- setSuspended(value){this.suspended=!!value;this.refresh();}
+ setEnabled(value){const next=!!value;if(this.enabled===next)return;this.enabled=next;this.refresh(next?900:undefined);}
+ setMotion(value){const next=!!value;if(this.motion===next)return;this.motion=next;this.refresh(next?900:undefined);}
+ setVisible(value){const next=!!value;if(this.visible===next)return;this.visible=next;this.refresh(next?900:undefined);}
+ setHover(value){const next=!!value;if(this.hover===next)return;this.hover=next;this.refresh(next?undefined:900);}
+ setSuspended(value){const next=!!value;if(this.suspended===next)return;this.suspended=next;this.refresh(next?undefined:900);}
  hold(ms=4000){this.holdUntil=this.now()+ms;this.refresh();}
- refresh(){
+ refresh(delay){
   this.clear();if(!this.enabled){this.emit('off');return;}
   if(this.blocked()){this.emit('resting');if(this.holdUntil>this.now()&&this.motion&&this.visible&&!this.hover&&!this.suspended)this.schedule(this.holdUntil-this.now()+50,()=>this.refresh());return;}
-  this.emit('thinking');this.schedule(6500+this.random()*5500,()=>this.walk());
+  this.emit('thinking');this.schedule(delay??(6500+this.random()*5500),()=>this.walk());
  }
  walk(){
   if(this.blocked()){this.refresh();return;}

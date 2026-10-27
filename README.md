@@ -18,7 +18,7 @@ Pofinyo’ya dokun, bir kalıpla tanış, aklından yaz ve başka bir cümlede k
 - Üzerine fare geldiğinde bekler; duraklayınca küçük düşünceler veya tanıştığın kelimeler görünür. Global fare/klavye takibi yapılmaz.
 - Azaltılmış hareket açıkken yerinde düşünür. Gizlenince, bilgisayar kilitlenince veya uykuya geçince hareket durur.
 - **Burada dinlen** gezintiyi kapatır; **Keşfe dön** öğrenme ekranını açar. Sistem tepsisinden de yönetilebilir.
-- Gezinti tercihi yeniden açılışta hatırlanır. Baloncuklar ve karakter hareketleri öğrenme puanı vermez.
+- Gezinti tercihi ders sırasında kapanmaz; küçük arkadaş moduna dönünce ve uygulama yeniden açılınca sürer. Yalnızca Burada dinlen ile tamamen kapatılır. Baloncuklar ve karakter hareketleri öğrenme puanı vermez.
 
 ## Nasıl öğretiyor?
 
@@ -58,7 +58,7 @@ Bu ilk ayrıntılı rota **İngilizce temelidir**; tam A1-C2 kursu veya CEFR ser
 
 ## Başla
 
-Windows x64 için **Pofinyo-Setup-1.3.0.exe** kurulum paketini veya **Pofinyo-Portable-1.3.0.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Pofinyo/actions/runs/40455638945) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
+Windows x64 için **Pofinyo-Setup-1.3.1.exe** kurulum paketini veya **Pofinyo-Portable-1.3.1.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
 
 1. Uygulamayı aç; **Ayarlar** bölümünden dilini seç.
 2. Sıralı temel kurs için **İngilizce → Bugünkü rotam** yolunu izle.
@@ -106,7 +106,7 @@ npm run test:education
 npm run dist:win
 ```
 
-`npm run check` sözdizimi kontrollerini ve 38 model/veri/yerleşim testini çalıştırır. Dört masaüstü senaryo grubu gerçek Electron oturumlarında mevcut oyunları, defteri, eğitim rotasını, kayıtları ve pencere davranışını doğrular. Her test ayrı profil kullanır. Grafik oturumu gerekir.
+`npm run check` sözdizimi kontrollerini ve 39 model/veri/yerleşim testini çalıştırır. Dört masaüstü senaryo grubu gerçek Electron oturumlarında mevcut oyunları, defteri, eğitim rotasını, kayıtları ve pencere davranışını doğrular. Her test ayrı profil kullanır. Grafik oturumu gerekir.
 
 Windows kurulum ve taşınabilir paketleri doğrulanır. macOS/Linux yapılandırmaları vardır; bu platformlar bu sürümde test edilmedi. Electron sandbox, context isolation ve kapalı Node integration kullanılır. Gizlenen pencerede animasyonlar durur; uygulama Electron’un kaynak maliyetini taşır.
 
