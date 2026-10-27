@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Pofinyo: yaprak taçlı, krem rengi küçük dil arkadaşı">
+<defs><linearGradient id="bg" x2=".8" y2="1"><stop stop-color="#adc9ae"/><stop offset="1" stop-color="#587e6d"/></linearGradient><linearGradient id="fur" x2=".3" y2="1"><stop stop-color="#fff9e9"/><stop offset="1" stop-color="#ead7ba"/></linearGradient></defs>
+<rect x="16" y="16" width="480" height="480" rx="136" fill="url(#bg)"/>
+<circle cx="256" cy="249" r="183" fill="#eff5d9" opacity=".12"/><ellipse cx="258" cy="400" rx="139" ry="30" fill="#345b4b" opacity=".2"/>
+<path d="M115 253Q87 100 134 108L204 179Q256 162 308 179L378 108Q425 100 397 253Q433 359 372 390Q256 438 140 390Q79 359 115 253Z" fill="url(#fur)" stroke="#e1cbae" stroke-width="6" stroke-linejoin="round"/>
+<path d="M135 145L178 188L138 211Z M377 145L334 188L374 211Z" fill="#dfaaa3"/>
+<path d="M251 178Q229 122 285 92Q307 151 251 178Z" fill="#517b54" stroke="#416749" stroke-width="5"/><path d="M252 174L277 113" stroke="#b7cf93" stroke-width="6" stroke-linecap="round"/>
+<ellipse cx="177" cy="275" rx="16" ry="23" fill="#3b4841"/><ellipse cx="335" cy="275" rx="16" ry="23" fill="#3b4841"/>
+<circle cx="182" cy="267" r="5" fill="#fffdf1"/><circle cx="340" cy="267" r="5" fill="#fffdf1"/>
+<ellipse cx="149" cy="316" rx="29" ry="16" fill="#e7aaa0" opacity=".75"/><ellipse cx="363" cy="316" rx="29" ry="16" fill="#e7aaa0" opacity=".75"/>
+<path d="M244 310Q256 302 268 310L256 322Z" fill="#b38b7c"/><path d="M256 322Q245 343 228 327M256 322Q267 343 284 327" fill="none" stroke="#806b5e" stroke-width="7" stroke-linecap="round"/>
+<path d="M404 77L411 94L429 101L411 108L404 125L397 108L379 101L397 94Z" fill="#f6df9f"/></svg>

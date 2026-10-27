@@ -1,39 +1,11 @@
 'use strict';
-const {test}=require('node:test');
-const assert=require('node:assert/strict');
-const {available,choose}=require('../ui/speech.js');
-const fs=require('node:fs'),path=require('node:path');
-const voice=(name,lang,localService=true)=>({name,voiceURI:name,lang,localService});
-test('English never falls back to Turkish',()=>{
- assert.equal(choose([voice('Turkish','tr-TR'),voice('English','en-US')],'en').name,'English');
- assert.equal(choose([voice('Turkish','tr-TR')],'en'),null);
-});
-test('US English is preferred and UK English is valid',()=>{
- assert.equal(choose([voice('UK','en-GB'),voice('US','en-US')],'en').name,'US');
- assert.equal(choose([voice('UK','en-GB')],'en').name,'UK');
-});
-test('remote voices do not pass the offline guard',()=>{
- assert.equal(choose([voice('Remote','en-US',false)],'en'),null);
- assert.deepEqual(available([voice('German','de-DE'),voice('English','en-US')],'de').map(x=>x.name),['German']);
-});
-test('explicit voice selection respects language',()=>{
- const voices=[voice('Alice','en-GB'),voice('Bob','en-US'),voice('Turkish','tr-TR')];
- assert.equal(choose(voices,'en','Alice').name,'Alice');
- assert.equal(choose(voices,'en','Turkish').name,'Bob');
-});
-test('seven languages do not use a mismatched system voice',()=>{
- for(const lang of ['en','de','fr','es','it','ru','ja']){
-  assert.equal(choose([voice('TR','tr-TR'),voice('Target',lang+'-XX')],lang).name,'Target');
- }
- assert.equal(choose([voice('US','en-US')],'xx'),null);
-});
-test('every English lesson has a nonempty bundled WAV matching its text',()=>{
- const cards=require('../ui/lessons.js').lessons.filter(x=>x.language==='en');
- const manifest=require('../ui/pronunciation/manifest.json');
- assert.equal(manifest.length,cards.length);
- for(const card of cards){
-  const item=manifest.find(x=>x.id===card.id);assert.equal(item.text,card.front);
-  const audio=fs.readFileSync(path.join(__dirname,'../ui/pronunciation',item.file));
-  assert.equal(audio.toString('ascii',0,4),'RIFF');assert.equal(audio.toString('ascii',8,12),'WAVE');assert.ok(audio.length>1000);
- }
-});
+const {test}=require('node:test'),assert=require('node:assert/strict'),{selectVoice,createPlayer}=require('../ui/speech.js'),{validate}=require('../ui/native-speech.cjs');
+const tr={name:'Turkish default',lang:'tr-TR',localService:true,default:true},en={name:'English local',lang:'en-US',localService:true};
+function rig(voices=[tr],nativeSpeak){const calls=[],errors=[],urls=[];const synth=new EventTarget();Object.assign(synth,{getVoices:()=>voices,cancel(){},resume(){},speak:u=>calls.push(u)});class U{constructor(text){this.text=text;}}class A{constructor(url){this.url=url;urls.push(url);}play(){return Promise.resolve();}pause(){}}const player=createPlayer({synth,Utterance:U,Audio:A,URL:{createObjectURL:()=> 'blob:test',revokeObjectURL(){}},Blob:globalThis.Blob,nativeSpeak,onError:s=>errors.push(s),waitMs:20});return {player,synth,calls,errors,urls,setVoices(v){voices=v;synth.dispatchEvent(new Event('voiceschanged'));}};}
+test('English never selects a Turkish default voice or remote voice',()=>{assert.equal(selectVoice([tr,en],'en-US'),en);assert.equal(selectVoice([tr],'en-US'),null);assert.equal(selectVoice([{...en,localService:false}],'en-US'),null);assert.equal(selectVoice([{...en,lang:'en-GB'}],'en-US').lang,'en-GB');});
+test('matching local speech explicitly sets the voice, language and normal rate',async()=>{const r=rig([tr,en]);const result=await r.player.play('Hello, I am Ada.','en-US');assert.equal(result.ok,true);assert.equal(r.calls[0].voice,en);assert.equal(r.calls[0].lang,'en-US');assert.equal(r.calls[0].text,'Hello, I am Ada.');assert.equal(r.calls[0].rate,1);r.player.cancel();});
+test('Turkish-only browser uses native English, preserving the English example text',async()=>{const captured=[];const r=rig([tr],async(text,lang)=>{captured.push({text,lang});return {ok:true,lang:'en-US',voice:'Zira',audio:Buffer.from('RIFFtest').toString('base64')};});const result=await r.player.play('Hello, I am Ada.','en-US');assert.equal(result.engine,'windows');assert.deepEqual(captured,[{text:'Hello, I am Ada.',lang:'en-US'}]);assert.equal(r.calls.length,0);assert.equal(r.urls[0],'blob:test');r.player.cancel();});
+test('missing or wrong-language native voice is reported instead of speaking Turkish',async()=>{for(const response of [{ok:false,error:'missing-voice'},{ok:true,lang:'tr-TR',voice:'Tolga',audio:'AA=='}]){const r=rig([tr],async()=>response);assert.equal((await r.player.play('Hello','en-US')).ok,false);assert.equal(r.calls.length,0);assert.equal(r.urls.length,0);assert.equal(r.errors.length,1);r.player.cancel();}});
+test('asynchronously loaded English voices are used after voiceschanged',async()=>{const r=rig([]);const p=r.player.play('Hello','en-US');r.setVoices([tr,en]);assert.equal((await p).engine,'browser');assert.equal(r.calls[0].voice,en);r.player.cancel();});
+test('cancelling an in-flight native request cannot play stale audio',async()=>{let resolve;const r=rig([tr],()=>new Promise(r=>resolve=r));const p=r.player.play('Old example','en-US');await Promise.resolve();await Promise.resolve();r.player.cancel();resolve({ok:true,lang:'en-US',voice:'Zira',audio:'AA=='});assert.equal((await p).error,'cancelled');assert.equal(r.urls.length,0);});
+test('speech requests have bounded text and allowlisted languages, with no command string',()=>{assert.doesNotThrow(()=>validate('Hello; "world"','en-US'));for(const [text,lang]of [['x'.repeat(501),'en-US'],['Hello','tr-TR'],['Hello','en-US & cmd'],['\0','en-US']])assert.throws(()=>validate(text,lang));});

@@ -6,3 +6,5 @@ dist/
 .env
 
 .qa/
+
+/assets/pofinyo-speech.exe

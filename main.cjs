@@ -1,151 +1,34 @@
 'use strict';
-const { app, BrowserWindow, Tray, Menu, nativeImage, ipcMain, protocol, net, screen } = require('electron');
-const path = require('node:path');
-const fs = require('node:fs');
-const { pathToFileURL } = require('node:url');
-const { requestLocalTutor } = require('./ui/ollama-bridge.cjs');
-
-protocol.registerSchemesAsPrivileged([{scheme:'chalk',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
-let mainWindow;
-let tray;
-const SMALL={width:320,height:280},LARGE={width:520,height:640};
-let quitting=false;
-let layoutExpanded=false,compactPosition=null;
-function startupExe(){return process.env.PORTABLE_EXECUTABLE_FILE||process.execPath;}
-function startupSupported(){return process.platform==='win32'&&app.isPackaged&&!process.argv.includes('--chalk-test');}
-function startupFile(){return path.join(app.getPath('userData'),'startup.json');}
-function startupOptions(enabled){return {openAtLogin:enabled,enabled:true,path:startupExe(),args:[],name:'ChalkLingo'};}
-function getStartup(){
- if(!startupSupported())return {supported:false,enabled:false};
- const s=app.getLoginItemSettings({path:startupExe(),args:[]});
- const exe=path.resolve(startupExe()).toLowerCase();
- const item=(s.launchItems||[]).find(entry=>entry.scope==='user'&&typeof entry.path==='string'&&path.resolve(entry.path).toLowerCase()===exe&&JSON.stringify(entry.args||[])==='[]');
- const enabled=item?!!item.enabled&&s.executableWillLaunchAtLogin!==false:!!s.openAtLogin&&s.executableWillLaunchAtLogin!==false;
- return {supported:true,enabled};
+const {app,BrowserWindow,Tray,Menu,nativeImage,ipcMain,protocol,screen,session,dialog,powerMonitor}=require('electron');
+const path=require('node:path'),fs=require('node:fs');const {fitWindow}=require('./ui/window-layout.cjs');const {createDesktopLayer}=require('./ui/desktop-layer.cjs');const {DesktopCat}=require('./ui/desktop-cat-controller.cjs');
+const TEST=process.argv.includes('--mochi-test'),LAYER_TEST=process.argv.includes('--desktop-layer-test');
+app.setName('Mochi');protocol.registerSchemesAsPrivileged([{scheme:'mochi',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
+app.disableHardwareAcceleration(); // Software offscreen alpha frames avoid compositor-dependent black child windows.
+let speechService;let progressStore;let win,tray,cat,layer,quitting=false,saveTimer;const origin='mochi://app/mochi.html',SIZES={widget:{width:400,height:660},pet:{width:280,height:302}};
+const stateFile=()=>path.join(app.getPath('userData'),'window.json');function saved(){try{return JSON.parse(fs.readFileSync(stateFile(),'utf8'));}catch{return {};}}
+function save(){if(!win||win.isDestroyed())return;try{const b=win.getBounds();fs.mkdirSync(app.getPath('userData'),{recursive:true});fs.writeFileSync(stateFile(),JSON.stringify({x:b.x,y:b.y,roaming:cat?.enabled===true}));}catch{}}
+function companion(){return cat?.state()||{enabled:false,wanted:false,available:false,desktopOnly:true,layout:'widget',pinned:false};}
+function broadcast(){if(win&&!win.isDestroyed())win.webContents.send('companion',companion());updateTray();}
+function show(){if(!win||win.isDestroyed()){createLearning();win.once('ready-to-show',show);return;}const p=saved(),area=screen.getPrimaryDisplay().workArea,r=fitWindow(SIZES.widget,area,p);win.setBounds(r);win.setAlwaysOnTop(false);win.show();win.focus();broadcast();}
+function toDesktop(){cat.setEnabled(true);win?.hide();broadcast();return true;}
+function updateTray(){if(!tray)return;tray.setContextMenu(Menu.buildFromTemplate([{label:'Öğrenme ekranını aç',click:show},{label:'Masaüstü kedisi',type:'checkbox',checked:cat?.enabled===true,click:i=>{cat.setEnabled(i.checked);broadcast();}},{type:'separator'},{label:'Çıkış',click:()=>{quitting=true;app.quit();}}]));}
+function authorized(e){return e.sender===win?.webContents&&e.senderFrame===e.sender.mainFrame&&e.sender.getURL()===origin;}
+function startup(enabled){if(TEST||!app.isPackaged)return false;if(typeof enabled==='boolean')app.setLoginItemSettings({openAtLogin:enabled,path:process.env.PORTABLE_EXECUTABLE_FILE||process.execPath,name:'Mochi'});return app.getLoginItemSettings({path:process.env.PORTABLE_EXECUTABLE_FILE||process.execPath}).openAtLogin;}
+function createLearning(){const p=saved(),area=screen.getAllDisplays().find(d=>p.x>=d.workArea.x&&p.x<d.workArea.x+d.workArea.width&&p.y>=d.workArea.y&&p.y<d.workArea.y+d.workArea.height)?.workArea||screen.getPrimaryDisplay().workArea;const r=fitWindow(SIZES.widget,area,Number.isFinite(p.x)&&Number.isFinite(p.y)?p:null);
+ win=new BrowserWindow({...r,useContentSize:true,frame:false,thickFrame:false,transparent:false,resizable:false,skipTaskbar:false,show:false,hasShadow:true,alwaysOnTop:false,title:'Pofinyo · Öğrenme',backgroundColor:'#f6f4eb',icon:path.join(__dirname,'assets','icon.png'),webPreferences:{preload:path.join(__dirname,'preload.cjs'),nodeIntegration:false,contextIsolation:true,sandbox:true,webSecurity:true,backgroundThrottling:true,devTools:TEST||!app.isPackaged}});
+ win.webContents.setWindowOpenHandler(()=>({action:'deny'}));win.webContents.on('will-navigate',(e,url)=>{if(url!==origin)e.preventDefault();});win.webContents.on('will-attach-webview',e=>e.preventDefault());win.webContents.on('did-finish-load',()=>{broadcast();win.webContents.send('visibility',!win.isVisible()||win.isMinimized());});win.loadURL(origin);if(TEST&&!LAYER_TEST)win.once('ready-to-show',()=>win.show());
+ for(const n of ['hide','show','minimize','restore'])win.on(n,()=>win.webContents.send('visibility',!win.isVisible()||win.isMinimized()));win.on('moved',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(save,400);});win.on('close',e=>{save();if(!quitting&&tray){e.preventDefault();win.hide();}});
 }
-function setStartup(enabled){
- if(!startupSupported())return getStartup();
- app.setLoginItemSettings(startupOptions(enabled));
- fs.mkdirSync(path.dirname(startupFile()),{recursive:true});
- fs.writeFileSync(startupFile(),'{"configured":true}',{mode:0o600});
- return getStartup();
-}
-function initializeStartup(){
- if(!startupSupported()||fs.existsSync(startupFile()))return;
- try{setStartup(true);}catch(e){console.warn('Startup unavailable:',e.message);}
-}
-function showWidget(){
- if(!mainWindow||mainWindow.isDestroyed())return;
- if(mainWindow.isMinimized())mainWindow.restore();
- mainWindow.show();mainWindow.focus();
-}
-function sizeContent(width,height){mainWindow.setContentSize(width,height,false);}
-function setLayout(layout){
- const expanded=layout==='expanded';
- if(expanded===layoutExpanded)return;
- if(expanded)compactPosition=mainWindow.getPosition();
- const target=layout==='expanded'?LARGE:SMALL;
- const b=mainWindow.getBounds(),work=screen.getDisplayMatching(b).workArea;
- const [anchorX,anchorY]=!expanded&&compactPosition?compactPosition:[b.x,b.y];
- const x=Math.max(work.x,Math.min(anchorX,work.x+work.width-target.width));
- const y=Math.max(work.y,Math.min(anchorY,work.y+work.height-target.height));
- layoutExpanded=expanded;
- sizeContent(target.width,target.height);
- const actual=mainWindow.getBounds();
- mainWindow.setPosition(Math.max(work.x,Math.min(x,work.x+work.width-actual.width)),Math.max(work.y,Math.min(y,work.y+work.height-actual.height)),false);
-}
-let lastTutorRequest = 0;
-let tutorBusy=false;
-let saveTimer=null;
-if(!app.requestSingleInstanceLock()){app.quit();}
-app.on('second-instance',()=>{if(mainWindow&&!mainWindow.isDestroyed()){if(mainWindow.isMinimized())mainWindow.restore();mainWindow.show();mainWindow.focus();}});
-
-function preferencesPath(){return path.join(app.getPath('userData'),'window.json');}
-function readWindowState(){try{return JSON.parse(fs.readFileSync(preferencesPath(),'utf8'))||{};}catch{return {};}}
-function saveWindowState(){
-  if(!mainWindow || mainWindow.isDestroyed() || mainWindow.isMinimized()) return;
-  const [x,y]=layoutExpanded&&compactPosition?compactPosition:mainWindow.getPosition();
-  try{fs.mkdirSync(path.dirname(preferencesPath()),{recursive:true});fs.writeFileSync(preferencesPath(),JSON.stringify({x,y}),{mode:0o600});}catch{/* Nonfatal */}
-}
-function safeSender(event){return event.sender === mainWindow?.webContents && event.sender.getURL()==='chalk://app/index.html' && event.senderFrame === event.sender.mainFrame;}
-function createWindow(){
-  const state=readWindowState();
-  const bounds=screen.getAllDisplays().some(d=>Number.isInteger(state.x)&&Number.isInteger(state.y)&&state.x>=d.workArea.x-150&&state.y>=d.workArea.y-150&&state.x<d.workArea.x+d.workArea.width-120&&state.y<d.workArea.y+d.workArea.height-100);
-  mainWindow=new BrowserWindow({
-    width:SMALL.width,height:SMALL.height,useContentSize:true,minWidth:300,minHeight:280,
-    ...(bounds?{x:state.x,y:state.y}:{center:true}),
-    frame:false,transparent:true,resizable:false,skipTaskbar:true,alwaysOnTop:false,
-    title:'ChalkLingo',show:false,backgroundColor:'#00000000',hasShadow:true,
-    webPreferences:{
-      preload:path.join(__dirname,'preload.cjs'),
-      nodeIntegration:false,contextIsolation:true,sandbox:true,
-      webSecurity:true,backgroundThrottling:true,devTools:!app.isPackaged
-    }
-  });
-  mainWindow.loadURL('chalk://app/index.html');
-  mainWindow.once('ready-to-show',()=>{sizeContent(SMALL.width,SMALL.height);mainWindow?.show();});
-  for(const event of ['minimize','hide','restore','show'])mainWindow.on(event,()=>{
-    mainWindow.webContents.send('window:visibility',mainWindow.isMinimized()||!mainWindow.isVisible());
-  });
-  mainWindow.on('moved',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(saveWindowState,400);});
-  mainWindow.on('closed',()=>{mainWindow=null;clearTimeout(saveTimer);});
-  mainWindow.on('close',event=>{saveWindowState();if(!quitting&&tray){event.preventDefault();mainWindow.hide();}});
-  mainWindow.webContents.setWindowOpenHandler(()=>({action:'deny'}));
-  mainWindow.webContents.on('will-navigate',(event,url)=>{if(url!=='chalk://app/index.html')event.preventDefault();});
-}
-app.whenReady().then(()=>{
-  protocol.handle('chalk',request=>{
-    try {
-    const target=new URL(request.url);
-    if(target.hostname!=='app')return new Response('Forbidden',{status:403});
-    const relative=decodeURIComponent(target.pathname).replace(/^\/+/, '') || 'index.html';
-    const normalized=path.normalize(relative);
-    const base=path.resolve(__dirname,'ui');
-    const file=path.resolve(base,normalized);
-    if(!file.startsWith(base+path.sep))return new Response('Forbidden',{status:403});
-    return net.fetch(pathToFileURL(file).toString());
-    }catch{return new Response('Bad request',{status:400});}
-  });
-  initializeStartup();
-  const disallow=permission=>false;
-  const session= require('electron').session.defaultSession;
-  session.setPermissionRequestHandler((_wc,_permission,callback)=>callback(false));
-  session.setPermissionCheckHandler(disallow);
-  ipcMain.handle('window:control',(event,action,value)=>{
-    if(!safeSender(event))throw new Error('Unauthorized IPC sender');
-    switch(action){
-      case 'minimize':mainWindow.hide();return true;
-      case 'close':mainWindow.hide();return true;
-      case 'set-top':if(typeof value!=='boolean')throw new TypeError('boolean required');mainWindow.setAlwaysOnTop(value);return true;
-      case 'get-top':return mainWindow.isAlwaysOnTop();
-      case 'show':showWidget();return true;
-      case 'layout':if(!['compact','expanded'].includes(value))throw new TypeError('Invalid layout');setLayout(value);return true;
-      default:throw new Error('Unknown action');
-    }
-  });
-  ipcMain.handle('startup:get',event=>{if(!safeSender(event))throw Error('Unauthorized IPC sender');return getStartup();});
-  ipcMain.handle('startup:set',(event,value)=>{if(!safeSender(event)||typeof value!=='boolean')throw Error('Unauthorized setting');return setStartup(value);});
-  ipcMain.handle('tutor:ask',async(event,args)=>{
-    if(!safeSender(event))throw new Error('Unauthorized IPC sender');
-    const now=Date.now();
-    if(tutorBusy||now-lastTutorRequest<1000)throw new Error('Lütfen bir an sonra tekrar dene');
-    lastTutorRequest=now;
-    tutorBusy=true;
-    try{return await requestLocalTutor(args);}finally{tutorBusy=false;}
-  });
-  createWindow();
-  const iconPath=app.isPackaged
-    ? path.join(process.resourcesPath,'app.asar.unpacked','assets','icon.png')
-    : path.join(__dirname,'assets','icon.png');
-  const icon=nativeImage.createFromPath(iconPath).resize({width:20,height:20});
-  tray=new Tray(icon);
-  tray.setToolTip('ChalkLingo · Bir tıkla yeni bir şey öğren');
-  tray.setContextMenu(Menu.buildFromTemplate([
-    {label:'Tahtayı aç',click:showWidget},
-    {label:'Uygulamadan çık',click:()=>{quitting=true;app.quit();}}
-  ]));
-  tray.on('double-click',showWidget);
-  app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)createWindow();});
-});
-app.on('before-quit',()=>{quitting=true;});
-app.on('window-all-closed',()=>{if(!tray&&process.platform!=='darwin')app.quit();});
+const lock=app.requestSingleInstanceLock();if(!lock)app.quit();else{app.on('second-instance',(_e,args)=>{cat?.setEnabled(true);if(args.includes('--open-learning'))show();});app.whenReady().then(()=>{
+ protocol.handle('mochi',async request=>{try{const u=new URL(request.url);if(u.hostname!=='app'||!['GET','HEAD'].includes(request.method))return new Response('Forbidden',{status:403});if(/^\/lexicon\/(en|de|fr|es|it|ru|ja)\.json$/.test(u.pathname))return new Response(await require('./ui/wordbank-store.cjs').readPack(u.pathname.slice(9,-5)),{headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}});const base=path.resolve(__dirname,'ui'),file=path.resolve(base,decodeURIComponent(u.pathname).replace(/^\/+/ ,''));if(!file.startsWith(base+path.sep))return new Response('Forbidden',{status:403});const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.wav':'audio/wav','.json':'application/json','.svg':'image/svg+xml'};return new Response(await fs.promises.readFile(file),{headers:{'Content-Type':mime[path.extname(file)]||'application/octet-stream'}});}catch{return new Response('Bad request',{status:400});}});
+ session.defaultSession.setPermissionRequestHandler((_w,_p,cb)=>cb(false));session.defaultSession.setPermissionCheckHandler(()=>false);session.defaultSession.webRequest.onBeforeRequest((d,cb)=>cb({cancel:!d.url.startsWith('mochi://app/')}));
+ progressStore=require('./ui/progress-store.cjs').createProgressStore(app.getPath('userData'));try{layer=createDesktopLayer();}catch{layer=null;}if(TEST||process.argv.includes('--open-learning'))createLearning();cat=new DesktopCat({BrowserWindow,screen,layer:(TEST&&!LAYER_TEST)?null:layer,userData:app.getPath('userData'),test:TEST&&!LAYER_TEST,onState:broadcast});
+ if(process.argv.includes('--open-learning'))win.once('ready-to-show',show);
+ for(const e of ['suspend','lock-screen'])powerMonitor.on(e,()=>cat.suspend(true));for(const e of ['resume','unlock-screen'])powerMonitor.on(e,()=>cat.suspend(false));
+ ipcMain.handle('speech',(e,text,lang)=>{if(!authorized(e))throw Error('Unauthorized');speechService??=require('./ui/native-speech.cjs').createNativeSpeech(app.isPackaged?path.join(process.resourcesPath,'app.asar.unpacked','assets','pofinyo-speech.exe'):path.join(__dirname,'assets','pofinyo-speech.exe'));return speechService.speak(text,lang);});ipcMain.handle('speech-stop',e=>{if(!authorized(e))throw Error('Unauthorized');speechService?.cancel();return true;});
+ ipcMain.on('progress-load',e=>{e.returnValue=authorized(e)?progressStore.load():null;});ipcMain.handle('progress-save',(e,text)=>{if(!authorized(e))throw Error('Unauthorized');return progressStore.save(text);});
+ ipcMain.handle('control',(e,action,value)=>{if(!authorized(e))throw Error('Unauthorized');switch(action){case 'roam':if(value!==undefined&&typeof value!=='boolean')throw Error('Boolean required');if(value!==undefined)cat.setEnabled(value);broadcast();return companion();case 'companion-hover':return false;case 'companion-motion':if(typeof value!=='boolean')throw Error('Boolean required');return cat.setMotion(value);case 'pass-through':if(typeof value!=='boolean')throw Error('Boolean required');win.setIgnoreMouseEvents(value,{forward:true});return value;case 'hide':win.hide();return true;case 'layout':if(!Object.hasOwn(SIZES,value))throw Error('Invalid layout');if(value==='pet')return toDesktop();show();return true;case 'top':if(typeof value!=='boolean')throw Error('Boolean required');return false;case 'startup':if(value!==undefined&&typeof value!=='boolean')throw Error('Boolean required');return startup(value);default:throw Error('Unknown action');}});
+ ipcMain.handle('desktop-cat',(e,action,value)=>{if(!cat.authorized(e))throw Error('Unauthorized');if(action==='state')return companion();if(action==='hover'&&typeof value==='boolean'){cat.hover(value);return true;}if(action==='pet'){cat.pet();return true;}throw Error('Invalid cat action');});
+ ipcMain.handle('export',async(e,data)=>{if(!authorized(e)||typeof data!=='string'||Buffer.byteLength(data,'utf8')>32*1024*1024)throw Error('Invalid export');const raw=JSON.parse(data);if(!raw.records||!raw.settings)throw Error('Invalid data');const choice=await dialog.showSaveDialog(win,{defaultPath:'pofinyo-backup.json',filters:[{name:'Pofinyo backup',extensions:['json']}]});if(choice.canceled)return false;await fs.promises.writeFile(choice.filePath,data,'utf8');return true;});
+ tray=new Tray(nativeImage.createFromPath(path.join(__dirname,'assets','icon.png')).resize({width:20,height:20}));tray.setToolTip('Pofinyo · Masaüstü kedisi');updateTray();tray.on('click',show);tray.on('double-click',show);
+ });app.on('before-quit',()=>{quitting=true;save();speechService?.dispose();cat?.dispose();clearTimeout(saveTimer);});app.on('window-all-closed',()=>{if(!tray)app.quit();});}
