@@ -45,7 +45,7 @@ function createDesktopLayer(){
   f.pos(h,0,0,0,0,0,0x0010|0x0001|0x0002|0x0020); // TOP only within the desktop child list.
   const proof=inspect(w);if(!proof.attached||proof.topmost||!proof.childStyle){f.show(h,0);return false;}return true;
  }
- function move(w,r,screen){const h=own(w),d=desktop();if(!d||f.parent(h)!==d.view){f.show(h,0);return false;}const p=screen.dipToScreenPoint({x:Math.round(r.x),y:Math.round(r.y)}),scale=screen.getDisplayMatching(r).scaleFactor;const point={x:p.x,y:p.y};if(!f.client(d.view,point))return false;return f.pos(h,0,point.x,point.y,Math.round(r.width*scale),Math.round(r.height*scale),0x0010|0x0004);}
+ function move(w,r,screen){const h=handle(w);if(!f.valid(h)||pid(h)!==process.pid)return false;const view=w.pofinyoSurface?.parent||desktop()?.view;if(!view||!f.valid(view)||f.parent(h)!==view){f.show(h,0);return false;}const p=screen.dipToScreenPoint({x:Math.round(r.x),y:Math.round(r.y)}),scale=screen.getDisplayMatching(r).scaleFactor;const point={x:p.x,y:p.y};if(!f.client(view,point))return false;return f.pos(h,0,point.x,point.y,Math.round(r.width*scale),Math.round(r.height*scale),0x0010|0x0004);}
  function show(w){const proof=inspect(w);if(!proof.attached||proof.topmost||(w.pofinyoOffscreen&&!proof.alphaPainted)){hide(w);return false;}f.show(own(w),4);return true;}
  return cachedLayer={desktop,compatible,attach,inspect,hide,move,show};
 }

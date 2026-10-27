@@ -8,3 +8,21 @@
 @keyframes run-weight{0%,100%{transform:translateY(1px) rotate(-1deg);transform-origin:120px 150px}50%{transform:translateY(-5px) rotate(1deg);transform-origin:120px 150px}}
 @keyframes leaf-sway{50%{transform:rotate(8deg)}}
 @keyframes curious{0%,55%,100%{transform:rotate(0)}65%,85%{transform:rotate(-5deg)}}
+/* Smaller viewport, direction-aware four-paw silhouettes, and head attention. */
+#cat{height:84.1%}#thought{right:3.3%;top:2.3%;max-width:78%;padding:4.1% 5.4%;font-size:clamp(8px,4.7vw,11px)}
+.back-facing,.front-facing{display:none}
+[data-heading=away] .side-facing,[data-heading=toward] .side-facing{display:none}
+[data-heading=away] .back-facing,[data-heading=toward] .front-facing{display:block}
+.back-facing .tail,.front-facing .tail{transform-origin:126px 145px}
+[data-pose=walk] .cat-head,[data-pose=run] .cat-head{animation:head-attend 6s ease-in-out infinite}
+.head-back{transform-box:fill-box;transform-origin:center;animation:rear-attend 7s ease-in-out infinite}
+[data-pose=walk] .depth-paws .leg{animation-name:depth-step}
+[data-pose=run] .depth-paws .leg{animation-name:depth-run}
+#cat.turning svg{animation:turn-body .24s ease-in-out}
+@keyframes step{0%,100%{transform:rotate(18deg)}55%{transform:rotate(-20deg)}77%{transform:rotate(-3deg) translateY(-4px)}}
+@keyframes depth-step{0%,100%{transform:translateY(0)}55%{transform:translateY(3px)}77%{transform:translateY(-5px)}}
+@keyframes depth-run{0%,100%{transform:translateY(3px)}50%{transform:translateY(-7px)}}
+@keyframes head-attend{0%,100%{transform:rotate(0)}23%{transform:rotate(-5deg)}63%{transform:rotate(5deg)}83%{transform:rotate(-2deg)}}
+@keyframes rear-attend{0%,100%{rotate:0deg}24%{rotate:-4deg}68%{rotate:4deg}}
+@keyframes look{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}65%{transform:rotate(7deg)}}
+@keyframes turn-body{50%{opacity:.9;scale:.88 1}}

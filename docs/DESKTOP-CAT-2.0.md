@@ -23,3 +23,13 @@ Kullanıcı 2.0.1 üzerinde siyah alan bildirdi. HWND ebeveynliği, konum ve boy
 Yerel Electron testi artık layered stilini, başarılı alfa yüklemesini, birden fazla kareyi, saydam/görünür piksel sayısını ve çizicinin gizli kalmasını da kontrol eder. Katman bağlanması tek başına görsel doğrulama sayılmaz. Önceki Pofinyo yüzü, yanakları, yaprak ve yeşil fular dört ayaklı karaktere geri taşındı.
 
 Kaynaklar: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-updatelayeredwindow ve https://www.electronjs.org/docs/latest/tutorial/offscreen-rendering
+
+## 2.2 — kullanıcı açıklaması ve hareket geliştirmesi
+
+Kullanıcı kedinin göründüğünü, siyah pencerenin öğrenme ekranı açıldığında oluştuğunu netleştirdi. Bu nedenle öğrenme ekranının Explorer altına bağlanması kaldırıldı. Eğitim ekranı artık yalnız açıkça çağrıldığında normal, opak zeminli, topmost olmayan bir pencere olarak açılır. Masaüstü katmanı yalnız gezinen kediye aittir. Yukarıdaki 2.0/2.1 notları tarihsel uygulamayı anlatır.
+
+Kedi penceresi 240×220 DIP yerine 180×165 DIP oldu (%25 küçülme). Konum adımları 50 ms yerine 16 ms aralık hedefler. Çizici hedefi 30'dan 60 FPS'e çıktı. Konum aktarımında her adımda Explorer/top-level pencere taraması yapılmaz; kendi geçerli masaüstü ebeveyni kullanılır. Gerçek kare hızı donanım ve sistem yüküne bağlıdır.
+
+Dikey/çapraz yukarı hareket ayrı arka görünüşü, aşağı hareket ön görünüşü kullanır; yana kayıyormuş gibi görünen sabit yan siluet kaldırıldı. Ayaklarda basma ve kaldırma fazı, dönüş geçişi ve iki yana baş bakışı eklendi. Hareketler özgün stilize SVG animasyonlarıdır; gerçek bir kedinin motion-capture kaydı değildir.
+
+Testler: 50 model/eğitim testi; yön seçimi ve yaklaşık 60 Hz model adımları; gerçek Explorer'da küçük boyut, devam eden alfa kareleri ve yer değiştirme; ön/arka/yan görünüşlerin ayrı görünürlüğü; öğrenme ekranının masaüstü çocuğu olmadan açılması.

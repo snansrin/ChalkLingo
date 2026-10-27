@@ -12,19 +12,20 @@ Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar 
 <table><tr><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/feat/mochi-living-language/docs/screenshots/pofinyo-cat-walk.png" width="240" alt="Dört ayakla yürüyüş"><br>Yürüyüş ve koşu</td><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/feat/mochi-living-language/docs/screenshots/pofinyo-cat-sleep.png" width="240" alt="Köşede kıvrılıp uyuyan Pofinyo"><br>Kıvrılıp uyuma</td></tr></table>
 
 - Yürüyüşte çapraz bacaklar, koşuda ön ve arka ayak çiftleri farklı ritimlerde hareket eder.
-- Oturma, başını çevirip bakma, kuyruk hareketi, göz kırpma, uyku ve uyanış pozları vardır.
+- Kedi %25 küçültüldü. Yaklaşık 60 hareket güncellemesi/saniye ve 60 FPS çizim hedefi kullanılır; gerçek hız donanıma bağlıdır.
+- Yukarı giderken arka, aşağı gelirken ön, yatay giderken yan görünüş kullanılır. Başını iki yana çevirir; oturur, göz kırpar, kıvrılır ve esneyerek uyanır.
 - Kısa düşünce baloncukları davranışına eşlik eder. Bunlar hazırlanmış cümlelerdir; mikrofon veya ekran izlenmez.
 - Fare üzerine geldiğinde bekler; tıklayınca tepki verir. Yalnız kendi penceresindeki etkileşimleri alır.
 - Hareket azaltma açıkken sakin kalır. Kilit ve uyku durumlarında gezinme durur.
 
 ## Kullanım ve kurulum
 
-Windows x64 için **Pofinyo-Setup-2.1.0.exe** veya **Pofinyo-Portable-2.1.0.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
+Windows x64 için **Pofinyo-Setup-2.2.0.exe** veya **Pofinyo-Portable-2.2.0.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
 
 1. Uygulamayı aç. Kedi masaüstünde yaşamaya başlar.
 2. **Win + D** ile masaüstüne geçebilirsin. Başka uygulama açtığında kedi onun arkasında kalır.
 3. Sistem tepsisindeki Pofinyo menüsünden **Masaüstü kedisi** seçeneğiyle açıp kapat.
-4. **Öğrenme ekranını masaüstünde aç** ile eğitim araçlarına ulaş. Bu pencere de masaüstü katmanındadır.
+4. **Öğrenme ekranını aç** ile eğitim araçlarına ulaş. Eğitim ekranı yalnız açmanı istediğinde normal pencere olarak görünür; üstte tutma kapalıdır. Gezinen kedi masaüstü katmanında kalır.
 5. Tamamen kapatmak için tepsi menüsündeki **Çıkış** seçeneğini kullan.
 
 Windows ile başlatma ayarlardan isteğe bağlıdır. Eski Mochi/Pofinyo ilerlemesi, defteri ve ayarları korunur; depolama kimliği uyumluluk için sabittir.

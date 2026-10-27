@@ -23,7 +23,7 @@ function native(){
 }
 class LayeredCat{
  constructor(parent,{hover=()=>{},pet=()=>{}}={}){
-  this.n=native();const n=this.n;
+  this.n=native();this.parent=parent;const n=this.n;
   // WS_EX_LAYERED | WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW, WS_CHILD.
   this.handle=n.create(0x08080080,'STATIC','Pofinyo · Masaüstü kedisi',0x40000100,0,0,240,220,parent,0,0,null);
   if(!this.handle)throw Error('Cat alpha window creation failed: '+n.error());
