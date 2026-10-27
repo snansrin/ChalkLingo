@@ -13,3 +13,5 @@ Kurulu 2.0.0.0 paketi üzerinde kedi katmanı ve öğrenme kontrolleri geçti. N
 Poz önizlemesi ayrı ve görünmeyen offscreen render işleminde üretildi. Kullanıcının masaüstü görüntüsü kaydedilmedi. Yürüyüş, koşu, oturma ve kıvrılıp uyuma görüntüleri görsel olarak incelendi.
 
 Kaynaklar: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setparent ; https://learn.microsoft.com/en-us/windows/win32/winmsg/window-features ; https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowpos ; https://koffi.dev/ .
+
+2.0.1: SetParent öncesinde ebeveyn ve çocuk pencerenin DPI awareness modları karşılaştırılır; uyumsuz modlarda bağlantı kurulmaz. GitHub Windows Server test oturumu gerçek etkileşimli Explorer oturumu olarak değerlendirilmez. CI gizli-kalma ve poz DOM kontrollerini yapar; gerçek masaüstü entegrasyonu yerel Windows oturumunda ve kurulu pakette ayrıca doğrulanır.

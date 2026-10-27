@@ -19,7 +19,7 @@ Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar 
 
 ## Kullanım ve kurulum
 
-Windows x64 için **Pofinyo-Setup-2.0.0.exe** veya **Pofinyo-Portable-2.0.0.exe**. Paketler [Pofinyo geliştirme dalının başarılı GitHub Actions çalışmasındaki](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısındadır.
+Windows x64 için **Pofinyo-Setup-2.0.1.exe** veya **Pofinyo-Portable-2.0.1.exe**. Paketler [Pofinyo geliştirme dalının başarılı GitHub Actions çalışmasındaki](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısındadır.
 
 1. Uygulamayı aç. Kedi masaüstünde yaşamaya başlar.
 2. **Win + D** ile masaüstüne geçebilirsin. Başka uygulama açtığında kedi onun arkasında kalır.
@@ -73,3 +73,5 @@ Model testleri hareket sınırlarını, davranış geçişlerini ve eğitim moto
 Masaüstü kedisi Windows Explorer gerektirir. macOS/Linux için masaüstü kedisi desteği yoktur. Diğer Windows kabukları ve tüm çoklu monitör/DPI kombinasyonları kapsamlı denenmedi. Electron'un bellek maliyeti vardır.
 
 Pofinyo karakteri ve animasyonları özgün SVG/CSS çizimidir. MIT lisansı. [FSRS lisansı](ui/vendor/ts-fsrs.LICENSE) ve bağımlılıkların lisansları korunur.
+
+Gerçek Explorer ebeveynliği testi etkileşimli Windows masaüstünde çalıştırılır. CI sunucusunda kedi katmanı gizli-kalma/DOM yoluyla kontrol edilir; `POFINYO_REAL_DESKTOP=1` yalnız gerçek masaüstü bulunan test oturumunda kullanılmalıdır. Farklı DPI awareness modları için bağlantı kurulmaz; normal overlay kullanılmaz.
