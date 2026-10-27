@@ -1,54 +1,75 @@
-# mochi.
-### Küçük adımlar, yaşayan kelimeler.
+<p align="center"><img src="assets/icon.svg" width="112" alt="Yaprak taçlı Pofinyo karakteri"></p>
+<h1 align="center">Pofinyo</h1>
+<p align="center"><strong>Küçük bir arkadaş. Her gün yeni bir dil keşfi.</strong></p>
+<p align="center">Masaüstünde yaşayan, öğreten ve hatırlamana yardımcı olan dil arkadaşı.</p>
+<p align="center"><a href="#başla">Başla</a> · <a href="#nasıl-öğretiyor">Öğrenme sistemi</a> · <a href="#ekranlar">Ekranlar</a> · <a href="#geliştirme">Geliştirme</a></p>
 
-Masaüstünde yaşayan, seninle öğrenen küçük bir arkadaş. Mochi’ye dokun, bir kelime keşfet, mini bir oyun oyna. Hatırladığın kelimeler yüzen adanda filizlensin.
+Pofinyo’ya dokun, bir kalıpla tanış, aklından yaz ve başka bir cümlede kullan. Küçük adan ve yaprak taçlı arkadaşın sana eşlik ederken tekrarların becerine ve geçmiş denemelerine göre planlansın.
 
-<p align="center"><img src="docs/screenshots/mochi-alive.gif" width="320" alt="Mochi: yaşayan bir adada dil öğrenme widget’ı"></p>
+**Windows masaüstü uygulaması · Türkçe arayüz · Hesapsız · Yerel kayıt · MIT**
 
-## Bir ders ekranından daha fazlası
+## Nasıl öğretiyor?
 
-- **Yaşayan bir karakter:** göz kırpma, nefes alma, kuyruk hareketi, pencere içindeki fareyi izleme, sevilince zıplama, hareketsiz kalınca uyuklama.
-- **Dört küçük oyun:** anlam eşleştirme, dinlediğini anlama, hafızadan yazma ve kelimelerden cümle kurma. Oturum başına en fazla beş soru; süre baskısı yok.
-- **Hafıza bahçesi:** ilk doğru hatırlama filiz, ikinci başarılı tekrar çiçek, üçüncü tekrar ağaç. Ekranda kelimeyi görmek veya karakteri sevmek öğrenme puanı vermez.
-- **Aralıklı hatırlama:** başarılı tekrarlar 1 → 3 → 7 → 14 → 30 → 60 → 120 gün; yanlış cevap 1 dakika sonra yeniden hazır. Tarihi gelmiş tekrarlar yeni içerikten önce seçilir. İpucuyla tamamlanan cümleler ve gelecek tarihli serbest alıştırmalar tekrar tarihini ilerletmez.
-- **Senin ritminde:** elle değiştirme veya 1 / 5 / 10 / 30 / 60 dakika; üç renk dünyası; isteğe bağlı yumuşak sesler; azaltılmış hareket; isteğe bağlı Windows başlangıcı.
-- **Gerçek masaüstü widget’ı:** sürüklenebilir pencere, 400 × 660 öğrenme modu, 280 × 302 arkadaş modu, üstte tutma, sistem tepsisi ve pencere konumunu hatırlama.
-- **Cihazında saklanır:** ilerleme ve ayarlar yerelde; JSON yedekleme ve geri yükleme. Hesap, abonelik veya API anahtarı gerekmez.
+**Tanış → anlamı hatırla → yardımsız yaz → başka bağlamda kullan → zamanı gelince yeniden hatırla.**
 
-<table><tr><td><img src="docs/screenshots/mochi-games.png" width="280" alt="Dört oyun"></td><td><img src="docs/screenshots/mochi-garden.png" width="280" alt="Hafıza bahçesi"></td><td><img src="docs/screenshots/mochi-pet.png" width="220" alt="Küçük arkadaş modu"></td></tr></table>
+- **Sıralı İngilizce temeli:** 8 iletişim durağı, 48 özgün kalıp, açıklamalı örnekler ve farklı bağlam soruları. Tanışmadan kafede sipariş vermeye, yön tarifinden birlikte plan yapmaya uzanan bir rota.
+- **Beceriye göre hafıza:** FSRS-6; anlamı tanıma, yazma, bağlam, dinleme ve parçalı cümle kurmayı ayrı izler. Bir kelimeyi seçenekten tanımak, onu yazabildiğin anlamına gelmez.
+- **Önce tekrar, sonra yeni keşif:** normal turda en fazla üç yeni hedef; tekrarlar biriktiğinde yeni içerik azalır. Her durağın ne kazandırdığı ve neden sırada olduğu görünür.
+- **Açıklayan geri bildirim:** yanlışta örnek ve kısa açıklama, ardından puansız düzeltme. İpuçları, erken alıştırma ve aynı turdaki düzeltme tekrar takvimini veya XP’yi ilerletmez.
+- **İlk başarı ile gecikmeli kanıt ayrı:** üretim ve bağlamda iki ayrı günde, en az 24 saat arayla doğru cevap gereklidir. Aynı gün peş peşe cevaplamak bu sayacı artırmaz.
 
+Bu ilk ayrıntılı rota **İngilizce temelidir**; tam A1-C2 kursu veya CEFR sertifikası değildir. Diğer altı dilde başlangıç kartları ve serbest oyunlar bulunur.
 
-## 1.2 - öğretim sırası ve beceri bazında hafıza
+## Ekranlar
 
-**İngilizce seçip Bugünkü rotam düğmesine bas:** 8 iletişim durağı, 48 özgün temel kalıp, öğretim örnekleri, kısa dil bilgisi açıklamaları ve öğretimden farklı bağlam soruları. Önce öğren, sonra anlamı tanı, yardımsız yaz ve bir başka cümlede kullan. Diğer altı dilde mevcut serbest kart rotası sürer; ayrıntılı sıralı kurs henüz İngilizce içindir.
+<table><tr>
+<td align="center"><img src="docs/screenshots/mochi-widget.png" width="245" alt="Pofinyo masaüstü dil arkadaşı"><br><strong>Yaşayan arkadaşın</strong></td>
+<td align="center"><img src="docs/screenshots/mochi-education.png" width="245" alt="Pofinyo İngilizce öğrenme rotası"><br><strong>Ne çalışacağın belli</strong></td>
+<td align="center"><img src="docs/screenshots/mochi-teaching.png" width="245" alt="Pofinyo açıklamalı öğretim kartı"><br><strong>Önce öğren, sonra dene</strong></td>
+</tr></table>
 
-- Zamanı gelen tekrarlar önde; tur başına en fazla üç yeni hedef, birikmiş tekrar yükünde daha az yeni içerik.
-- FSRS-6 her hedef ve beceri için ayrı çalışır. İpucu, erken tekrar ve aynı turdaki düzeltme takvimi veya XP'yi ilerletmez.
-- İlk uygulama ile en az 24 saat arayla iki ayrı günde üretim ve bağlam başarısı ayrı sayılır. Bu dar ölçüm konuşma yeterliği veya CEFR sertifikası değildir.
-- Eski kayıtlar ve kimlikler korunur; eski başarı serisinden yapay FSRS geçmişi veya gecikmeli kanıt üretilmez.
-- Kısaltmalar açıkça listelenir; yazma kontrolü öğretilen biçimlerle sınırlıdır. Tam A1-C2 müfredatı, açık uçlu konuşma veya kişiye göre parametre optimizasyonu yoktur.
+## Sadece kartlardan ibaret değil
 
-[Araştırma ve pedagojik kararlar](docs/EDUCATION-RESEARCH-2026-10-27.md) · [Sürüm doğrulaması](docs/VALIDATION-1.2.md) · [FSRS lisansı](ui/vendor/ts-fsrs.LICENSE)
+- **Canlı karakter:** göz kırpar, nefes alır, kuyruk sallar, pencere içindeki fareyi takip eder ve sevilince tepki verir. Azaltılmış hareket desteği vardır.
+- **Dört serbest oyun:** anlam eşleştirme, dinleme, hafızadan yazma ve cümle kurma. Süre baskısı yok; cümle parçaları sürüklenebilir veya tıklanabilir.
+- **Kelime defteri:** arama, favoriler, kendi kelime/örneklerini ekleme, arşivleme ve geri alma. Hata atölyesinde zorlandığın kartlarla çalışabilirsin.
+- **Bahçe ve aksesuarlar:** başarılı hatırlamalarla filizler ve yaprak, çiçek, gezgin, yıldız aksesuarları açılır. Bir kez kazanılan aksesuar geri alınmaz. Bunlar motivasyon öğeleridir, yeterlik notu değildir.
+- **Masaüstüne uyum:** sürüklenebilir pencere, küçük arkadaş modu, üstte tutma, sistem tepsisine gizleme ve isteğe bağlı başlangıç. Küçük modda tıklamaları masaüstüne geçirebilir, tepsiden yeniden etkileşime dönebilirsin.
+- **Kendi ritmin:** üç renk dünyası, elle keşif veya ayarlanabilir keşif aralığı, isteğe bağlı yumuşak oyun sesleri.
 
-<table><tr><td><img src="docs/screenshots/mochi-education.png" width="250" alt="İngilizce temel öğrenme rotası"></td><td><img src="docs/screenshots/mochi-teaching.png" width="250" alt="Önce öğreten açıklamalı kart"></td><td><img src="docs/screenshots/mochi-curriculum.png" width="250" alt="Önkoşullu sekiz durak haritası"></td></tr></table>
+## Başla
 
-## Kurulum
+Windows x64 için **Pofinyo-Setup-1.2.1.exe** kurulum paketini veya **Pofinyo-Portable-1.2.1.exe** taşınabilir sürümünü kullan. Paketler başarılı [GitHub Actions çalışmasının](https://github.com/snansrin/Mochi/actions/workflows/ci.yml) **Pofinyo-Windows** çıktısında bulunur.
 
-Windows için `Mochi-Setup-1.2.0.exe` kurulum paketini veya `Mochi-Portable-1.2.0.exe` taşınabilir sürümünü kullan. Pencerenin üstünden sürükleyerek yerini değiştir. `−` sistem tepsisine gizler; tepsi menüsündeki **Çıkış** uygulamayı tamamen kapatır. Otomatik başlangıç varsayılan olarak kapalıdır.
+1. Uygulamayı aç; **Ayarlar** bölümünden dilini seç.
+2. Sıralı temel kurs için **İngilizce → Bugünkü rotam** yolunu izle.
+3. Yeni kalıplarla tanış, alıştırmaları tamamla ve sonraki tekrar zamanlarında geri dön.
 
-İngilizce başlangıç telaffuzları pakette WAV olarak bulunur. Diğer içeriklerde işletim sisteminin ilgili dildeki konuşma sesi kullanılır; uygun ses yüklü değilse dinleme çalışmayabilir. Mikrofonla konuşma değerlendirmesi yapılmaz.
+Pencereyi üst çubuğundan taşı. `−` sistem tepsisine gizler; tepsi menüsündeki **Çıkış** uygulamayı tamamen kapatır. Otomatik başlangıç varsayılan olarak kapalıdır. İlerlemeni ayarlardan JSON olarak yedekleyebilir ve geri yükleyebilirsin.
 
-## Dil içeriği ve sınırlar
+## Dil ve ses kapsamı
 
-Türkçe açıklamalı İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca için 229 eski içerik ve 48 yeni İngilizce temel hedefiyle toplam **277 içerik** bulunur. A1–C2 etiketleri yaklaşık zorluk göstergeleridir. Oyunlar kelime ve cümle içeriklerini kullanır; dilbilgisi satırları veri kümesinde korunur. Bu sürüm geniş kapsamlı bir dil kursu, CEFR sertifikası veya konuşma değerlendirme sistemi değildir. Gelişmiş seviyelerdeki havuzlar küçüktür. Tamamlanan içeriklerde serbest alıştırma yapılabilir.
+Türkçe açıklamalı **İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca**. Eski 229 içerik ile 48 yeni temel hedef birlikte **277 satır** oluşturur: 234 kelime/cümle hedefi ve korunmuş 43 dil bilgisi satırı. İleri seviye kart havuzları küçüktür; seviye etiketleri yaklaşık zorluk göstergeleridir.
 
-Yazma oyunu büyük/küçük harf, fazla boşluk ve temel noktalama farklarını yok sayar; aksan farklarını korur. Alternatif doğru yazımlar için ayrı bir dil modeli kullanılmaz. Cümle kurma oyunu boşlukla ayrılan cümlelere açıktır; uygun örnek yoksa yazma oyununa geçer.
+Mevcut İngilizce başlangıç kartlarının sesleri pakettedir. Yeni kurs örnekleri ve diğer diller cihazın uygun konuşma sesini kullanır; ses yüklü değilse dinleme çalışmayabilir. Yazılı rota kullanılabilir. Mikrofonla konuşma veya telaffuz puanlama yapılmaz.
 
-## Araştırmadan ürüne
+Yazma kontrolü öğretilen biçimler ve kursta listelenen kısaltmalarla sınırlıdır. Bütün alternatif doğru cümleleri anlayan bir dil modeli değildir. Büyük/küçük harf ve temel noktalama esnektir; aksan farkları korunur. Her hedefin tek sabit bağlam sorusu vardır.
 
-[BongoCat](https://github.com/ayangweb/BongoCat), küçük ve tepkili bir karakterin masaüstüne nasıl kişilik katabildiğine ilham verdi. Mochi’nin karakteri özgün SVG çizimidir; BongoCat kodu veya Live2D modeli kopyalanmadı. Etkileşim uygulama penceresi içinde gerçekleşir; sistem genelinde tuş, fare, ekran veya mikrofon izlenmez.
+## Araştırma ve açık sınırlar
 
-[Kim & Webb’in aralıklı pratik meta-analizi](https://doi.org/10.1111/lang.12479) ve [Karpicke & Roediger’in yabancı dil kelimelerinde hatırlama çalışması](https://doi.org/10.1126/science.1152408), yalnızca tekrar göstermenin ötesinde aktif hatırlama gerektiren oyunları destekliyor. 1.2 sürümü, [ts-fsrs 5.4.2](https://github.com/open-spaced-repetition/ts-fsrs/tree/v5.4.2) üzerinden FSRS-6 kullanır. Hedef başına tanıma, yazma, bağlam, dinleme ve parçalı cümle becerilerinin takvimleri ayrıdır. Varsayılan model parametreleri kişisel geçmişe göre eğitilmiş değildir; uygulamaya özgü öğrenme etkisi henüz ölçülmedi. Ayrıntılar: [tasarım araştırması](docs/RESEARCH.md).
+10 kurum/ürünün açık yöntemleri, görev odaklı öğretim ve hatırlama araştırmaları incelendi. Ticari dersler ve kapalı algoritmalar kopyalanmadı. **FSRS-6**, MIT lisanslı [ts-fsrs 5.4.2](https://github.com/open-spaced-repetition/ts-fsrs/tree/v5.4.2) üzerinden çalışır. Hedef %90 hatırlama bir model ayarıdır; ölçülmüş başarı veya garanti değildir. Genel model parametreleri henüz kişisel verine göre eğitilmez.
+
+- [Eğitim araştırması, müfredat ve değerlendirme planı](docs/EDUCATION-RESEARCH-2026-10-27.md)
+- [Yazılım ve kurulu paket doğrulaması](docs/VALIDATION-1.2.md)
+- [Etkileşim ve açık kaynak ürün araştırması](docs/RESEARCH-2026-10-27.md)
+
+Bağımsız öğretmen incelemesi ve gerçek öğrenenlerle karşılaştırmalı eğitim etkisi çalışması henüz yapılmadı. Ürün içi ilerleme; konuşma yeterliğini, bütün dil bilgisini veya gerçek yaşamda serbest iletişimi ölçmez.
+
+## Gizlilik ve verilerin
+
+Hesap, abonelik veya API anahtarı gerekmez. İlerleme ve ayarlar cihazında tutulur. Uygulama içinde dış ağ istekleri engellenir; sistem genelinde klavye, fare, ekran veya mikrofon kaydı yapılmaz.
+
+Önceki Mochi sürümlerinden güncellerken kayıt kimlikleri, ayarlar, defter ve aksesuarlar korunur. Depolama kimliği uyumluluk için sabittir; eski başarılardan hayalî FSRS geçmişi üretilmez. Kullanıcı tarafından eklenen kelimelerin doğruluğu otomatik denetlenmez.
 
 ## Geliştirme
 
@@ -64,27 +85,12 @@ npm run test:education
 npm run dist:win
 ```
 
-`npm run check` bağımlılıksız model ve veri testlerini çalıştırır. Masaüstü testi gerçek Electron oturumunda dört oyunu, kayıt kalıcılığını, pencere modlarını ve güvenlik ayarlarını doğrular; ekran görüntülerini `docs/screenshots/` içine kaydeder. Windows dışında masaüstü testleri için grafik oturumu gerekir. macOS ve Linux paketleme tanımları bulunur; bu sürüm Windows’ta doğrulandı.
+`npm run check` sözdizimi kontrollerini ve 32 model/veri/yerleşim testini çalıştırır. Üç masaüstü senaryo grubu gerçek Electron oturumlarında mevcut oyunları, defteri, eğitim rotasını, kayıtları ve pencere davranışını doğrular. Her test ayrı profil kullanır. Grafik oturumu gerekir.
 
-## Güvenlik ve kaynak kullanımı
+Windows kurulum ve taşınabilir paketleri doğrulanır. macOS/Linux yapılandırmaları vardır; bu platformlar bu sürümde test edilmedi. Electron sandbox, context isolation ve kapalı Node integration kullanılır. Gizlenen pencerede animasyonlar durur; uygulama Electron’un kaynak maliyetini taşır.
 
-Electron sandbox, context isolation, kapalı Node integration, dar IPC yüzeyi, izin engelleme ve CSP kullanılır. Dış ağ istekleri ve yeni pencereler engellenir. Animasyonlar CSS/SVG ile çalışır; fare güncellemeleri `requestAnimationFrame` ile sınırlandırılır. Gizlenen pencerede animasyonlar ve ses durur; tek bir 15 saniyelik zamanlayıcı keşif aralığını kontrol eder. Electron çalışma zamanı nedeniyle bellek maliyeti sıfır değildir. [Güncel doğrulama kaydı](docs/VALIDATION-1.2.md).
+## Kimlik ve lisans
 
-Eski ChalkLingo tahta arayüzü, fil karakteri ve yerel LLM köprüsü bu sürümde kaldırıldı. Önceki kaynaklar Git geçmişinde bulunabilir. MIT lisansı.
+Pofinyo, pofuduk ve minyon çağrışımlarından türetilmiş proje adıdır. Yaprak taçlı krem rengi karakter ve ikon özgün SVG çizimleridir. [BongoCat](https://github.com/ayangweb/BongoCat) küçük bir masaüstü karakterinin etkileşim gücüne ilham verdi; kodu veya karakter modeli kullanılmadı.
 
-## 1.1 sürümünden gelen etkileşimler
-
-[27 Ekim 2026 tarihli kaynaklı araştırma](docs/RESEARCH-2026-10-27.md), 10 yüksek yıldızlı ilgili projeyi ve kullanıcı geri bildirimlerini karşılaştırır. [Sayısal gözlem kaydı](docs/research-snapshot-2026-10-27.json) yıldızları, issue tepkilerini ve kaynak uç noktalarını içerir. Bu karşılaştırma bütün GitHub’ın kesin sıralaması veya temsilî bir kullanıcı anketi değildir.
-
-- **Bugünkü rotam:** 3 / 5 / 10 farklı doğru hatırlama hedefi, son yedi gün ve anlam seçimiyle yazmayı birleştiren kısa bir tur. Zamanı geçmiş tekrarlar yeni kartlardan önce gelir.
-- **Kelime defteri:** arama, favoriler, 500 adede kadar kişisel kelime/anlam/örnek, arşivleme ve geri alma. Listendeki kartlarla doğrudan çalışabilirsin; yedekler özel kayıtları da taşır.
-- **Hata atölyesi:** son denemede zorlandığın kelimeler kapanıp açılınca kaybolmaz. İleri tarihli kartlarla serbest çalışma takvimi, XP’yi ve günlük hedefi ilerletmez; yardımsız doğru hatırlama aktif hata kaydını çözebilir.
-- **Küçük hazineler:** 3 / 10 / 20 / 35 farklı başarılı kartla özgün yaprak, çiçek, gezgin ve yıldız aksesuarları açılır. Kazanılan aksesuarlar sonraki hatada kaybolmaz; sevmek öğrenme puanı kazandırmaz.
-- **Daha akıcı etkileşim:** seçeneklerde 1-4, cevap sonrasında Enter, dinlemede R; cümle kelimelerini sürükleyebilir veya dokunarak taşıyabilirsin.
-- **Masaüstüne uyum:** kısa ekranlarda pencere yüksekliği çalışma alanına sığar. Küçük arkadaş modundaki ◇ tıklamaları masaüstüne geçirir; tepsideki Mochi’ye tıklayarak etkileşimi geri açarsın. Yeni sakin boşta pozları mevcut zamanlayıcıyı kullanır.
-
-<table><tr><td><img src="docs/screenshots/mochi-route.png" width="280" alt="Günlük rota"></td><td><img src="docs/screenshots/mochi-journal.png" width="280" alt="Kişisel kelime defteri"></td><td><img src="docs/screenshots/mochi-wardrobe.png" width="280" alt="Öğrenmeyle açılan aksesuarlar"></td></tr></table>
-
-1.0 ilerlemesi ve ayarları otomatik okunur; eski sürümün tutmadığı ayrıntılı günlük/hata olayları geriye dönük uydurulmaz. Yeni olay geçmişi son 2.000 kayıtla sınırlıdır. Aksesuar açılımları ve kartların ulaştığı en iyi seviye ayrıca korunur. Bu sürüm FSRS, mikrofonla değerlendirme veya otomatik çeviri eklemez. Kullanıcının eklediği içeriğin doğruluğu otomatik denetlenmez.
-
-Yeni masaüstü akışlarını test etmek için `npm run test:studio` çalıştır. [1.1 doğrulama kaydı](docs/VALIDATION-1.1.md) kapsamı ve sınırlamaları açıklar. Kurulum dosyaları artık `Mochi-Setup-1.2.0.exe` ve `Mochi-Portable-1.2.0.exe` adlarını taşır.
+MIT lisansı. FSRS kütüphanesinin lisansı [ayrıca korunur](ui/vendor/ts-fsrs.LICENSE). Önceki ChalkLingo ve Mochi sürümleri Git geçmişindedir.

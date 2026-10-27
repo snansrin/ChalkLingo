@@ -2,7 +2,7 @@
 'use strict';
 const LANGUAGES=['en','de','fr','es','it','ru','ja'],LEVELS=['A1','A2','B1','B2','C1','C2'];
 const REWARDS=[
- {id:'plain',name:'Sade Mochi',icon:'♡',threshold:0,description:'İlk günden senin.'},
+ {id:'plain',name:'Sade Pofinyo',icon:'♡',threshold:0,description:'İlk günden senin.'},
  {id:'leaf',name:'Filiz tacı',icon:'♧',threshold:3,description:'3 farklı kelimeyi doğru hatırla.'},
  {id:'blossom',name:'Çiçek tacı',icon:'✿',threshold:10,description:'10 farklı kelimeyi doğru hatırla.'},
  {id:'explorer',name:'Gezgin şapkası',icon:'⌂',threshold:20,description:'20 farklı kelimeyi doğru hatırla.'},

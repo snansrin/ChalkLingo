@@ -1,8 +1,8 @@
 {
-  "name": "mochi-language",
-  "version": "1.2.0",
+  "name": "pofinyo-language",
+  "version": "1.2.1",
   "description": "A living desktop language companion: tiny games, a growing memory garden, and spaced retrieval.",
-  "author": "Mochi Contributors",
+  "author": "Pofinyo Contributors",
   "license": "MIT",
   "main": "main.cjs",
   "type": "commonjs",
@@ -27,7 +27,7 @@
   },
   "build": {
     "appId": "org.mochi.language",
-    "productName": "Mochi",
+    "productName": "Pofinyo",
     "asar": true,
     "files": [
       "main.cjs",
@@ -52,12 +52,12 @@
       "allowToChangeInstallationDirectory": true,
       "perMachine": false,
       "allowElevation": false,
-      "shortcutName": "Mochi",
+      "shortcutName": "Pofinyo",
       "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
       "runAfterFinish": false,
-      "uninstallDisplayName": "Mochi Language",
-      "artifactName": "Mochi-Setup-${version}.${ext}"
+      "uninstallDisplayName": "Pofinyo Language",
+      "artifactName": "Pofinyo-Setup-${version}.${ext}"
     },
     "mac": {
       "category": "public.app-category.education",
@@ -71,7 +71,7 @@
       "assets/*"
     ],
     "portable": {
-      "artifactName": "Mochi-Portable-${version}.${ext}"
+      "artifactName": "Pofinyo-Portable-${version}.${ext}"
     }
   },
   "dependencies": {
