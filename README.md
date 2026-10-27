@@ -1,98 +1,57 @@
-<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/assets/icon.svg" width="112" alt="Yaprak taçlı Pofinyo karakteri"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/assets/icon.svg" width="96" alt="Pofinyo"></p>
 <h1 align="center">Pofinyo</h1>
-<p align="center"><strong>Küçük bir arkadaş. Her gün yeni bir dil keşfi.</strong></p>
-<p align="center">Masaüstünde yaşayan, öğreten ve hatırlamana yardımcı olan dil arkadaşı.</p>
-<p align="center"><a href="#başla">Başla</a> · <a href="#nasıl-öğretiyor">Öğrenme sistemi</a> · <a href="#ekranlar">Ekranlar</a> · <a href="#geliştirme">Geliştirme</a></p>
+<p align="center"><strong>Masaüstünde yaşayan küçük kedin. Dil öğrenirken sana eşlik eder.</strong></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-desktop-cat.gif" width="300" alt="Pofinyo yürür, koşar, oturur ve kıvrılıp uyur"></p>
 
-Pofinyo’ya dokun, bir kalıpla tanış, aklından yaz ve başka bir cümlede kullan. Küçük adan ve yaprak taçlı arkadaşın sana eşlik ederken tekrarların becerine ve geçmiş denemelerine göre planlansın.
+## Masaüstünün kedisi
 
-**Windows masaüstü uygulaması · Türkçe arayüz · Hesapsız · Yerel kayıt · MIT**
+Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar ve bir köşeye giderek **kıvrılıp uyur**. Uyandığında esneyip tekrar dolaşır. Platform, ada veya yastık üzerinde hareket etmez.
 
-## Masaüstünde gezen küçük arkadaşın
+**Yalnız Windows masaüstü katmanında görünür: klasör ve simgelerin önünde, açık uygulamaların arkasında.** En üstte pencere modu kaldırılmıştır. Masaüstü bağlantısı hazır değilse kedi gizli kalır; uygulamaların üstüne çıkan bir pencereye dönüşmez.
 
-**Pofinyo 1.3:** küçük arkadaş modunda **Gezintiye çık** düğmesine bas. Yüzen adasıyla sakin sakin dolaşır, durur ve başının üstündeki düşünce baloncuğunda küçük çağrışımlar kurar.
+<table><tr><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-cat-walk.png" width="240" alt="Dört ayakla yürüyüş"><br>Yürüyüş ve koşu</td><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-cat-sleep.png" width="240" alt="Köşede kıvrılıp uyuyan Pofinyo"><br>Kıvrılıp uyuma</td></tr></table>
 
-<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/e6367bb7441f4e830444d27c3afecbcd96952751/docs/screenshots/pofinyo-daydream.gif" width="300" alt="Pofinyo'nun düşünce baloncuğu ve gezinti animasyonu"></p>
+- Yürüyüşte çapraz bacaklar, koşuda ön ve arka ayak çiftleri farklı ritimlerde hareket eder.
+- Oturma, başını çevirip bakma, kuyruk hareketi, göz kırpma, uyku ve uyanış pozları vardır.
+- Kısa düşünce baloncukları davranışına eşlik eder. Bunlar hazırlanmış cümlelerdir; mikrofon veya ekran izlenmez.
+- Fare üzerine geldiğinde bekler; tıklayınca tepki verir. Yalnız kendi penceresindeki etkileşimleri alır.
+- Hareket azaltma açıkken sakin kalır. Kilit ve uyku durumlarında gezinme durur.
 
-- Çalışma alanının içinde kalır; görev çubuğunun ötesine geçmez. Şimdilik bulunduğu monitörde dolaşır.
-- Üzerine fare geldiğinde bekler; duraklayınca küçük düşünceler veya tanıştığın kelimeler görünür. Global fare/klavye takibi yapılmaz.
-- Azaltılmış hareket açıkken yerinde düşünür. Gizlenince, bilgisayar kilitlenince veya uykuya geçince hareket durur.
-- **Burada dinlen** gezintiyi kapatır; **Keşfe dön** öğrenme ekranını açar. Sistem tepsisinden de yönetilebilir.
-- Gezinti tercihi yeniden açılışta hatırlanır. Baloncuklar ve karakter hareketleri öğrenme puanı vermez.
+## Kullanım ve kurulum
+
+Windows x64 için **Pofinyo-Setup-2.0.1.exe** veya **Pofinyo-Portable-2.0.1.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
+
+1. Uygulamayı aç. Kedi masaüstünde yaşamaya başlar.
+2. **Win + D** ile masaüstüne geçebilirsin. Başka uygulama açtığında kedi onun arkasında kalır.
+3. Sistem tepsisindeki Pofinyo menüsünden **Masaüstü kedisi** seçeneğiyle açıp kapat.
+4. **Öğrenme ekranını masaüstünde aç** ile eğitim araçlarına ulaş. Bu pencere de masaüstü katmanındadır.
+5. Tamamen kapatmak için tepsi menüsündeki **Çıkış** seçeneğini kullan.
+
+Windows ile başlatma ayarlardan isteğe bağlıdır. Eski Mochi/Pofinyo ilerlemesi, defteri ve ayarları korunur; depolama kimliği uyumluluk için sabittir.
 
 ## Nasıl öğretiyor?
 
-**Tanış → anlamı hatırla → yardımsız yaz → başka bağlamda kullan → zamanı gelince yeniden hatırla.**
+**Tanış → anlamı hatırla → yardımsız yaz → başka bağlamda kullan → zamanı gelince tekrar et.**
 
-- **Sıralı İngilizce temeli:** 8 iletişim durağı, 48 özgün kalıp, açıklamalı örnekler ve farklı bağlam soruları. Tanışmadan kafede sipariş vermeye, yön tarifinden birlikte plan yapmaya uzanan bir rota.
-- **Beceriye göre hafıza:** FSRS-6; anlamı tanıma, yazma, bağlam, dinleme ve parçalı cümle kurmayı ayrı izler. Bir kelimeyi seçenekten tanımak, onu yazabildiğin anlamına gelmez.
-- **Önce tekrar, sonra yeni keşif:** normal turda en fazla üç yeni hedef; tekrarlar biriktiğinde yeni içerik azalır. Her durağın ne kazandırdığı ve neden sırada olduğu görünür.
-- **Açıklayan geri bildirim:** yanlışta örnek ve kısa açıklama, ardından puansız düzeltme. İpuçları, erken alıştırma ve aynı turdaki düzeltme tekrar takvimini veya XP’yi ilerletmez.
-- **İlk başarı ile gecikmeli kanıt ayrı:** üretim ve bağlamda iki ayrı günde, en az 24 saat arayla doğru cevap gereklidir. Aynı gün peş peşe cevaplamak bu sayacı artırmaz.
+- **İngilizce temel rotası:** 8 iletişim durağı, 48 özgün kalıp, açıklamalı örnekler ve farklı bağlam soruları.
+- **FSRS-6:** tanıma, yazma, bağlam, dinleme ve parçalı cümle kurma kayıtları ayrıdır. Bir kelimeyi seçenekten tanımak, yazabildiğin anlamına gelmez.
+- **Dört serbest oyun:** anlam eşleştirme, dinleme, aklından yazma ve cümle kurma; süre baskısı yoktur.
+- **Kişisel defter:** arama, favoriler, kelime ve örnek ekleme, arşivleme ve geri alma.
+- **İlerleme ve tekrar:** ilk uygulama ile sonraki günlerin kanıtı ayrıdır. İpuçları, erken tekrar ve aynı turdaki düzeltme takvimi ilerletmez. Kediyi sevmek veya izlemek XP kazandırmaz.
 
-Bu ilk ayrıntılı rota **İngilizce temelidir**; tam A1-C2 kursu veya CEFR sertifikası değildir. Diğer altı dilde başlangıç kartları ve serbest oyunlar bulunur.
+Türkçe açıklamalı İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca için **277 içerik satırı** bulunur: 234 kelime/cümle hedefi ve 43 dil bilgisi satırı. Ayrıntılı sıralı rota şu anda İngilizce temelidir; tam A1-C2 kursu veya CEFR sertifikası değildir. İleri seviye havuzlar küçüktür.
 
-## Ekranlar
+Başlangıç İngilizce sesleri pakettedir; diğer içeriklerde cihazın uygun dil sesi kullanılır. Konuşma veya telaffuz puanlama yapılmaz. Yazma kontrolü öğretilen biçimler ve listelenen alternatiflerle sınırlıdır.
 
-<table><tr>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-widget.png" width="245" alt="Pofinyo masaüstü dil arkadaşı"><br><strong>Yaşayan arkadaşın</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-education.png" width="245" alt="Pofinyo İngilizce öğrenme rotası"><br><strong>Ne çalışacağın belli</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-teaching.png" width="245" alt="Pofinyo açıklamalı öğretim kartı"><br><strong>Önce öğren, sonra dene</strong></td>
-</tr></table>
+## Gizlilik ve araştırma
 
+Hesap, abonelik veya API anahtarı gerekmez. Eğitim kayıtları cihazındadır ve JSON olarak yedeklenebilir. Sistem genelinde klavye, fare, ekran veya mikrofon kaydı yapılmaz. Kedi ve öğrenme ekranının dış ağ erişimi kapalıdır.
 
-<table><tr>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-games.png" width="245" alt="Pofinyo dört interaktif dil oyunu"><br><strong>Oynayarak hatırla</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-journal.png" width="245" alt="Pofinyo kişisel kelime defteri"><br><strong>Kelimelerin sana ait</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-wardrobe.png" width="245" alt="Pofinyo yaprak ve çiçek aksesuarları"><br><strong>Birlikte büyüyün</strong></td>
-</tr></table>
-
-## Sadece kartlardan ibaret değil
-
-- **Canlı karakter:** göz kırpar, nefes alır, kuyruk sallar, pencere içindeki fareyi takip eder ve sevilince tepki verir. Azaltılmış hareket desteği vardır.
-- **Dört serbest oyun:** anlam eşleştirme, dinleme, hafızadan yazma ve cümle kurma. Süre baskısı yok; cümle parçaları sürüklenebilir veya tıklanabilir.
-- **Kelime defteri:** arama, favoriler, kendi kelime/örneklerini ekleme, arşivleme ve geri alma. Hata atölyesinde zorlandığın kartlarla çalışabilirsin.
-- **Bahçe ve aksesuarlar:** başarılı hatırlamalarla filizler ve yaprak, çiçek, gezgin, yıldız aksesuarları açılır. Bir kez kazanılan aksesuar geri alınmaz. Bunlar motivasyon öğeleridir, yeterlik notu değildir.
-- **Masaüstüne uyum:** sürüklenebilir pencere, küçük arkadaş modu, üstte tutma, sistem tepsisine gizleme ve isteğe bağlı başlangıç. Küçük modda tıklamaları masaüstüne geçirebilir, tepsiden yeniden etkileşime dönebilirsin.
-- **Kendi ritmin:** üç renk dünyası, elle keşif veya ayarlanabilir keşif aralığı, isteğe bağlı yumuşak oyun sesleri.
-
-## Başla
-
-Windows x64 için **Pofinyo-Setup-1.3.0.exe** kurulum paketini veya **Pofinyo-Portable-1.3.0.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Pofinyo/actions/runs/40455638945) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
-
-1. Uygulamayı aç; **Ayarlar** bölümünden dilini seç.
-2. Sıralı temel kurs için **İngilizce → Bugünkü rotam** yolunu izle.
-3. Yeni kalıplarla tanış, alıştırmaları tamamla ve sonraki tekrar zamanlarında geri dön.
-
-Pencereyi üst çubuğundan taşı. `−` sistem tepsisine gizler; tepsi menüsündeki **Çıkış** uygulamayı tamamen kapatır. Otomatik başlangıç varsayılan olarak kapalıdır. İlerlemeni ayarlardan JSON olarak yedekleyebilir ve geri yükleyebilirsin.
-
-## Dil ve ses kapsamı
-
-Türkçe açıklamalı **İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Rusça ve Japonca**. Eski 229 içerik ile 48 yeni temel hedef birlikte **277 satır** oluşturur: 234 kelime/cümle hedefi ve korunmuş 43 dil bilgisi satırı. İleri seviye kart havuzları küçüktür; seviye etiketleri yaklaşık zorluk göstergeleridir.
-
-Mevcut İngilizce başlangıç kartlarının sesleri pakettedir. Yeni kurs örnekleri ve diğer diller cihazın uygun konuşma sesini kullanır; ses yüklü değilse dinleme çalışmayabilir. Yazılı rota kullanılabilir. Mikrofonla konuşma veya telaffuz puanlama yapılmaz.
-
-Yazma kontrolü öğretilen biçimler ve kursta listelenen kısaltmalarla sınırlıdır. Bütün alternatif doğru cümleleri anlayan bir dil modeli değildir. Büyük/küçük harf ve temel noktalama esnektir; aksan farkları korunur. Her hedefin tek sabit bağlam sorusu vardır.
-
-## Araştırma ve açık sınırlar
-
-10 kurum/ürünün açık yöntemleri, görev odaklı öğretim ve hatırlama araştırmaları incelendi. Ticari dersler ve kapalı algoritmalar kopyalanmadı. **FSRS-6**, MIT lisanslı [ts-fsrs 5.4.2](https://github.com/open-spaced-repetition/ts-fsrs/tree/v5.4.2) üzerinden çalışır. Hedef %90 hatırlama bir model ayarıdır; ölçülmüş başarı veya garanti değildir. Genel model parametreleri henüz kişisel verine göre eğitilmez.
-
-- [Eğitim araştırması, müfredat ve değerlendirme planı](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/EDUCATION-RESEARCH-2026-10-27.md)
-- [Yazılım ve kurulu paket doğrulaması](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/VALIDATION-1.2.md)
-- [Etkileşim ve açık kaynak ürün araştırması](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/RESEARCH-2026-10-27.md)
-
-Bağımsız öğretmen incelemesi ve gerçek öğrenenlerle karşılaştırmalı eğitim etkisi çalışması henüz yapılmadı. Ürün içi ilerleme; konuşma yeterliğini, bütün dil bilgisini veya gerçek yaşamda serbest iletişimi ölçmez.
-
-## Gizlilik ve verilerin
-
-Hesap, abonelik veya API anahtarı gerekmez. İlerleme ve ayarlar cihazında tutulur. Uygulama içinde dış ağ istekleri engellenir; sistem genelinde klavye, fare, ekran veya mikrofon kaydı yapılmaz.
-
-Önceki Mochi sürümlerinden güncellerken kayıt kimlikleri, ayarlar, defter ve aksesuarlar korunur. Depolama kimliği uyumluluk için sabittir; eski başarılardan hayalî FSRS geçmişi üretilmez. Kullanıcı tarafından eklenen kelimelerin doğruluğu otomatik denetlenmez.
+[Pedagojik araştırma ve sınırlar](https://github.com/snansrin/Pofinyo/blob/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/EDUCATION-RESEARCH-2026-10-27.md) · [Masaüstü katmanı ve kedi doğrulaması](https://github.com/snansrin/Pofinyo/blob/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/DESKTOP-CAT-2.0.md). Genel FSRS parametreleri kişisel geçmişe göre eğitilmez; hedef hatırlama oranı bir model ayarıdır, başarı garantisi değildir. Bağımsız öğretmen incelemesi ve karşılaştırmalı öğrenme etkisi çalışması henüz yapılmadı.
 
 ## Geliştirme
 
-Güncel Pofinyo kaynakları [Pofinyo geliştirme dalındadır](https://github.com/snansrin/Pofinyo/tree/feat/mochi-living-language). Node.js 24 ve Git ile:
+Güncel Pofinyo kaynakları geliştirme dalındadır. Node.js 24 ve Git:
 
 ```sh
 git clone --branch feat/mochi-living-language https://github.com/snansrin/Pofinyo.git Pofinyo
@@ -103,15 +62,16 @@ npm run check
 npm run test:desktop
 npm run test:studio
 npm run test:education
+npm run test:companion
 npm run dist:win
 ```
 
-`npm run check` sözdizimi kontrollerini ve 38 model/veri/yerleşim testini çalıştırır. Dört masaüstü senaryo grubu gerçek Electron oturumlarında mevcut oyunları, defteri, eğitim rotasını, kayıtları ve pencere davranışını doğrular. Her test ayrı profil kullanır. Grafik oturumu gerekir.
+Windows masaüstü bağlantısı Win32 **SetParent / WS_CHILD** ile Explorer masaüstü görünümüne yapılır; yalnızca üstte tutmayı kapatmakla yetinilmez. Kedi masaüstü simgelerinin kardeş penceresidir. Bağlantı kaybolduğunda gizlenir. Konumlandırma odak çalmaz ve kedi hiçbir zaman topmost yapılmaz. Win32 erişimi sabit sürümlü MIT lisanslı Koffi ile ana süreçte sınırlıdır; renderer'a genel yerel API verilmez.
 
-Windows kurulum ve taşınabilir paketleri doğrulanır. macOS/Linux yapılandırmaları vardır; bu platformlar bu sürümde test edilmedi. Electron sandbox, context isolation ve kapalı Node integration kullanılır. Gizlenen pencerede animasyonlar durur; uygulama Electron’un kaynak maliyetini taşır.
+Model testleri hareket sınırlarını, davranış geçişlerini ve eğitim motorunu kapsar. Gerçek Electron testleri masaüstü ebeveynini, simgelerin üzerindeki sırayı, topmost olmamasını, sabit boyutta hareketi ve eğitim akışlarını doğrular. Explorer olmayan test ortamında görünür overlay yerine gizli kalması kontrol edilir. Eski sürümün hareket modeli testleri tarihsel regresyon kapsamı olarak korunmuştur.
 
-## Kimlik ve lisans
+Masaüstü kedisi Windows Explorer gerektirir. macOS/Linux için masaüstü kedisi desteği yoktur. Diğer Windows kabukları ve tüm çoklu monitör/DPI kombinasyonları kapsamlı denenmedi. Electron'un bellek maliyeti vardır.
 
-Pofinyo, pofuduk ve minyon çağrışımlarından türetilmiş proje adıdır. Yaprak taçlı krem rengi karakter ve ikon özgün SVG çizimleridir. [BongoCat](https://github.com/ayangweb/BongoCat) küçük bir masaüstü karakterinin etkileşim gücüne ilham verdi; kodu veya karakter modeli kullanılmadı.
+Pofinyo karakteri ve animasyonları özgün SVG/CSS çizimidir. MIT lisansı. [FSRS lisansı](https://github.com/snansrin/Pofinyo/blob/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/ui/vendor/ts-fsrs.LICENSE) ve bağımlılıkların lisansları korunur.
 
-MIT lisansı. FSRS kütüphanesinin lisansı [ayrıca korunur](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/ui/vendor/ts-fsrs.LICENSE). Önceki ChalkLingo ve Mochi sürümleri Git geçmişindedir.
+Gerçek Explorer ebeveynliği testi etkileşimli Windows masaüstünde çalıştırılır. CI sunucusunda kedi katmanı gizli-kalma/DOM yoluyla kontrol edilir; `POFINYO_REAL_DESKTOP=1` yalnız gerçek masaüstü bulunan test oturumunda kullanılmalıdır. Farklı DPI awareness modları için bağlantı kurulmaz; normal overlay kullanılmaz.
