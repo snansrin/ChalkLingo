@@ -6,11 +6,11 @@
 
 Pofinyo, **masaüstünde yaşayan animasyonlu bir kedi** ile **10.000 kelimelik İngilizce–Türkçe çalışma havuzunu** bir araya getirir. Kelimeleri küçük gruplarla tanı, yardımsız hatırla ve FSRS ile zamanı geldiğinde tekrar et.
 
-**Güncel sürüm: 2.3.0.** [Windows paketleri](https://github.com/snansrin/Pofinyo/actions/runs/40487072942) · [Güncel uygulama kaynakları](https://github.com/snansrin/Pofinyo/tree/feat/mochi-living-language) · [Kelime kaynağı ve doğrulama](https://github.com/snansrin/Pofinyo/blob/ec9b0bef66cc123230e2c6d837195e5b9ec43935/docs/WORDBANK-10000.md)
+**Güncel sürüm: 2.3.1.** [Windows paketleri](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) · [Güncel uygulama kaynakları](https://github.com/snansrin/Pofinyo/tree/feat/mochi-living-language) · [Kelime kaynağı ve doğrulama](https://github.com/snansrin/Pofinyo/blob/ec9b0bef66cc123230e2c6d837195e5b9ec43935/docs/WORDBANK-10000.md)
 
 ## Hemen başla
 
-1. [Başarılı 2.3.0 Windows çalışmasındaki](https://github.com/snansrin/Pofinyo/actions/runs/40487072942) **Pofinyo-Windows** çıktısını aç. **Pofinyo-Setup-2.3.0.exe** kurulumlu, **Pofinyo-Portable-2.3.0.exe** taşınabilir sürümdür. Artifakt indirmek için GitHub oturumu gerekebilir.
+1. [Başarılı 2.3.1 Windows çalışmasındaki](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısını aç. **Pofinyo-Setup-2.3.1.exe** kurulumlu, **Pofinyo-Portable-2.3.1.exe** taşınabilir sürümdür. Artifakt indirmek için GitHub oturumu gerekebilir.
 2. Pofinyo’yu çalıştır. Kedi masaüstünde dolaşır; **Win + D** ile görebilirsin.
 3. Sistem tepsisindeki Pofinyo menüsünden **Öğrenme ekranını aç** seçeneğine gir.
 4. **◫ 10.000 kelime → 5 kelime öğren** ile önce karşılıkları gör, sonra hatırlamayı dene.
@@ -54,7 +54,7 @@ Animasyonlar özgün, stilize SVG/CSS çizimleridir. [Masaüstü katmanı, harek
 - **Dört oyun:** anlam eşleştirme, dinleme, akıldan yazma ve örnek cümleyi parçalarıyla kurma. Cümle oyunu, örnek cümle içeren derslerde kullanılır.
 - **Kişisel defter:** arama, favoriler, kelime/örnek ekleme, arşivleme ve geri alma. Geniş havuzun kendi arama ve favori görünümü de vardır.
 - **Günlük hedef ve hata atölyesi:** ilerleme, XP ve aksesuarlar. İpucu, erken tekrar ve aynı turdaki düzeltme gecikmeli başarı kanıtı üretmez. Kediyi sevmek XP kazandırmaz.
-- **Sesli okuma:** 49 İngilizce başlangıç ses kaydı pakettedir. Diğer kelimeler için cihazda uygun dil sesi gerekir. Konuşma veya telaffuz puanlaması yapılmaz.
+- **Sesli okuma:** 49 İngilizce başlangıç ses kaydı pakettedir. Örnekler ve diğer kelimeler yalnız doğru dildeki yerel sesle okunur; Electron sesi göremezse kurulu Windows sesine başvurulur. Uygun ses yoksa farklı dilin varsayılan sesi kullanılmaz. Konuşma veya telaffuz puanlaması yapılmaz. [Ses dili düzeltmesi ve doğrulama](https://github.com/snansrin/Pofinyo/blob/feat/mochi-living-language/docs/SPEECH-LANGUAGE.md).
 
 ## Hangi dilde ne var?
 
@@ -98,6 +98,7 @@ Doğrulama ve Windows paketi:
 
 ```sh
 npm run check
+npm run test:speech
 npm run test:desktop
 npm run test:studio
 npm run test:wordbank
@@ -106,6 +107,6 @@ npm run test:companion
 npm run dist:win
 ```
 
-2.3.0 için **56 model/veri testi** ve beş Electron akışı geçti; [Windows CI doğrulaması ve paketleri](https://github.com/snansrin/Pofinyo/actions/runs/40487072942) başarılı. Gerçek Explorer testi etkileşimli Windows masaüstünde çalıştırılır. CI sunucusunda gizli kalma ve poz/uygulama akışları kontrol edilir. `POFINYO_REAL_DESKTOP=1` yalnız gerçek masaüstü olan test oturumunda kullanılır.
+2.3.1 için yerel doğrulamada **63 model/veri testi** ve altı Electron akışı geçti; [Windows CI sonuçları ve paketleri](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) buradan izlenebilir. Gerçek Explorer testi etkileşimli Windows masaüstünde çalıştırılır. CI sunucusunda gizli kalma ve poz/uygulama akışları kontrol edilir. `POFINYO_REAL_DESKTOP=1` yalnız gerçek masaüstü olan test oturumunda kullanılır.
 
 Masaüstü kedisi Windows Explorer gerektirir; macOS/Linux desteği yoktur. Tüm Windows kabukları ve çoklu monitör/DPI kombinasyonları denenmedi. Electron'un temel disk ve bellek maliyeti devam eder; yukarıdaki küçük boyutlar yalnız kelime verisine aittir.
