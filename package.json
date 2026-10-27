@@ -1,6 +1,6 @@
 {
   "name": "pofinyo-language",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "A living desktop language companion: tiny games, a growing memory garden, and spaced retrieval.",
   "author": "Pofinyo Contributors",
   "license": "MIT",
@@ -8,19 +8,21 @@
   "type": "commonjs",
   "scripts": {
     "start": "electron .",
-    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/mochi.js && node --check ui/memory.js && node --check ui/lessons.js && node --check ui/journey.js && node --check ui/studio.js && node --check ui/window-layout.cjs && node --check ui/pedagogy.js && node --check ui/curriculum.js && node --check ui/education.js && node --check ui/companion.js && node --check cat-preload.cjs && node --check ui/cat-brain.cjs && node --check ui/desktop-layer.cjs && node --check ui/desktop-cat-controller.cjs && node --check ui/desktop-cat.js && node --check ui/layered-cat.cjs && node --check ui/wordbank-core.js && node --check ui/wordbank.js && node --check ui/wordbank-store.cjs && node --check ui/progress-store.cjs",
+    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/mochi.js && node --check ui/memory.js && node --check ui/lessons.js && node --check ui/journey.js && node --check ui/studio.js && node --check ui/window-layout.cjs && node --check ui/pedagogy.js && node --check ui/curriculum.js && node --check ui/education.js && node --check ui/companion.js && node --check cat-preload.cjs && node --check ui/cat-brain.cjs && node --check ui/desktop-layer.cjs && node --check ui/desktop-cat-controller.cjs && node --check ui/desktop-cat.js && node --check ui/layered-cat.cjs && node --check ui/wordbank-core.js && node --check ui/wordbank.js && node --check ui/wordbank-store.cjs && node --check ui/progress-store.cjs && node --check ui/speech.js && node --check ui/native-speech.cjs && node --check scripts/build-speech.cjs",
     "test": "node --test tests/*.test.cjs",
     "check": "npm run lint && npm test",
     "test:desktop": "node tests/desktop.cjs",
     "test:widget": "node tests/desktop.cjs",
     "test:screenshots": "node tests/desktop.cjs && node tests/studio.cjs && node tests/education.cjs",
-    "dist:win": "electron-builder --win nsis portable --x64 --publish never",
+    "dist:win": "node scripts/build-speech.cjs && electron-builder --win nsis portable --x64 --publish never",
     "dist:mac": "electron-builder --mac dmg --publish never",
     "dist:linux": "electron-builder --linux AppImage --publish never",
     "test:studio": "node tests/studio.cjs",
     "test:education": "node tests/education.cjs",
     "test:companion": "node tests/desktop-cat.cjs",
-    "test:wordbank": "node tests/wordbank-ui.cjs"
+    "test:wordbank": "node tests/wordbank-ui.cjs",
+    "prestart": "node scripts/build-speech.cjs",
+    "test:speech": "node scripts/build-speech.cjs && node tests/speech-ui.cjs"
   },
   "devDependencies": {
     "electron": "45.0.0",

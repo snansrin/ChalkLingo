@@ -25,6 +25,7 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci --no-audit --no-fund
+      - run: npm run test:speech
       - run: npm run test:desktop
       - run: npm run test:studio
       - run: npm run test:wordbank

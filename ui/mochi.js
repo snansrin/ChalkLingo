@@ -23,11 +23,15 @@ function updateGarden(){
  }
 }
 function chime(success=true){if(!state.settings.sound||hidden)return;try{context??=new AudioContext();context.resume();const t=context.currentTime;[0,1,2].forEach((n)=>{const o=context.createOscillator(),gain=context.createGain();o.type='sine';o.frequency.value=(success?[523.25,659.25,783.99]:[392,349,330])[n];gain.gain.setValueAtTime(0,t+n*.08);gain.gain.linearRampToValueAtTime(.035,t+n*.08+.015);gain.gain.exponentialRampToValueAtTime(.001,t+n*.08+.24);o.connect(gain).connect(context.destination);o.start(t+n*.08);o.stop(t+n*.08+.26);});}catch{}}
-function stopAudio(){audio?.pause();if(window.speechSynthesis)window.speechSynthesis.cancel();}
-async function speak(text=current.front,lesson=current){
- stopAudio();let finished=false;
- const fallback=()=>{if(finished)return;finished=true;if(!window.speechSynthesis){$('bubble').textContent='Bu cihazda ses desteği bulunamadı.';return;}const utter=new SpeechSynthesisUtterance(text);utter.lang=L.packs[lesson.language].voice;utter.rate=.85;utter.onerror=()=>{$('bubble').textContent='Bu dil için cihazına bir ses yükleyebilirsin.';};window.speechSynthesis.speak(utter);};
- if(lesson.language==='en'&&lesson.id.startsWith('en:')&&text===lesson.front){const file=lesson.id.replaceAll(':','-');audio=new Audio(`pronunciation/${file}.wav`);audio.onerror=fallback;try{await audio.play();finished=true;}catch{fallback();}}else fallback();
+function speechNotice(message){$('bubble').textContent=message||'Küçük adımlar, yaşayan kelimeler.';if($('panel').open){let note=$('speech-feedback');if(!note&&message){note=document.createElement('p');note.id='speech-feedback';note.className='intro';note.setAttribute('role','status');$('panel-content').prepend(note);}if(note){note.textContent=message;note.hidden=!message;}}}
+const speechPlayer=MochiSpeech.createPlayer({synth:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,Audio:window.Audio,URL:window.URL,Blob:window.Blob,nativeSpeak:native?.speakText,nativeCancel:native?.cancelSpeech,onError:speechNotice});
+let speechEpoch=0;
+function stopAudio(){speechEpoch++;speechPlayer.cancel();const note=$('speech-feedback');if(note)note.hidden=true;}
+async function speak(text=current?.front,lesson=current){
+ stopAudio();const token=speechEpoch,language=lesson?.language;if(!L.packs[language]||typeof text!=='string'||!text.trim())return;
+ const file=language==='en'&&/^en:(vocab|sentence|grammar):\d{3}$/.test(lesson.id)&&text===lesson.front?`pronunciation/${lesson.id.replaceAll(':','-')}.wav`:null;
+ speechNotice('Ses hazırlanıyor…');const result=await speechPlayer.play(text,L.packs[language].voice,file);if(token===speechEpoch&&result.ok)speechNotice('');
+ return result;
 }
 function delight(message='Mrrp! Seninle öğrenmek güzel.'){
  clearTimeout(petTimer);document.body.classList.remove('sleeping','thinking');document.body.classList.add('happy');$('bubble').textContent=message;
