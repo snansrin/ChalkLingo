@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/assets/icon.svg" width="112" alt="Yaprak taçlı Pofinyo karakteri"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/assets/icon.svg" width="112" alt="Yaprak taçlı Pofinyo karakteri"></p>
 <h1 align="center">Pofinyo</h1>
 <p align="center"><strong>Küçük bir arkadaş. Her gün yeni bir dil keşfi.</strong></p>
 <p align="center">Masaüstünde yaşayan, öğreten ve hatırlamana yardımcı olan dil arkadaşı.</p>
@@ -23,16 +23,16 @@ Bu ilk ayrıntılı rota **İngilizce temelidir**; tam A1-C2 kursu veya CEFR ser
 ## Ekranlar
 
 <table><tr>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-widget.png" width="245" alt="Pofinyo masaüstü dil arkadaşı"><br><strong>Yaşayan arkadaşın</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-education.png" width="245" alt="Pofinyo İngilizce öğrenme rotası"><br><strong>Ne çalışacağın belli</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-teaching.png" width="245" alt="Pofinyo açıklamalı öğretim kartı"><br><strong>Önce öğren, sonra dene</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-widget.png" width="245" alt="Pofinyo masaüstü dil arkadaşı"><br><strong>Yaşayan arkadaşın</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-education.png" width="245" alt="Pofinyo İngilizce öğrenme rotası"><br><strong>Ne çalışacağın belli</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-teaching.png" width="245" alt="Pofinyo açıklamalı öğretim kartı"><br><strong>Önce öğren, sonra dene</strong></td>
 </tr></table>
 
 
 <table><tr>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-games.png" width="245" alt="Pofinyo dört interaktif dil oyunu"><br><strong>Oynayarak hatırla</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-journal.png" width="245" alt="Pofinyo kişisel kelime defteri"><br><strong>Kelimelerin sana ait</strong></td>
-<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Mochi/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-wardrobe.png" width="245" alt="Pofinyo yaprak ve çiçek aksesuarları"><br><strong>Birlikte büyüyün</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-games.png" width="245" alt="Pofinyo dört interaktif dil oyunu"><br><strong>Oynayarak hatırla</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-journal.png" width="245" alt="Pofinyo kişisel kelime defteri"><br><strong>Kelimelerin sana ait</strong></td>
+<td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/screenshots/mochi-wardrobe.png" width="245" alt="Pofinyo yaprak ve çiçek aksesuarları"><br><strong>Birlikte büyüyün</strong></td>
 </tr></table>
 
 ## Sadece kartlardan ibaret değil
@@ -46,7 +46,7 @@ Bu ilk ayrıntılı rota **İngilizce temelidir**; tam A1-C2 kursu veya CEFR ser
 
 ## Başla
 
-Windows x64 için **Pofinyo-Setup-1.2.1.exe** kurulum paketini veya **Pofinyo-Portable-1.2.1.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Mochi/actions/runs/40445157940) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
+Windows x64 için **Pofinyo-Setup-1.2.1.exe** kurulum paketini veya **Pofinyo-Portable-1.2.1.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Pofinyo/actions/runs/40445157940) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
 
 1. Uygulamayı aç; **Ayarlar** bölümünden dilini seç.
 2. Sıralı temel kurs için **İngilizce → Bugünkü rotam** yolunu izle.
@@ -66,9 +66,9 @@ Yazma kontrolü öğretilen biçimler ve kursta listelenen kısaltmalarla sını
 
 10 kurum/ürünün açık yöntemleri, görev odaklı öğretim ve hatırlama araştırmaları incelendi. Ticari dersler ve kapalı algoritmalar kopyalanmadı. **FSRS-6**, MIT lisanslı [ts-fsrs 5.4.2](https://github.com/open-spaced-repetition/ts-fsrs/tree/v5.4.2) üzerinden çalışır. Hedef %90 hatırlama bir model ayarıdır; ölçülmüş başarı veya garanti değildir. Genel model parametreleri henüz kişisel verine göre eğitilmez.
 
-- [Eğitim araştırması, müfredat ve değerlendirme planı](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/EDUCATION-RESEARCH-2026-10-27.md)
-- [Yazılım ve kurulu paket doğrulaması](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/VALIDATION-1.2.md)
-- [Etkileşim ve açık kaynak ürün araştırması](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/RESEARCH-2026-10-27.md)
+- [Eğitim araştırması, müfredat ve değerlendirme planı](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/EDUCATION-RESEARCH-2026-10-27.md)
+- [Yazılım ve kurulu paket doğrulaması](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/VALIDATION-1.2.md)
+- [Etkileşim ve açık kaynak ürün araştırması](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/docs/RESEARCH-2026-10-27.md)
 
 Bağımsız öğretmen incelemesi ve gerçek öğrenenlerle karşılaştırmalı eğitim etkisi çalışması henüz yapılmadı. Ürün içi ilerleme; konuşma yeterliğini, bütün dil bilgisini veya gerçek yaşamda serbest iletişimi ölçmez.
 
@@ -80,10 +80,10 @@ Hesap, abonelik veya API anahtarı gerekmez. İlerleme ve ayarlar cihazında tut
 
 ## Geliştirme
 
-Güncel Pofinyo kaynakları [Pofinyo geliştirme dalındadır](https://github.com/snansrin/Mochi/tree/feat/mochi-living-language). Node.js 24 ve Git ile:
+Güncel Pofinyo kaynakları [Pofinyo geliştirme dalındadır](https://github.com/snansrin/Pofinyo/tree/feat/mochi-living-language). Node.js 24 ve Git ile:
 
 ```sh
-git clone --branch feat/mochi-living-language https://github.com/snansrin/Mochi.git Pofinyo
+git clone --branch feat/mochi-living-language https://github.com/snansrin/Pofinyo.git Pofinyo
 cd Pofinyo
 npm ci
 npm start
@@ -102,4 +102,4 @@ Windows kurulum ve taşınabilir paketleri doğrulanır. macOS/Linux yapılandı
 
 Pofinyo, pofuduk ve minyon çağrışımlarından türetilmiş proje adıdır. Yaprak taçlı krem rengi karakter ve ikon özgün SVG çizimleridir. [BongoCat](https://github.com/ayangweb/BongoCat) küçük bir masaüstü karakterinin etkileşim gücüne ilham verdi; kodu veya karakter modeli kullanılmadı.
 
-MIT lisansı. FSRS kütüphanesinin lisansı [ayrıca korunur](https://github.com/snansrin/Mochi/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/ui/vendor/ts-fsrs.LICENSE). Önceki ChalkLingo ve Mochi sürümleri Git geçmişindedir.
+MIT lisansı. FSRS kütüphanesinin lisansı [ayrıca korunur](https://github.com/snansrin/Pofinyo/blob/18f70099b289375db3c7f672f6b7c5cc4536705f/ui/vendor/ts-fsrs.LICENSE). Önceki ChalkLingo ve Mochi sürümleri Git geçmişindedir.
