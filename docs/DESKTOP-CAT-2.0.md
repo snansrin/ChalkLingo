@@ -33,3 +33,9 @@ Kedi penceresi 240×220 DIP yerine 180×165 DIP oldu (%25 küçülme). Konum ad�
 Dikey/çapraz yukarı hareket ayrı arka görünüşü, aşağı hareket ön görünüşü kullanır; yana kayıyormuş gibi görünen sabit yan siluet kaldırıldı. Ayaklarda basma ve kaldırma fazı, dönüş geçişi ve iki yana baş bakışı eklendi. Hareketler özgün stilize SVG animasyonlarıdır; gerçek bir kedinin motion-capture kaydı değildir.
 
 Testler: 50 model/eğitim testi; yön seçimi ve yaklaşık 60 Hz model adımları; gerçek Explorer'da küçük boyut, devam eden alfa kareleri ve yer değiştirme; ön/arka/yan görünüşlerin ayrı görünürlüğü; öğrenme ekranının masaüstü çocuğu olmadan açılması.
+
+## 2.2.1 — pati yönü ve uyku yüzü
+
+Yan yürüyüşteki basma fazının dönüş işareti ters çevrildi: gövde ilerlerken yere basan pati gövdeye göre geriye gider; kaldırma fazı onu öne taşır. Aşağıdan görülen yürüyüşün derinlik fazı da yöne göre ayrıldı. Electron testi sağ/sol yönlerinde hem yürüme hem koşma için pati ucunun basma fazındaki gerçek SVG dönüşümünü örnekler.
+
+Uykuya ait ayrı yüz çizimi kaldırıldı. Uyuyan/kıvrılan karakter, uyanık karakterle aynı head şablonunu kullanır; gözler CSS ile kapanır. Başın yerleşimi değişir, yüz oranları ve çizgileri korunur. Test baş geometrisinin eşitliğini ve açık/kapalı göz görünürlüğünü ayrıca doğrular. Uyku pozu görsel olarak incelendi.

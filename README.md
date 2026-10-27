@@ -20,7 +20,7 @@ Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar 
 
 ## Kullanım ve kurulum
 
-Windows x64 için **Pofinyo-Setup-2.2.0.exe** veya **Pofinyo-Portable-2.2.0.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
+Windows x64 için **Pofinyo-Setup-2.2.1.exe** veya **Pofinyo-Portable-2.2.1.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
 
 1. Uygulamayı aç. Kedi masaüstünde yaşamaya başlar.
 2. **Win + D** ile masaüstüne geçebilirsin. Başka uygulama açtığında kedi onun arkasında kalır.

@@ -19,10 +19,16 @@
 [data-pose=walk] .depth-paws .leg{animation-name:depth-step}
 [data-pose=run] .depth-paws .leg{animation-name:depth-run}
 #cat.turning svg{animation:turn-body .24s ease-in-out}
-@keyframes step{0%,100%{transform:rotate(18deg)}55%{transform:rotate(-20deg)}77%{transform:rotate(-3deg) translateY(-4px)}}
+@keyframes step{0%,100%{transform:rotate(-18deg)}55%{transform:rotate(20deg)}77%{transform:rotate(3deg) translateY(-4px)}}
 @keyframes depth-step{0%,100%{transform:translateY(0)}55%{transform:translateY(3px)}77%{transform:translateY(-5px)}}
 @keyframes depth-run{0%,100%{transform:translateY(3px)}50%{transform:translateY(-7px)}}
 @keyframes head-attend{0%,100%{transform:rotate(0)}23%{transform:rotate(-5deg)}63%{transform:rotate(5deg)}83%{transform:rotate(-2deg)}}
 @keyframes rear-attend{0%,100%{rotate:0deg}24%{rotate:-4deg}68%{rotate:4deg}}
 @keyframes look{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}65%{transform:rotate(7deg)}}
 @keyframes turn-body{50%{opacity:.9;scale:.88 1}}
+
+/* During contact the foot travels backwards relative to the advancing body. */
+[data-heading=toward][data-pose=walk] .depth-paws .leg{animation-name:toward-step}
+[data-heading=toward][data-pose=run] .depth-paws .leg{animation-name:toward-step}
+@keyframes toward-step{0%,100%{transform:translateY(0)}55%{transform:translateY(-3px)}77%{transform:translateY(-7px)}}
+.curled .open-eye{display:none}.curled .closed-eye{display:block}.curled .leaf{animation:none}
