@@ -12,7 +12,7 @@ Pofinyo’ya dokun, bir kalıpla tanış, aklından yaz ve başka bir cümlede k
 
 **Pofinyo 1.3:** küçük arkadaş modunda **Gezintiye çık** düğmesine bas. Yüzen adasıyla sakin sakin dolaşır, durur ve başının üstündeki düşünce baloncuğunda küçük çağrışımlar kurar.
 
-<p align="center"><img src="docs/screenshots/pofinyo-daydream.gif" width="300" alt="Pofinyo'nun düşünce baloncuğu ve gezinti animasyonu"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/e6367bb7441f4e830444d27c3afecbcd96952751/docs/screenshots/pofinyo-daydream.gif" width="300" alt="Pofinyo'nun düşünce baloncuğu ve gezinti animasyonu"></p>
 
 - Çalışma alanının içinde kalır; görev çubuğunun ötesine geçmez. Şimdilik bulunduğu monitörde dolaşır.
 - Üzerine fare geldiğinde bekler; duraklayınca küçük düşünceler veya tanıştığın kelimeler görünür. Global fare/klavye takibi yapılmaz.
@@ -58,7 +58,7 @@ Bu ilk ayrıntılı rota **İngilizce temelidir**; tam A1-C2 kursu veya CEFR ser
 
 ## Başla
 
-Windows x64 için **Pofinyo-Setup-1.3.0.exe** kurulum paketini veya **Pofinyo-Portable-1.3.0.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
+Windows x64 için **Pofinyo-Setup-1.3.0.exe** kurulum paketini veya **Pofinyo-Portable-1.3.0.exe** taşınabilir sürümünü kullan. Paketler doğrulanmış [GitHub Actions çalışmasının](https://github.com/snansrin/Pofinyo/actions/runs/40455638945) **Pofinyo-Windows** çıktısında bulunur. GitHub hesabınla çalışmayı açıp **Artifacts → Pofinyo-Windows** arşivini indir.
 
 1. Uygulamayı aç; **Ayarlar** bölümünden dilini seç.
 2. Sıralı temel kurs için **İngilizce → Bugünkü rotam** yolunu izle.
@@ -103,7 +103,6 @@ npm run check
 npm run test:desktop
 npm run test:studio
 npm run test:education
-npm run test:companion
 npm run dist:win
 ```
 
