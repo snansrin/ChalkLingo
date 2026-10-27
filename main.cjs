@@ -27,7 +27,7 @@ function size(mode,resume=true){
  if(mode==='pet')anchor=win.getPosition();
  const pos=mode==='widget'&&anchor?anchor:[b.x,b.y];
  const fitted=fitWindow(SIZES[mode],area,{x:pos[0],y:pos[1]});
- win.setContentSize(fitted.width,fitted.height);win.setPosition(fitted.x,fitted.y);
+ win.setBounds(fitted,false);
  layout=mode;if(mode==='widget')setPassThrough(false);if(mode==='pet'&&resume&&roamingWanted&&!roamer.enabled)setRoaming(true,false);broadcastCompanion();save();
 }
 function startup(enabled){if(TEST||!app.isPackaged)return false;if(typeof enabled==='boolean')app.setLoginItemSettings({openAtLogin:enabled,path:process.env.PORTABLE_EXECUTABLE_FILE||process.execPath,name:'Mochi'});return app.getLoginItemSettings({path:process.env.PORTABLE_EXECUTABLE_FILE||process.execPath}).openAtLogin;}
@@ -43,7 +43,7 @@ app.whenReady().then(()=>{
  const initial=fitWindow(SIZES.widget,area,Number.isFinite(position.x)&&Number.isFinite(position.y)?position:null);
  win=new BrowserWindow({...initial,useContentSize:true,frame:false,transparent:true,resizable:false,skipTaskbar:true,show:false,hasShadow:false,title:'Pofinyo · Living language',backgroundColor:'#00000000',icon:path.join(__dirname,'assets','icon.png'),webPreferences:{preload:path.join(__dirname,'preload.cjs'),nodeIntegration:false,contextIsolation:true,sandbox:true,webSecurity:true,backgroundThrottling:true,devTools:TEST||!app.isPackaged}});
  win.webContents.setWindowOpenHandler(()=>({action:'deny'}));win.webContents.on('will-navigate',(e,url)=>{if(url!==origin)e.preventDefault();});win.webContents.on('will-attach-webview',e=>e.preventDefault());
- roamer=new Roamer({bounds:()=>win.getBounds(),area:()=>screen.getDisplayMatching(win.getBounds()).workArea,move:(x,y)=>win.setPosition(x,y,false),phase:broadcastCompanion});
+ roamer=new Roamer({bounds:()=>win.getBounds(),area:()=>screen.getDisplayMatching(win.getBounds()).workArea,move:(x,y)=>{const a=screen.getDisplayMatching(win.getBounds()).workArea;win.setBounds(fitWindow(SIZES.pet,a,{x,y}),false);},phase:broadcastCompanion});
  win.webContents.on('did-finish-load',()=>{if(restoreRoaming){restoreRoaming=false;if(roamingWanted&&!roamer.enabled){setRoaming(true,false);return;}}broadcastCompanion();});
  win.on('will-move',()=>{if(roamer.enabled)roamer.hold();});
  for(const event of ['display-removed','display-metrics-changed'])screen.on(event,()=>{if(roamer.enabled){roamer.hold(1000);const b=win.getBounds(),f=fitWindow(b,screen.getDisplayMatching(b).workArea,b);win.setBounds(f);}});
