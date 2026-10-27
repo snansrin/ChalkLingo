@@ -1,0 +1,8 @@
+Pofinyo English–Turkish 10,000-word bank (adaptation, 2026-10-27)
+Dictionary: Copyright (C) 1999–2017 various authors, FreeDict English–Turkish 0.3.
+Converted by Michael Bunk; maintenance/conversion work by Sebastian Humenda, Piotr Banski and contributors. See the pinned upstream source in SOURCES.json for the original notices and history. Upstream license: GPL version 2 or any later version. This adaptation elects GPL version 3.
+Ranking: FrequencyWords, Hermit Dave, English 2018 data, derived from OpenSubtitles2018. Content is CC BY-SA 4.0; https://github.com/hermitdave/FrequencyWords ; https://opus.nlpl.eu/OpenSubtitles2018.php
+The combined dictionary adaptation is GPL-3.0-only (CC BY-SA 4.0 permits GPLv3 adaptations: https://creativecommons.org/compatible-licenses/). Original CC BY-SA attribution and notices are retained; no endorsement is implied.
+Modifications: filtering, 10,000 distinct lowercase headword selection, up to three cleaned meanings, explicit editorial corrections for frequent words, compact serialization and frequency ordering. No CEFR grades or sentence examples are invented. Not all translations have independent teacher review.
+Complete editable source of this adaptation is en-source.tsv.gz. build-pack.py regenerates the runtime en.json.gz and manifest.json entirely offline. GPL-3.0.txt and CC-BY-SA-4.0.txt are supplied here. Import/reproduction procedure is documented in docs/WORDBANK-10000.md and tools/import-wordbank.py.
+This dictionary is separate licensed data. The Pofinyo application code retains its MIT license. Redistribution must preserve the applicable data licenses and source.

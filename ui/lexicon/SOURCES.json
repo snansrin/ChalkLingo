@@ -1,0 +1,17 @@
+{
+  "dictionary": {
+    "name": "English-Turkish FreeDict 0.3",
+    "url": "https://github.com/freedict/fd-dictionaries/blob/dc426dbe79483dc1c020bffca532470557cd94b9/eng-tur/eng-tur.tei",
+    "license": "GPL-2.0-or-later",
+    "sha256": "2bc21fa1a784f68df6d94edfcde900ac185e51a6088e3245d9e08d8563c0043e"
+  },
+  "ranking": {
+    "name": "FrequencyWords English 2018, Hermit Dave / OpenSubtitles",
+    "url": "https://github.com/hermitdave/FrequencyWords/blob/master/content/2018/en/en_50k.txt",
+    "license": "CC-BY-SA-4.0",
+    "sha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458"
+  },
+  "adaptationLicense": "GPL-3.0-only",
+  "modifications": "Select 10,000 distinct lowercase headwords; normalize whitespace; filter broken/long/cross-reference/archaic glosses; keep at most three meanings; apply explicit frequent-word corrections; rank by subtitle frequency. No CEFR classification or example sentences are fabricated. Frequency ranking does not imply a validated teaching sequence.",
+  "source": "en-source.tsv.gz is the editable preferred source for this adaptation; build-pack.py regenerates en.json.gz without network access."
+}

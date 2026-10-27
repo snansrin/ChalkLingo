@@ -27,6 +27,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run test:desktop
       - run: npm run test:studio
+      - run: npm run test:wordbank
       - run: npm run test:education
       - run: npm run test:companion
       - run: npm run dist:win

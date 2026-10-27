@@ -1,6 +1,6 @@
 {
   "name": "pofinyo-language",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "A living desktop language companion: tiny games, a growing memory garden, and spaced retrieval.",
   "author": "Pofinyo Contributors",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "electron .",
-    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/mochi.js && node --check ui/memory.js && node --check ui/lessons.js && node --check ui/journey.js && node --check ui/studio.js && node --check ui/window-layout.cjs && node --check ui/pedagogy.js && node --check ui/curriculum.js && node --check ui/education.js && node --check ui/companion.js && node --check cat-preload.cjs && node --check ui/cat-brain.cjs && node --check ui/desktop-layer.cjs && node --check ui/desktop-cat-controller.cjs && node --check ui/desktop-cat.js && node --check ui/layered-cat.cjs",
+    "lint": "node --check main.cjs && node --check preload.cjs && node --check ui/mochi.js && node --check ui/memory.js && node --check ui/lessons.js && node --check ui/journey.js && node --check ui/studio.js && node --check ui/window-layout.cjs && node --check ui/pedagogy.js && node --check ui/curriculum.js && node --check ui/education.js && node --check ui/companion.js && node --check cat-preload.cjs && node --check ui/cat-brain.cjs && node --check ui/desktop-layer.cjs && node --check ui/desktop-cat-controller.cjs && node --check ui/desktop-cat.js && node --check ui/layered-cat.cjs && node --check ui/wordbank-core.js && node --check ui/wordbank.js && node --check ui/wordbank-store.cjs && node --check ui/progress-store.cjs",
     "test": "node --test tests/*.test.cjs",
     "check": "npm run lint && npm test",
     "test:desktop": "node tests/desktop.cjs",
@@ -19,7 +19,8 @@
     "dist:linux": "electron-builder --linux AppImage --publish never",
     "test:studio": "node tests/studio.cjs",
     "test:education": "node tests/education.cjs",
-    "test:companion": "node tests/desktop-cat.cjs"
+    "test:companion": "node tests/desktop-cat.cjs",
+    "test:wordbank": "node tests/wordbank-ui.cjs"
   },
   "devDependencies": {
     "electron": "45.0.0",
@@ -71,7 +72,8 @@
     },
     "asarUnpack": [
       "assets/*",
-      "node_modules/@koromix/**/*"
+      "node_modules/@koromix/**/*",
+      "ui/lexicon/**/*"
     ],
     "portable": {
       "artifactName": "Pofinyo-Portable-${version}.${ext}"

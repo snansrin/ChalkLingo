@@ -14,8 +14,8 @@ function cleanCard(c){
 }
 function clean(raw){
  const v=raw&&typeof raw==='object'?raw:{},skills=Object.create(null),introduced=Object.create(null);
- for(const [id,at] of Object.entries(v.introduced||{}).slice(0,1000))if(validID(id)&&time(at))introduced[id]=at;
- for(const [id,record] of Object.entries(v.skills||{}).slice(0,2000)){
+ for(const [id,at] of Object.entries(v.introduced||{}).slice(0,20000))if(validID(id)&&time(at))introduced[id]=at;
+ for(const [id,record] of Object.entries(v.skills||{}).slice(0,20000)){
   if(!validID(id)||!record||typeof record!=='object')continue;
   const result=Object.create(null);
   for(const skill of SKILLS){const r=record[skill],card=cleanCard(r?.card);if(!card)continue;
