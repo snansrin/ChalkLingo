@@ -15,3 +15,11 @@ Poz önizlemesi ayrı ve görünmeyen offscreen render işleminde üretildi. Kul
 Kaynaklar: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setparent ; https://learn.microsoft.com/en-us/windows/win32/winmsg/window-features ; https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowpos ; https://koffi.dev/ .
 
 2.0.1: SetParent öncesinde ebeveyn ve çocuk pencerenin DPI awareness modları karşılaştırılır; uyumsuz modlarda bağlantı kurulmaz. GitHub Windows Server test oturumu gerçek etkileşimli Explorer oturumu olarak değerlendirilmez. CI gizli-kalma ve poz DOM kontrollerini yapar; gerçek masaüstü entegrasyonu yerel Windows oturumunda ve kurulu pakette ayrıca doğrulanır.
+
+## 2.1 — siyah dikdörtgen ve karakter tutarlılığı
+
+Kullanıcı 2.0.1 üzerinde siyah alan bildirdi. HWND ebeveynliği, konum ve boyut testleri geçse de bunlar görsel alfa birleşimini doğrulamıyordu. Kedi artık gizli, yazılımsal offscreen Electron çizicisinden BGRA kareleri üretir. Görünen pencere Explorer altında `WS_CHILD | WS_EX_LAYERED | WS_EX_NOACTIVATE` kullanan ayrı bir yerel yüzeydir. `UpdateLayeredWindow` premultiplied alpha ile çizimi aktarır; boş veya opak dikdörtgen kareler reddedilir. Gizli çizici hiçbir zaman gösterilmez.
+
+Yerel Electron testi artık layered stilini, başarılı alfa yüklemesini, birden fazla kareyi, saydam/görünür piksel sayısını ve çizicinin gizli kalmasını da kontrol eder. Katman bağlanması tek başına görsel doğrulama sayılmaz. Önceki Pofinyo yüzü, yanakları, yaprak ve yeşil fular dört ayaklı karaktere geri taşındı.
+
+Kaynaklar: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-updatelayeredwindow ve https://www.electronjs.org/docs/latest/tutorial/offscreen-rendering

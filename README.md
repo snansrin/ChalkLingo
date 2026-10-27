@@ -1,7 +1,7 @@
-<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/assets/icon.svg" width="96" alt="Pofinyo"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/feat/mochi-living-language/assets/icon.svg" width="96" alt="Pofinyo"></p>
 <h1 align="center">Pofinyo</h1>
 <p align="center"><strong>Masaüstünde yaşayan küçük kedin. Dil öğrenirken sana eşlik eder.</strong></p>
-<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-desktop-cat.gif" width="300" alt="Pofinyo yürür, koşar, oturur ve kıvrılıp uyur"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/feat/mochi-living-language/docs/screenshots/pofinyo-desktop-cat.gif" width="300" alt="Pofinyo yürür, koşar, oturur ve kıvrılıp uyur"></p>
 
 ## Masaüstünün kedisi
 
@@ -9,7 +9,7 @@ Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar 
 
 **Yalnız Windows masaüstü katmanında görünür: klasör ve simgelerin önünde, açık uygulamaların arkasında.** En üstte pencere modu kaldırılmıştır. Masaüstü bağlantısı hazır değilse kedi gizli kalır; uygulamaların üstüne çıkan bir pencereye dönüşmez.
 
-<table><tr><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-cat-walk.png" width="240" alt="Dört ayakla yürüyüş"><br>Yürüyüş ve koşu</td><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/136607f8fc6f65bcc4a128eb6c8ac5edf827e6e1/docs/screenshots/pofinyo-cat-sleep.png" width="240" alt="Köşede kıvrılıp uyuyan Pofinyo"><br>Kıvrılıp uyuma</td></tr></table>
+<table><tr><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/feat/mochi-living-language/docs/screenshots/pofinyo-cat-walk.png" width="240" alt="Dört ayakla yürüyüş"><br>Yürüyüş ve koşu</td><td align="center"><img src="https://raw.githubusercontent.com/snansrin/Pofinyo/feat/mochi-living-language/docs/screenshots/pofinyo-cat-sleep.png" width="240" alt="Köşede kıvrılıp uyuyan Pofinyo"><br>Kıvrılıp uyuma</td></tr></table>
 
 - Yürüyüşte çapraz bacaklar, koşuda ön ve arka ayak çiftleri farklı ritimlerde hareket eder.
 - Oturma, başını çevirip bakma, kuyruk hareketi, göz kırpma, uyku ve uyanış pozları vardır.
@@ -19,7 +19,7 @@ Pofinyo **dört ayağıyla yürür**, kısa koşular yapar, oturup etrafa bakar 
 
 ## Kullanım ve kurulum
 
-Windows x64 için **Pofinyo-Setup-2.0.1.exe** veya **Pofinyo-Portable-2.0.1.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
+Windows x64 için **Pofinyo-Setup-2.1.0.exe** veya **Pofinyo-Portable-2.1.0.exe**. Paketler [Pofinyo geliştirme dalının GitHub Actions çalışması tamamlandıktan sonra](https://github.com/snansrin/Pofinyo/actions/workflows/ci.yml?query=branch%3Afeat%2Fmochi-living-language) **Pofinyo-Windows** çıktısından indirilebilir.
 
 1. Uygulamayı aç. Kedi masaüstünde yaşamaya başlar.
 2. **Win + D** ile masaüstüne geçebilirsin. Başka uygulama açtığında kedi onun arkasında kalır.
@@ -69,6 +69,8 @@ npm run dist:win
 Windows masaüstü bağlantısı Win32 **SetParent / WS_CHILD** ile Explorer masaüstü görünümüne yapılır; yalnızca üstte tutmayı kapatmakla yetinilmez. Kedi masaüstü simgelerinin kardeş penceresidir. Bağlantı kaybolduğunda gizlenir. Konumlandırma odak çalmaz ve kedi hiçbir zaman topmost yapılmaz. Win32 erişimi sabit sürümlü MIT lisanslı Koffi ile ana süreçte sınırlıdır; renderer'a genel yerel API verilmez.
 
 Model testleri hareket sınırlarını, davranış geçişlerini ve eğitim motorunu kapsar. Gerçek Electron testleri masaüstü ebeveynini, simgelerin üzerindeki sırayı, topmost olmamasını, sabit boyutta hareketi ve eğitim akışlarını doğrular. Explorer olmayan test ortamında görünür overlay yerine gizli kalması kontrol edilir. Eski sürümün hareket modeli testleri tarihsel regresyon kapsamı olarak korunmuştur.
+
+Kedi, gizli bir Electron çizicisinden alınan alfa kareleriyle `UpdateLayeredWindow` üzerinden çizilir. Saydam veya görünür pikselleri olmayan kareler gösterilmez; doğrudan yeniden ebeveynlenen Chromium penceresinin siyah dikdörtgen sorunu bu yolla önlenir.
 
 Masaüstü kedisi Windows Explorer gerektirir. macOS/Linux için masaüstü kedisi desteği yoktur. Diğer Windows kabukları ve tüm çoklu monitör/DPI kombinasyonları kapsamlı denenmedi. Electron'un bellek maliyeti vardır.
 

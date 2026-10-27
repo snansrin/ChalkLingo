@@ -3,6 +3,7 @@ const {app,BrowserWindow,Tray,Menu,nativeImage,ipcMain,protocol,screen,session,d
 const path=require('node:path'),fs=require('node:fs');const {fitWindow}=require('./ui/window-layout.cjs');const {createDesktopLayer}=require('./ui/desktop-layer.cjs');const {DesktopCat}=require('./ui/desktop-cat-controller.cjs');
 const TEST=process.argv.includes('--mochi-test'),LAYER_TEST=process.argv.includes('--desktop-layer-test');
 app.setName('Mochi');protocol.registerSchemesAsPrivileged([{scheme:'mochi',privileges:{standard:true,secure:true,supportFetchAPI:true,stream:true}}]);
+app.disableHardwareAcceleration(); // Software offscreen alpha frames avoid compositor-dependent black child windows.
 let win,tray,cat,layer,quitting=false,saveTimer;const origin='mochi://app/mochi.html',SIZES={widget:{width:400,height:660},pet:{width:280,height:302}};
 const stateFile=()=>path.join(app.getPath('userData'),'window.json');function saved(){try{return JSON.parse(fs.readFileSync(stateFile(),'utf8'));}catch{return {};}}
 function save(){if(!win||win.isDestroyed())return;try{const b=win.getBounds();fs.mkdirSync(app.getPath('userData'),{recursive:true});fs.writeFileSync(stateFile(),JSON.stringify({x:b.x,y:b.y,roaming:cat?.enabled===true}));}catch{}}

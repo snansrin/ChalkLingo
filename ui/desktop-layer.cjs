@@ -28,13 +28,14 @@ function createDesktopLayer(){
  };
  const pid=h=>{const out=[0];f.pid(h,out);return out[0];};
  const cls=h=>{const b=Buffer.alloc(512);const n=f.cls(h,b,256);return b.toString('utf16le',0,Math.max(0,n)*2);};
- const handle=w=>Number(w.getNativeWindowHandle().readBigUInt64LE());
+ const handle=w=>w.pofinyoSurface?.handle||Number(w.getNativeWindowHandle().readBigUInt64LE());
  function desktop(){const shell=f.shell();if(!shell)return null;const owner=pid(shell);let root=0;while((root=f.find(0,root,null,null))){if(pid(root)!==owner||!['Progman','WorkerW'].includes(cls(root)))continue;const view=f.find(root,0,'SHELLDLL_DefView',null);if(!view)continue;const icons=f.find(view,0,'SysListView32',null);if(icons)return{root,view,icons};}return null;}
  function own(w){const h=handle(w);if(pid(h)!==process.pid)throw Error('Window ownership mismatch');return h;}
- function inspect(w){if(!w||w.isDestroyed())return{attached:false};const h=own(w),d=desktop(),parent=f.parent(h);let order=[],s=d?f.sibling(d.view,5):0;while(s&&order.length<100){order.push(s);s=f.sibling(s,2);}const style=Number(f.getStyle(h,-16))>>>0,ex=Number(f.getStyle(h,-20))>>>0,r={};f.rect(h,r);return{attached:!!d&&parent===d.view&&f.child(d.view,h),parentClass:cls(parent),aboveIcons:!!d&&order.indexOf(h)>=0&&order.indexOf(h)<order.indexOf(d.icons),topmost:!!(ex&8),childStyle:!!(style&0x40000000),rect:r};}
- function compatible(w){const d=desktop();return !!d&&f.awareness(f.dpi(d.view))===f.awareness(f.dpi(own(w)));}
- function hide(w){if(w&&!w.isDestroyed())f.show(own(w),0);}
+ function inspect(w){if(!w||w.isDestroyed()||!f.valid(handle(w)))return{attached:false};const h=own(w),d=desktop(),parent=f.parent(h);let order=[],s=d?f.sibling(d.view,5):0;while(s&&order.length<100){order.push(s);s=f.sibling(s,2);}const style=Number(f.getStyle(h,-16))>>>0,ex=Number(f.getStyle(h,-20))>>>0,r={};f.rect(h,r);return{attached:!!d&&parent===d.view&&f.child(d.view,h),parentClass:cls(parent),aboveIcons:!!d&&order.indexOf(h)>=0&&order.indexOf(h)<order.indexOf(d.icons),topmost:!!(ex&8),childStyle:!!(style&0x40000000),layered:!!(ex&0x80000),alphaPainted:w.pofinyoSurface?.painted===true,frames:w.pofinyoSurface?.frames||0,transparentPixels:w.pofinyoSurface?.transparentPixels||0,opaquePixels:w.pofinyoSurface?.opaquePixels||0,rect:r};}
+ function compatible(w){const d=desktop();return !!d&&f.awareness(f.dpi(d.view))===f.awareness(f.dpi(Number(w.getNativeWindowHandle().readBigUInt64LE())));}
+ function hide(w){if(w&&!w.isDestroyed()&&f.valid(handle(w)))f.show(own(w),0);}
  function attach(w,{noActivate=true}={}){
+  if(w.pofinyoOffscreen){const d=desktop();if(!d||!compatible(w))return false;if(w.pofinyoSurface){w.pofinyoSurface.dispose();w.pofinyoSurface=null;}const {LayeredCat}=require('./layered-cat.cjs');w.pofinyoSurface=new LayeredCat(d.view,w.pofinyoInput);f.pos(own(w),0,0,0,0,0,0x0010|0x0001|0x0002);return inspect(w).attached;}
   const h=own(w);f.show(h,0);const d=desktop();if(!d||!compatible(w))return false;
   const style=Number(f.getStyle(h,-16))>>>0,ex=Number(f.getStyle(h,-20))>>>0;
   f.setStyle(h,-16,((style&~0x80C40000)|0x40000000)>>>0);
@@ -45,7 +46,7 @@ function createDesktopLayer(){
   const proof=inspect(w);if(!proof.attached||proof.topmost||!proof.childStyle){f.show(h,0);return false;}return true;
  }
  function move(w,r,screen){const h=own(w),d=desktop();if(!d||f.parent(h)!==d.view){f.show(h,0);return false;}const p=screen.dipToScreenPoint({x:Math.round(r.x),y:Math.round(r.y)}),scale=screen.getDisplayMatching(r).scaleFactor;const point={x:p.x,y:p.y};if(!f.client(d.view,point))return false;return f.pos(h,0,point.x,point.y,Math.round(r.width*scale),Math.round(r.height*scale),0x0010|0x0004);}
- function show(w){const proof=inspect(w);if(!proof.attached||proof.topmost){hide(w);return false;}f.show(own(w),4);return true;}
+ function show(w){const proof=inspect(w);if(!proof.attached||proof.topmost||(w.pofinyoOffscreen&&!proof.alphaPainted)){hide(w);return false;}f.show(own(w),4);return true;}
  return cachedLayer={desktop,compatible,attach,inspect,hide,move,show};
 }
 module.exports={createDesktopLayer};
